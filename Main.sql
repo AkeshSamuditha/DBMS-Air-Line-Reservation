@@ -20,7 +20,7 @@ create table Model(ID varchar(2),
                     primary key(ID));
                     
 create table Airplane(Airplane_ID varchar(5),
-		    Model_ID varchar(5),
+		    Model_ID varchar(30),
                     primary key(Airplane_ID),
                     foreign key(Model_ID) references Model(ID));
                     

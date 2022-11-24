@@ -13,14 +13,14 @@ create table Guest(ID varchar(6),
                     primary key(ID));
 
 create table Model(ID varchar(2),
-		    Model varchar(10),
+		    Model varchar(4),
 		    Brand varchar(15),
 		    seat_count varchar(3),
                     No_of_planes int,
                     primary key(ID));
                     
 create table Airplane(Airplane_ID varchar(5),
-		    Model_ID varchar(30),
+		    Model_ID varchar(4),
                     primary key(Airplane_ID),
                     foreign key(Model_ID) references Model(ID));
                     

@@ -20,20 +20,20 @@ create table Model(ID varchar(2),
                     primary key(ID));
                     
 create table Airplane(Airplane_ID varchar(5),
-		    Model_ID varchar(2),
+		    Model_ID varchar(5),
                     primary key(Airplane_ID),
                     foreign key(Model_ID) references Model(ID));
                     
 create table Airport(Airport_code char(3),
-		    Airport_Name varchar(30),
+		    Airport_Name varchar(100),
 		    City varchar(15),
                     State varchar(15),
                     Country varchar(15),
                     primary key(Airport_code));
                     
 create table Route(Routine_ID varchar(5),
-	        Origin_ID varchar(5),
-                Destination_ID varchar(5),
+	        Origin_ID varchar(3),
+                Destination_ID varchar(3),
                 primary key(Routine_ID),
                 foreign key(Origin_ID) references Airport(Airport_code),
                 foreign key(Destination_ID) references Airport(Airport_code));

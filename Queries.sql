@@ -22,8 +22,8 @@ insert into Model values ('M001','Boeing','747','400','4');
 insert into Model values ('M002','Airbus','A350','898','5');
 insert into Model values ('M003','Airbus','A350','900','1');
 
-insert into Route values ('R0001','JMK','CMK');
-insert into Route values ('R0002','CMK','JMK');
+insert into Route values ('R0001','JFK','CMK');
+insert into Route values ('R0002','CMK','JFK');
 
 insert into Flight values ('00001','A0001','R0001','2023-01-01','04:15:00','09:00:00',2);
 insert into Flight values ('00002','A0002','R0002','2023-01-01','05:30:00','12:00:00',5);

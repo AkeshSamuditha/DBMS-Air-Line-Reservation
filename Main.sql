@@ -1,4 +1,4 @@
-create table user_type(
+create table user_type( 
 	U_type varchar(8) DEFAULT 'Noob',
 	discount int Not Null,
 	threashold int Not Null,
@@ -11,6 +11,7 @@ create table user_type(
 
 insert into User_Type values ('Frequent',0.05,10);
 insert into User_Type values ('Gold',0.09,50);
+
 
 create table class_type(
 	name varchar(10),
@@ -28,8 +29,9 @@ insert into Class_Types values ('Economy',8);
 insert into Class_Types values ('Buisness',15);
 insert into Class_Types values ('Platinum',25);
 
+
 create table Registered_user(
-	Registered_date date DEFAULT GETDATE()
+	Registered_date DATETIME DEFAULT GETDATE()
 	PID char(6),
 	Passport varchar(15) Not Null; 
 	user_name varchar(30) UNIQUE NOT NULL,
@@ -48,7 +50,7 @@ create table Registered_user(
 	check (sex = "Male" or sex = "Female" or sex is Null ));
             
 
-insert into Registered _User values ('P00001','Dilshan Karunarathna',DilshanKarunarathna@gmail.com, +94701123891, 38, Sri Lanka, 3,'Gold');
+insert into Registered _User values ('P00001','Dilshan Karunarathna','DilshanKarunarathna@gmail.com', +94701123891, 38, Sri Lanka, 3,'Gold');
 insert into Registered _User values ('P00002','Kasun Rathnayake',25,10,'Noob'); --Need To Insert Data--
 insert into Registered _User values ('P00003','Nadun Bandara',26,1,'Frequent');
 insert into Registered _User values ('P00004','Akesh Samuditha',28,5,'Gold');
@@ -61,6 +63,7 @@ create table Guest(
 	Age int,
 	
 	primary key(ID));
+
 
 create table AirPlane_Model(
 	Model_ID varchar(2),
@@ -75,6 +78,7 @@ insert into Model values ('M001','Boeing','747','400','4');
 insert into Model values ('M002','Airbus','A350','898','5');
 insert into Model values ('M003','Airbus','A350','900','1');
 
+
 create table Airplane(
 	Airplane_ID varchar(5),
 	Model varchar(4),
@@ -87,6 +91,7 @@ insert into Airplane values ('A0002','M001');
 insert into Airplane values ('A0003','M002');
 insert into Airplane values ('A0004','M003');
 
+
 create table Airport(
 	Airport_code char(3),
 	Airport_Name varchar(100) Not Null UNIQUE,
@@ -96,6 +101,10 @@ create table Airport(
 	
 	primary key(Airport_code));
 
+insert into Airport values ('CMK','Bandaranayake International Airport','Katunayake','Colombo','Sri Lanka');
+insert into Airport values ('JFK','John F. Kennedy International Airport','Queens','New York','USA');
+
+
 create table Route(
 	Route_ID varchar(5),
 	Origin_ID varchar(3),
@@ -104,10 +113,12 @@ create table Route(
 	
 	primary key(Route_ID),
 	foreign key(Origin_ID) references Airport(Airport_code),
-	foreign key(Destination_ID) references Airport(Airport_code));
+	foreign key(Destination_ID) references Airport(Airport_code)
+);
 
 insert into Route values ('R0001','JFK','CMK', 200);
 insert into Route values ('R0002','CMK','JFK', 200);
+
 
 create table Flight(
 	Flight_ID varchar(5),
@@ -125,8 +136,14 @@ create table Flight(
 	Check (Tickets_bought>=0)
 );
 
+insert into Flight values ('00001','A0001','R0001','2023-01-01','04:15:00','09:00:00',2);
+insert into Flight values ('00002','A0002','R0002','2023-01-01','05:30:00','12:00:00',5);
+insert into Flight values ('00003','A0003','R0001','2023-01-02','13:30:00','19:15:00',1);
+insert into Flight values ('00004','A0004','R0001','2023-01-02','14:15:00','20:30:00',2);
+
+
 create table Ticket(
-	Time_of_Booking date default getdate(),
+	Time_of_Booking DATETIME default GETDATE(),
 	Flight varchar(5),
 	Ticket_ID varchar(5),
 	seat_ID varchar(3),

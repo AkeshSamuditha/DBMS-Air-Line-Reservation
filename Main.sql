@@ -14,6 +14,19 @@ create table user_types(
 
 insert into user_types(User, Discription, Discount, Threashold) values ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
 
+CREATE TABLE Locations( -- Need to Create Some data
+	location_ID int AUTO_INCREMENT,
+	Location varchar(30),
+    Parent_ID int DEFAULT NULL,
+   
+    
+    PRIMARY KEY(location_ID),
+    FOREIGN KEY(Parent_ID) REFERENCES Locations(location_ID));
+    
+Insert into Locations(Location) values('Sri Lanka');
+Insert into Locations(Location, Parent_ID) values('Colombo', 1);
+
+
 
 create table class_types(
 	Class char(1),
@@ -27,19 +40,7 @@ create table class_types(
 
 insert into class_types(Class, Discription, Price_per_air_mile) values ('E', 'Economy', 8), ('B','Buisness',15), ('P','Platinum',25);
 
-create table Routes(
-	Route_ID varchar(5),
-	Origin_ID varchar(3),
-	Destination_ID varchar(3),
-	Miles int,
-	
-	primary key(Route_ID),
-	foreign key(Origin_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade,
-	foreign key(Destination_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade
-);
 
-insert into Routes values ('R1','JFK','CMK', 200);
-insert into Routes values ('R2','CMK','JFK', 200);
 
 
 create table AirPlane_Models(
@@ -124,17 +125,25 @@ create table Airports( -- Need to Organize Some data
 	primary key(Airport_code),
     FOREIGN KEY(Location) REFERENCES Locations(Location));
 
+
+create table Routes(
+	Route_ID varchar(5),
+	Origin_ID varchar(3),
+	Destination_ID varchar(3),
+	Miles int,
+	
+	primary key(Route_ID),
+	foreign key(Origin_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade,
+	foreign key(Destination_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade
+);
+
+insert into Routes values ('R1','JFK','CMK', 200);
+insert into Routes values ('R2','CMK','JFK', 200);
 -- insert into Airports values ('CMK','Bandaranayake International Airport','Katunayake','Colombo','Sri Lanka');
 -- insert into Airports values ('JFK','John F. Kennedy International Airport','Queens','New York','USA');
 
 
-CREATE TABLE Locations( -- Need to Create Some data
-	location_ID int AUTO_INCREMENT,
-    Parent_ID int DEFAULT NULL,
-    Location varchar(30),
-    
-    PRIMARY KEY(location_ID),
-    FOREIGN KEY(Parent_ID) REFERENCES Locations(location_ID));
+
 
 
 
@@ -257,3 +266,4 @@ select * from Flights;
 select * from airplanes;
 select * from tickets;
 SELECT * FROM Registered_users;
+Select * from Locations;

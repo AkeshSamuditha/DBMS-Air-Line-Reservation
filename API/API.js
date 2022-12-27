@@ -1,5 +1,6 @@
 var express = require('express');
-var router = express.Router();
+
+const router = express.Router();
 
 const {ResponseHandler} = require("../Controller/ResponseController");
 const Method = require("../Controller/method");
@@ -13,20 +14,20 @@ router.get('/getReservation',async function(req, res){
 
     var method = new Method(req,res);
     
-    const status = await uController.getReservation(method,req.user);
-    console.log(status);
+    const statusANDData = await uController.getReservation(method,req.user);
+    console.log(statusANDData);
     
-    res.status(ResponseHandler(status)).send(status);
+    res.status(ResponseHandler(statusANDData)).send(statusANDData);
 
 });
 router.get('/getFlights',async function(req, res){
 
     var method = new Method(req,res);
     
-    const status = await uController.getFlights(method,req.user);
-    console.log(status);
+    const statusANDData = await uController.getFlights(method,req.user);
+    console.log(statusANDData);
     
-    res.status(ResponseHandler(status)).send(status);
+    res.status(ResponseHandler(statusANDData)).send(statusANDData);
 
 });
 
@@ -38,6 +39,16 @@ router.get('/getFlights',async function(req, res){
 
 
 ////////////////////////////////////////////////////// GET Requests/////////////////////////////////////////////////////
+router.get('/getFlights',async function(req, res){
+
+    var method = new Method(req,res);
+    
+    const status = await uController.getFlights(method,req.user);
+    console.log(status);
+    
+    res.status(ResponseHandler(status)).send(status);
+
+});
 
 
 

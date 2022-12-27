@@ -28,4 +28,9 @@ where Route = (
     order by Date_of_travel
     ) AND Tockets_remaining > 0;
 
-Re
+Request No: 02 
+Description: What the Rq Do
+Request Type: GET/POST/DELETE/UPDATE 
+Request URL: lo
+Response: What is given in Response
+SQL Query: SQL query to Access DB

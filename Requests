@@ -1,0 +1,31 @@
+Request No: 
+Description: What the Rq Do
+Request Type: GET/POST/DELETE/UPDATE 
+Request URL: lo
+Response: What is given in Response
+SQL Query: SQL query to Access DB
+
+Request No: 01
+Description: When From, To and Date Range(From_Date,To_Date) is given then available Flights will be shown to the user
+Request Type: GET
+Request URL: Http:/localhost:3000/api/getFlights
+Input: 
+{  
+        "From": "Location01",   
+        "To": "Location02",   
+        "From_Date": "FromDate",
+        "To_Date": "ToDate" 
+}  
+
+Response: Date_of_travel, Dep_time, Arr_time, Tockets_remaining is gibven 
+SQL Query: 
+Select Date_of_travel, Dep_time, Arr_time, Tockets_remaining 
+From Flights 
+where Route = (
+    Select Route_ID 
+    From Routes 
+    Where Origin_ID = 'From' AND Destination_ID = 'To' AND Date_of_travel BETWEEN 'From_Date' AND 'To_Date'
+    order by Date_of_travel
+    ) AND Tockets_remaining > 0;
+
+Re

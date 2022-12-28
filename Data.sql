@@ -77,6 +77,6 @@ CALL new_flight('F9','A1','R8','2023-01-05','05:30:00','15:30:00');
 CALL new_flight('F10','A2','R10','2023-01-05','09:30:00','18:00:00');
 CALL new_flight('F11','A3','R8','2023-01-06','05:30:00','14:00:00');
 
-CALL new_ticket('F2', 2, 'E', '2' );
-CALL new_ticket('F2', 3, 'E', '2' );
-CALL new_ticket('F1', 3, 'E', '1' );
+CALL new_ticket('F2', 2, 'E', '2', 'A' );
+CALL new_ticket('F2', 3, 'E', '2', 'C' );
+CALL new_ticket('F1', 3, 'E', '1', 'A' );

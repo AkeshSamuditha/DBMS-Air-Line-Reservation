@@ -133,6 +133,7 @@ create table Flights(
 	Tickets_Remaining_First_Class int  NOT NULL DEFAULT 0,
 	Tickets_Remaining_Business_Class int  NOT NULL DEFAULT 0,
 	Tickets_Remaining_Economy_Class int  NOT NULL DEFAULT 0,
+	Revenue numeric(8,2) NOT NULL DEFAULT 0,
 	Flight_Status varchar(10) NOT NULL DEFAULT 'Scheduled',
 	
 	primary key(Flight_ID),
@@ -152,13 +153,15 @@ CREATE table Tickets(
 	price numeric(8,2),
 	class varchar(10),
 	PID int,
+	Adult_or_Child char(1),
 	
 	primary key(Ticket_ID),
 	foreign key(Flight) references Flights(Flight_ID) ON UPDATE CASCADE on delete Cascade,
 	foreign key(PID) references Users(PID) ON UPDATE CASCADE on delete Cascade,
 	foreign key(class) references class_types(Class) ON UPDATE CASCADE on delete Restrict,
 	UNIQUE KEY seat_allocation(Flight,class, seat_ID),
-	check (price>= 300)
+	check (price>= 300),
+	check (Adult_or_Child In ("A", "C"))
 );
 
 DELIMITER //
@@ -223,7 +226,7 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE new_ticket(F varchar(5), seat_ID varchar(5), C char(1), PID int)
+CREATE PROCEDURE new_ticket(F varchar(5), seat_ID varchar(5), C char(1), PID int, Adult_or_Child char(1))
 BEGIN
 	DECLARE ticket_price int;
     DECLARE R varchar(5);
@@ -232,7 +235,7 @@ BEGIN
     SET R = (SELECT Route FROM flights where FLIGHT_ID = F);
     SET ticket_price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = R);
     
-    INSERT INTO tickets(Flight, seat_ID, price, class, PID) values (F, seat_ID, ticket_price, C, PID);
+    INSERT INTO tickets(Flight, seat_ID, price, class, PID, Adult_or_Child) values (F, seat_ID, ticket_price, C, PID, Adult_or_Child);
     
 	IF C = 'F' THEN
     	UPDATE flights SET flights.Tickets_Remaining_First_Class = Flights.Tickets_Remaining_First_Class - 1 WHERE Flight_ID = F;
@@ -241,6 +244,10 @@ BEGIN
 	ELSEIF C = 'E' THEN
 		UPDATE flights SET flights.Tickets_Remaining_Economy_Class = Flights.Tickets_Remaining_Economy_Class - 1 WHERE Flight_ID = F;
 	END IF;
+
+	UPDATE Registered_Users SET Total_bookings = Total_bookings + 1 WHERE PID = PID;
+
+	UPDATE Flights set Revenue = Revenue + ticket_price WHERE Flight_ID = F;
 
     COMMIT;
 END//
@@ -257,6 +264,7 @@ BEGIN
 	DELETE FROM tickets WHERE Ticket_ID = Ticket_ID;
 	UPDATE flights SET Tickets_Remaining = Tickets_Remaining + 1 WHERE Flight_ID = F;
 	UPDATE Registered_Users SET Total_bookings = Total_bookings - 1 WHERE PID = PID;
+    UPDATE Flights set Revenue = Revenue - (select price from Tickets where Ticket_ID = Tickets.Ticket_ID) WHERE Flight_ID = F;
 END//
 DELIMITER;
 
@@ -284,17 +292,6 @@ BEGIN
 END//
 DELIMITER ;
 
-
-DELIMITER //
-CREATE TRIGGER ticket_booked   
-After INSERT  
-ON Tickets FOR EACH ROW
-BEGIN	
-	UPDATE Registered_Users, Tickets 
-		SET Registered_Users.Total_bookings = Registered_Users.Total_bookings + 1  
-			WHERE Registered_Users.PID = Tickets.PID;
-END//
-DELIMITER ;
 
 
 select * from Flights;

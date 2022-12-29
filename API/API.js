@@ -5,6 +5,9 @@ const router = express.Router();
 const {ResponseHandler} = require("../Controller/ResponseController");
 const Method = require("../Controller/method");
 const UserController = require("../Controller/UserControl");
+const {ExtractUser} = require("../MODEL/Authentication");
+
+router.use(ExtractUser)
 
 uController = new UserController();
 
@@ -20,7 +23,7 @@ router.get('/getReservation',async function(req, res){
     res.status(ResponseHandler(statusANDData)).send(statusANDData);
 
 });
-router.get('/getFlights',async function(req, res){
+/* router.get('/getFlights',async function(req, res){
 
     var method = new Method(req,res);
     
@@ -29,7 +32,7 @@ router.get('/getFlights',async function(req, res){
     
     res.status(ResponseHandler(statusANDData)).send(statusANDData);
 
-});
+}); */
 
 
 
@@ -54,11 +57,18 @@ router.get('/getFlights',async function(req, res){
 
 
 ////////////////////////////////////////////////////// POST Requests/////////////////////////////////////////////////////
+router.delete('/logout',async function(req, res){
+    
+    var method = new Method(req,res);
+    
+    const status = await logout(req.user);
 
+    // console.log(status);
+    
+    res.status(ResponseHandler(status)).send(status);
+    
 
-
-
-
+});
 
 ////////////////////////////////////////////////////// UPDATE Requests/////////////////////////////////////////////////////
 

@@ -68,7 +68,6 @@ CREATE INDEX idx_Airplane_ID ON Airplanes (Airplane_ID);
 
     
 create table Users(
-	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     PID int AUTO_INCREMENT,
 	Title char(4),
 	First_Name varchar(30) NOT NULL,
@@ -84,6 +83,7 @@ create table Users(
             
 
 create table Registered_Users(
+	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PID int,
 	UserName varchar(30) NOT NULL unique,
 	Password varchar(30) NOT NULL,
@@ -99,7 +99,17 @@ create table Registered_Users(
     
 	check (Total_bookings >= 0));
 
+create table Session(
+	
+	Session_id AUTO_INCREMENT,
+	User_Id int,
+	Start_Time DATETIME DEFAULT CURRENT_TIMESTAMP Not Null,
+	End_Time DATETIME,
 
+
+	Primary Key(Seesion_Id, User_Id),
+	Foregn Key(User_Id) references users(PID) On UPDATE Cascade
+);
 
 create table Airports(
 	Airport_code char(3),

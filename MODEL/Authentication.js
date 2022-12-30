@@ -4,7 +4,7 @@ const {sign, verify} = require("jsonwebtoken");
 const Method = require("../Controller/method");
 const {Guest,RegUser} = require("./User");
 const { parse } = require('querystring');
-const ACCESS_TOKEN_SECRECT = "GP20Project";
+const ACCESS_TOKEN_SECRECT = "Group20Project";
 
 var RegUsers = new Map();
 
@@ -69,9 +69,9 @@ async function login(method){
         
         if (status){
 
-            var user = userCreator(PID,UserName,"Registered",fname,lname);
+            var user = userFactory(PID,UserName,"Registered",fname,lname);
 
-            if (RegUsers.has(username)){
+            if (RegUsers.has(PID)){
 
                 RegUsers.delete(username);
 
@@ -93,7 +93,7 @@ async function login(method){
             RegUsers.set(PID,user);
 
     
-            const token = getAccessToken({sessionID:user.sessionID,PIP:user.PID});
+            const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
     
             //method.setToken(token,true,50000000);
 
@@ -133,11 +133,10 @@ async function logout(user){
 
 
 const getAccessToken = (data)=>{
-    token = sign(data, ACCESS_TOKEN_SECRECT,{expiresIn:"500m"});
+    token = sign(data, ACCESS_TOKEN_SECRECT,{algorithm: "HS256",expiresIn:"500m"});
     console.log(token);
     return token;
 };
-
 
 
 var ExtractUser =async function(req,res, next){
@@ -148,10 +147,10 @@ var ExtractUser =async function(req,res, next){
     console.log(token);
     try{
         const {sessionID,PID} = verify(token,ACCESS_TOKEN_SECRECT);
-
         if(sessionID){
             
             var user = RegUsers.get(PID);
+            console.log(PID);
             await user.setLastUsedTime();
             req.user = user;
         }
@@ -159,6 +158,7 @@ var ExtractUser =async function(req,res, next){
         next();
     }
     catch(err){
+        console.log(err);
         console.log("Invaild token"); //when token expires
         res.sendStatus(203);
     }
@@ -184,7 +184,7 @@ var RestoreSession = async function(){
     }
     for (const [key, value] of data.entries()){
 
-        var user = userCreator(value.PID,value.UserName,"Registered",value.First_Name,value.Last_Name,value.Session_id,value.Last_used_time);
+        var user = userFactory(value.PID,value.UserName,"Registered",value.First_Name,value.Last_Name,value.Session_id,value.Last_used_time);
         RegUsers.set(value.PID,user)
     
     }
@@ -193,7 +193,7 @@ var RestoreSession = async function(){
 }
 
 
-function userCreator(pid,username,type,fname,lname,sessionID,lastUsedTime){
+function userFactory(pid,username,type,fname,lname,sessionID,lastUsedTime){
     if(type=="Guest"){
         var user = new Guest(pid,username,type,fname,lname,sessionID,lastUsedTime);
     }else if (type=="Registered"){
@@ -218,30 +218,3 @@ function ShowCurrentUsers(){
 }
 
 module.exports = {login,register,getAccessToken,ExtractUser,RestoreSession,logout,ShowCurrentUsers};
-
-
-
-/* 
-function login(method) {
-    var req = method.req;
-    var res = method.res;
-    const{username, password} = method.getBody();
-
-    if (username && password) {
-        if(req.session.authenticated){
-            res.json(req.session)
-        }
-        else{
-            if (password === "123"){
-            req.session.authenticated = true;
-            req.session.user = {username, password};
-            res.json(req.session);
-            }
-            else{
-                res.status(403).json({error: "Bad credentials"});
-            }
-        }
-    }
-}
-
-module.exports = {login}; */

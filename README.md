@@ -27,6 +27,6 @@ Then open a terminal inside that new folder and install the following using thos
   
   npm i nodemon
   
-  finally, start the Application using
+finally, start the Application using
   
-  nodemon index.js
+nodemon index.js

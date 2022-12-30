@@ -117,7 +117,7 @@ async function login(method){
 
 async function logout(user){
 
-    RegUsers.delete(user.UserName);
+    RegUsers.delete(user.PID);
 
     try{
         await executeSQL('DELETE FROM Session_table WHERE User_ID = ?',[user.PID]);
@@ -150,7 +150,7 @@ var ExtractUser =async function(req,res, next){
         if(sessionID){
             
             var user = RegUsers.get(PID);
-            console.log(PID);
+            console.log(user);
             await user.setLastUsedTime();
             req.user = user;
         }

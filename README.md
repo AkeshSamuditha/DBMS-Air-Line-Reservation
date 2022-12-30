@@ -10,10 +10,15 @@ Then include those Files in the main branch inside a new Folder
 Then open a terminal inside that new folder and install the following using those commands.
 
   npm init --yes
+  
   npm i express
+  
   npm i dotenv
+  
   npm i bcryptjs
+  
   npm i jsonwebtoken
+  
   npm i uniqid
   
   npm i nodemon

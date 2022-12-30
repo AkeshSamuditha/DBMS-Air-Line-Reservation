@@ -5,11 +5,11 @@ const router = express.Router();
 const {ResponseHandler} = require("../Controller/ResponseController");
 const Method = require("../Controller/method");
 const UserController = require("../Controller/UserControl");
-const {ExtractUser} = require("../MODEL/Authentication");
+const {ExtractUser,logout} = require("../MODEL/Authentication");
 
 router.use(ExtractUser)
 
-uController = new UserController();
+const uController = new UserController();
 
 /////////////////////sample////////////////////////
 
@@ -67,7 +67,6 @@ router.delete('/logout',async function(req, res){
     
     res.status(ResponseHandler(status)).send(status);
     
-
 });
 
 ////////////////////////////////////////////////////// UPDATE Requests/////////////////////////////////////////////////////

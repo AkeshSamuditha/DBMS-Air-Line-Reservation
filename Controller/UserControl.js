@@ -22,14 +22,14 @@ class UserControl{
             
             const data = await executeSQL(
 
-            `Select Date_of_travel, Dep_time, Arr_time, Tickets_Remaining 
+            `Select Date_of_travel, Dep_time, Arr_time, Tickets_Remaining_First_Class, Tickets_Remaining_Business_Class, Tickets_Remaining_Economy_Class
              From Flights 
              where Route = (
                  Select Route_ID 
                  From Routes 
                  Where Origin_ID = '${From}' AND Destination_ID = '${To}' AND (Date_of_travel BETWEEN '${From_Date}' AND '${To_Date}')
                  order by Date_of_travel
-                 ) AND Tickets_remaining > 0;`
+                 );`
                 
             );
             return(data);

@@ -97,6 +97,10 @@ Request No: 11
 Description: Cancel Booking
 Request Type: Post
 Request URL: http://localhost:3000/api/CancelBooking
+input:
+{
+    "Ticket_ID": "xxxx"
+}
 Response:
 SQL Query:
 
@@ -115,4 +119,51 @@ Response:
 SQL Query:
 
 Request No: 14
-Description: 
+Description: Check Flight Status
+Request Type: Get
+Request URL: http://localhost:3000/api/FlightStatus
+Input:
+{
+    "Flight_Number": "Flight_Number"
+}
+Response:
+SQL Query:
+
+Request No: 15
+Description: Get Destinations
+Request Type: Get
+Request URL: http://localhost:3000/api/Destinations
+Input: None
+Response: List of Destinations
+Query: 
+
+Request No: 16
+Description: Get Details of the Booked Flight Along with its Status
+Request Type: Get
+Request URL: http://localhost:3000/api/BookedFlightDetails
+Input: {
+    "PID": "XXX"
+}
+Response: Details of Booked Flights of the Relevent User
+Query:
+
+
+Request No: 17
+Description: Past Flights of the user
+Request Type: Get
+Request URL: http://localhost:3000/api/PastFlights
+Input: {
+    "PID": "XXX"
+}
+Response: Details of Past Flights of the Relevent User
+Query:
+
+
+----------------------------- Add New Requests Here ---------------------------------------------
+-------------------------------------------------------------------------------------------------
+
+
+Optional Rq:
+1. Get Details of the Registered User
+2. Edit User Details
+3. 

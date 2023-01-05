@@ -72,8 +72,8 @@ create table Users(
 	Title char(4),
 	First_Name varchar(30) NOT NULL,
     Last_Name varchar(30) NOT NULL,
-	Email varchar(30) UNIQUE NOT NULL,
-	Telephone varchar(15) UNIQUE NOT NULL,
+	Email varchar(30) NOT NULL,
+	Telephone varchar(15) NOT NULL,
 	Country varchar(30) NOT NULL,	
 
 	primary key(PID),

@@ -77,6 +77,10 @@ CALL new_flight('F11','A3','R8','2023-01-06','05:30:00','14:00:00');
 CALL new_ticket('F2', 'E', 2, '2', 'A' );
 CALL new_ticket('F2', 'E', 3, '2', 'C' );
 CALL new_ticket('F1', 'E', 3, '1', 'A' );
+CALL new_ticket('F1', 'B', 1, '3', 'C' );
+CALL new_ticket('F1', 'F', 1, '1', 'A' );
+CALL new_ticket('F1', 'F', 2, '3', 'C' );
+
 
 select * from Flights;
 select * from airplanes;
@@ -86,3 +90,5 @@ Select * from Locations;
 select * from AirPlane_Models;
 select * from routes order by Route_ID;
 select * from Registered_Users;
+
+Sele

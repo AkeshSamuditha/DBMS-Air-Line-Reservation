@@ -224,7 +224,7 @@ DECLARE price int DEFAULT 0;
 DECLARE discount int DEFAULT 0;
 DECLARE user_categories char(1);
 Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
-if (Select User_type from users where PID = PID LIMIT 1) == 'R' then
+if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
 	set user_categories = (Select User_category from Registered_Users where PID = PID);
 	set discount = (select discount from user_categories where User = user_categories);
 end if;
@@ -262,6 +262,7 @@ CREATE PROCEDURE new_ticket(F varchar(5), C char(1), seat_ID varchar(5),  PID in
 BEGIN
 	DECLARE ticket_price int;
     DECLARE R varchar(5);
+	SET Adult_or_Child = UPPER(Adult_or_Child);
 	START TRANSACTION;	
 	
     SET R = (SELECT Route FROM flights where FLIGHT_ID = F);
@@ -333,20 +334,3 @@ SELECT * FROM Users;
 Select * from Locations;
 select * from AirPlane_Models;
 select * from routes order by Route_ID;
-
-select route_ID From routes Where Origin_ID = Origin AND Destination_ID = destination;
-
-Create view Airplanes_w_seasts as
-SELECT Airplane_ID, (seat_count_First_Class+seat_count_Economy_Class+seat_count_Buisness_Class) as seat_count
-FROM Airplanes, Airplane_Models 
-WHERE Airplanes.Model = Airplane_Models.Model_ID;
-
-SELECT Flight_ID, Airplane, Date_of_travel, Dep_time, Arr_time, (seat_count-(Tickets_Remaining_Business_Class+Tickets_Remaining_Economy_Class+Tickets_Remaining_First_Class)) as passenger_count 
-FROM (Flights Left Join Airplanes_w_seasts on Airplane = Airplane_ID), Routes 
-WHERE route In (select route_ID 
-				FROM routes 
-				WHERE Origin_ID = "BIA" AND Destination_ID = "JFK");
-                
-select * from Airplanes_w_seasts;
-Drop view Airplanes_w_seasts;
-

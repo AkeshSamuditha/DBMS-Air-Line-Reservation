@@ -10,35 +10,38 @@
 
 # SQL Query: SQL query to Access DB
 
-Request No: 01
+Request No: 01✅
 Description: Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
 Request Type: GET
-Request URL:
-Response:
-SQL Query:
+Request URL: http://localhost:3000/api/getPassengersByFlight
+Input: {"Flight_ID": "F1"}
+Response:{Above, Below}
+SQL Query:Select (SELECT COUNT(_) FROM tickets WHERE Adult_or_Child LIKE '%A%' AND Flight = "F1") as Above_18, (SELECT COUNT(_) FROM tickets WHERE Adult_or_Child LIKE '%C%'AND Flight = "F1") as Below_18;
 
-Request No: 02
+Request No: 02✅
 Description: Given a date range, number of passengers travelling to a given destination
 Request Type: GET
 Request URL: http://localhost:3000/api/getPassengersByDestination
-input: {
+input:
+{
 "Destination_ID": "JFK",
 "From_Date": "2022-01-01",
-"To_Date": "2022-01-31"
+"To_Date": "2023-01-31"
 }
 Response: {count}
-SQL Query:
+SQL Query: Select count(\*) FROM Tickets WHERE Flight IN (Select Flight_ID from Flights Where (Route IN (Select Route_ID FROM routes WHERE Destination_ID = "JFK" ) AND Date_of_travel BETWEEN "2022-01-01" AND "2023-01-31"));
 
-Request No: 03
+Request No: 03✅
 Description: Given a date range, number of bookings by each passenger type
 Request Type: GET
 Request URL: http://localhost:3000/api/getBookingsByPassengerType
 input: {
 "From_Date": "2022-01-01",
-"To_Date": "2022-01-31"
+"To_Date": "2023-01-31"
 }
 Response: {passenger_type, count}
-SQL Query: =
+SQL Query: SELECT (SELECT count(_) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time_of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%G%') AS Guests,
+(SELECT count(_) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time_of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%R%') AS Registered ;
 
 Request No: 04 ✅
 Description: Given origin and destination, all past flights, status, passenger counts data
@@ -90,7 +93,7 @@ Email: "Mr",
 Password: "John",
 }
 Response: {මොනවද ඕන දෙනව}
-SQL Query: Select \* from users, Registered_Users where Email = 'Email' and Password = 'Password';
+SQL Query: Select \* from users, Registered_Users where Email = 'Email' and Password = 'Password' users.PID = Registered_Users.PID;
 
 Request No: 07✅
 Description: Register
@@ -183,10 +186,10 @@ input: {
 response: {'Price': "100"}
 SQL Query: Ticket_Price('PID', 'Route', 'Class') //Function
 
-Request No: 13 ✅
-Description: Login
-Request Type: GET
-Request URL: http://localhost:3000/Auth/login
+Request No: 13✅
+Description: Guest User Login
+Request Type: Post
+Request URL: http://localhost:3000/api/GuestLogin
 input:
 {
 Title: "Mr",
@@ -243,7 +246,7 @@ Query: select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Fli
 from Flights Right Join Routes On Route = Route_ID
 where Flight_ID in (select Flight from Tickets where PID = '1') AND Date_of_travel < CURDATE();
 
-## ----------------------------- Add New Requests Here ---------------------------------------------
+----------------------------- Add New Requests Here ---------------------------------------------
 
 Optional Rq:
 

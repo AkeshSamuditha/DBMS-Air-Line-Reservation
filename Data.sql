@@ -58,12 +58,9 @@ insert into Routes values ('R12','JFK','BIA', 9396.32);
 insert into Routes values ('R13','BOM','BIA', 948.51 );
 
 insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M1', 'Boeing','747','20', '50', '400','4');
-insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M2','Airbus','A350','20', '50','898','5');
+insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M2','Airbus','A350','20', '50','700','5');
 insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M3','Airbus','A352','20', '50','900','1');
--- insert into Airplanes(Airplane_ID, Model) values ('A1','M1'); 
--- insert into Airplanes(Airplane_ID, Model) values ('A2','M1');
--- insert into Airplanes(Airplane_ID, Model) values ('A3','M2');
--- insert into Airplanes(Airplane_ID, Model) values ('A4','M3');   
+ 
 
 CALL new_flight('F1','A1','R1','2023-01-01','04:15:00','15:00:00');
 CALL new_flight('F2','A2','R2','2023-01-01','05:30:00','14:00:00');
@@ -77,6 +74,15 @@ CALL new_flight('F9','A1','R8','2023-01-05','05:30:00','15:30:00');
 CALL new_flight('F10','A2','R10','2023-01-05','09:30:00','18:00:00');
 CALL new_flight('F11','A3','R8','2023-01-06','05:30:00','14:00:00');
 
-CALL new_ticket('F2', 2, 'E', '2', 'A' );
-CALL new_ticket('F2', 3, 'E', '2', 'C' );
-CALL new_ticket('F1', 3, 'E', '1', 'A' );
+CALL new_ticket('F2', 'E', 2, '2', 'A' );
+CALL new_ticket('F2', 'E', 3, '2', 'C' );
+CALL new_ticket('F1', 'E', 3, '1', 'A' );
+
+select * from Flights;
+select * from airplanes;
+select * from tickets;
+SELECT * FROM Users;
+Select * from Locations;
+select * from AirPlane_Models;
+select * from routes order by Route_ID;
+select * from Registered_Users;

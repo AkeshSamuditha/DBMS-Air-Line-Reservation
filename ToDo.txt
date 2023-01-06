@@ -1,5 +1,4 @@
 -----------------Akesh--------------------
-Create Function for ticket Price
 
 ----------------Thisara--------------------
 
@@ -9,3 +8,4 @@ Create Function for ticket Price
 
 ----------------Tharaka--------------------
 Add More Flights
+And Some users

@@ -6,7 +6,7 @@ SET @@session.time_zone='+05:30';
 create table user_categories( 
 	User char(1) DEFAULT 'N',
     Discription varchar(8),
-	Discount FLOAT(4, 3) Not Null DEFAULT '0.000' ,
+	Discount FLOAT(5, 2) Not Null DEFAULT '0.000' , -- 000.00 to 100.00 
 	Threashold int Not Null Default '0',
 	primary key(User),
 	
@@ -21,7 +21,6 @@ CREATE TABLE Locations(
 	location_ID int AUTO_INCREMENT,
 	Location varchar(30),
     Parent_ID int DEFAULT NULL,
-   
     
     PRIMARY KEY(location_ID),
     FOREIGN KEY(Parent_ID) REFERENCES Locations(location_ID));
@@ -67,7 +66,7 @@ CREATE INDEX idx_Airplane_ID ON Airplanes (Airplane_ID);
 
 
     
-create table Users(
+create table users(
     PID int AUTO_INCREMENT,
 	Title char(4),
 	First_Name varchar(30) NOT NULL,
@@ -75,19 +74,21 @@ create table Users(
 	Email varchar(30) NOT NULL,
 	Telephone varchar(15) NOT NULL,
 	Country varchar(30) NOT NULL,	
+	User_type char(1) NOT NULL DEFAULT 'G',
 
 	primary key(PID),
+
 	
 	
 	check (Title In ("Mr." , "Mrs.", "Ms.", "Miss", Null)));
             
 
-create table Registered_Users(
-	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+create table registered_users(
+	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- YYYY-MM-DD HH:MM:SS
 	PID int,
 	UserName varchar(30) NOT NULL unique,
 	Password varchar(30) NOT NULL,
-	Age int,
+	Date_of_Birth Date NOT NULL, -- YYYY-MM-DD
 	Address varchar(50),
     user_category char(1) NOT NULL DEFAULT 'N',
 	Total_Bookings int NOT NULL default 0,
@@ -99,16 +100,16 @@ create table Registered_Users(
     
 	check (Total_bookings >= 0));
 
-create table Session(
+create table Session( 
 	
-	Session_id AUTO_INCREMENT,
+	Session_id int AUTO_INCREMENT,
 	User_Id int,
 	Start_Time DATETIME DEFAULT CURRENT_TIMESTAMP Not Null,
 	End_Time DATETIME,
 
 
-	Primary Key(Seesion_Id, User_Id),
-	Foregn Key(User_Id) references users(PID) On UPDATE Cascade
+	Primary Key(Session_id, User_Id),
+	Foreign Key(User_Id) references users(PID) On UPDATE Cascade
 );
 
 create table Airports(
@@ -159,9 +160,9 @@ CREATE table Tickets(
 	Time_of_Booking DATETIME default CURRENT_TIMESTAMP,
 	Flight varchar(5),
 	Ticket_ID int AUTO_INCREMENT,
+	class char(1),
 	seat_ID int(3),
 	price numeric(8,2),
-	class varchar(10),
 	PID int,
 	Adult_or_Child char(1),
 	
@@ -171,7 +172,8 @@ CREATE table Tickets(
 	foreign key(class) references class_types(Class) ON UPDATE CASCADE on delete Restrict,
 	UNIQUE KEY seat_allocation(Flight,class, seat_ID),
 	check (price>= 300),
-	check (Adult_or_Child In ("A", "C"))
+	check (Adult_or_Child In ("A", "C")),
+	check (seat_ID >= 0 AND seat_ID <= 300)
 );
 
 DELIMITER //
@@ -183,7 +185,11 @@ BEGIN
 	DECLARE A_ID varchar(5) DEFAULT 'A1';
 	DECLARE M_ID varchar(4) default NEW.MODEL_ID;
 	WHILE i <= (New.No_of_planes) DO
-		SET A_ID = concat('A', (Select id from Airplanes order by id desc limit 1));
+		IF (Select id from Airplanes order by id desc limit 1) is null THEN
+			SET A_ID = 'A1';
+		ELSE
+			SET A_ID = concat('A', (Select id from Airplanes order by id desc limit 1)+1);
+		END IF;
 		Insert Into Airplanes(Airplane_ID, Model) values (A_ID, M_ID);
 		SET i = i + 1;
 	END WHILE;
@@ -209,16 +215,32 @@ BEGIN
 END//
 Delimiter ;
 
+DELIMITER //
+CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
+RETURNS int
+DETERMINISTIC
+BEGIN
+DECLARE price int DEFAULT 0;
+DECLARE discount int DEFAULT 0;
+DECLARE user_categories char(1);
+Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
+if (Select User_type from users where PID = PID LIMIT 1) == 'R' then
+	set user_categories = (Select User_category from Registered_Users where PID = PID);
+	set discount = (select discount from user_categories where User = user_categories);
+end if;
+return Price - (Price * discount);
+END//
+Delimiter ;
 
 
 DELIMITER //
-CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), Age int, Address varchar(50))
+CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), DOB Date, Address varchar(50))
 BEGIN
 	DECLARE Last_PID INT DEFAULT 0;
 	START TRANSACTION;
-	INSERT INTO USERS(Title, First_Name, Last_Name, Email, Telephone, Country) VALUES (Title, First_Name, Last_Name, Email, Telephone, Country);
+	INSERT INTO USERS(Title, First_Name, Last_Name, Email, Telephone, Country, User_type) VALUES (Title, First_Name, Last_Name, Email, Telephone, Country, 'G');
 	SET Last_PID = LAST_INSERT_ID();
-	INSERT INTO Registered_Users(PID, UserName, Password, Age, Address) VALUES (Last_PID, UserName, Password, Age, Address);
+	INSERT INTO Registered_Users(PID, UserName, Password, Date_of_Birth, Address) VALUES (Last_PID, UserName, Password, DOB, Address);
 	COMMIT;
 END//
 DELIMITER ;
@@ -236,16 +258,16 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE new_ticket(F varchar(5), seat_ID varchar(5), C char(1), PID int, Adult_or_Child char(1))
+CREATE PROCEDURE new_ticket(F varchar(5), C char(1), seat_ID varchar(5),  PID int, Adult_or_Child char(1))
 BEGIN
 	DECLARE ticket_price int;
     DECLARE R varchar(5);
 	START TRANSACTION;	
 	
     SET R = (SELECT Route FROM flights where FLIGHT_ID = F);
-    SET ticket_price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = R);
+    SET ticket_price = Ticket_Price(PID, R, C);
     
-    INSERT INTO tickets(Flight, seat_ID, price, class, PID, Adult_or_Child) values (F, seat_ID, ticket_price, C, PID, Adult_or_Child);
+    INSERT INTO tickets(Flight,class, seat_ID, price, PID, Adult_or_Child) values (F, C, seat_ID, ticket_price, PID, Adult_or_Child);
     
 	IF C = 'F' THEN
     	UPDATE flights SET flights.Tickets_Remaining_First_Class = Flights.Tickets_Remaining_First_Class - 1 WHERE Flight_ID = F;
@@ -311,3 +333,20 @@ SELECT * FROM Users;
 Select * from Locations;
 select * from AirPlane_Models;
 select * from routes order by Route_ID;
+
+select route_ID From routes Where Origin_ID = Origin AND Destination_ID = destination;
+
+Create view Airplanes_w_seasts as
+SELECT Airplane_ID, (seat_count_First_Class+seat_count_Economy_Class+seat_count_Buisness_Class) as seat_count
+FROM Airplanes, Airplane_Models 
+WHERE Airplanes.Model = Airplane_Models.Model_ID;
+
+SELECT Flight_ID, Airplane, Date_of_travel, Dep_time, Arr_time, (seat_count-(Tickets_Remaining_Business_Class+Tickets_Remaining_Economy_Class+Tickets_Remaining_First_Class)) as passenger_count 
+FROM (Flights Left Join Airplanes_w_seasts on Airplane = Airplane_ID), Routes 
+WHERE route In (select route_ID 
+				FROM routes 
+				WHERE Origin_ID = "BIA" AND Destination_ID = "JFK");
+                
+select * from Airplanes_w_seasts;
+Drop view Airplanes_w_seasts;
+

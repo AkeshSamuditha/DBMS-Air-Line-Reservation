@@ -87,7 +87,7 @@ create table registered_users(
 	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- YYYY-MM-DD HH:MM:SS
 	PID int,
 	UserName varchar(30) NOT NULL unique,
-	Password varchar(30) NOT NULL,
+	Password varchar(60) NOT NULL,
 	Date_of_Birth Date NOT NULL, -- YYYY-MM-DD
 	Address varchar(50),
     user_category char(1) NOT NULL DEFAULT 'N',
@@ -100,16 +100,13 @@ create table registered_users(
     
 	check (Total_bookings >= 0));
 
-create table Session( 
-	
-	Session_id int AUTO_INCREMENT,
+create table Session_table(
+	Session_id varchar(30) NOT NULL,
 	User_Id int,
-	Start_Time DATETIME DEFAULT CURRENT_TIMESTAMP Not Null,
-	End_Time DATETIME,
+	Last_used_time int,
 
-
-	Primary Key(Session_id, User_Id),
-	Foreign Key(User_Id) references users(PID) On UPDATE Cascade
+	Primary Key(User_Id),
+	foreign key(User_Id) references users(PID) On UPDATE Cascade
 );
 
 create table Airports(

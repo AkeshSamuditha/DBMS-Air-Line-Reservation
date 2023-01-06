@@ -14,10 +14,8 @@ const uController = new UserController();
 ////////////////////////////////////////////////////// GET Requests/////////////////////////////////////////////////////
 // Request No: 16
 router.get('/BookedFlightDetails',async function(req, res){
-
-    var method = new Method(req,res);
     
-    const status = await uController.getBookedFlightDetails(method,req.user);
+    const status = await uController.getBookedFlightDetails(req.user);
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);
@@ -26,10 +24,8 @@ router.get('/BookedFlightDetails',async function(req, res){
 
 // Request No: 17
 router.get('/PastFlights',async function(req, res){
-
-    var method = new Method(req,res);
     
-    const status = await uController.getPastFlights(method,req.user);
+    const status = await uController.RGetPastFlights(req.user);
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);
@@ -53,10 +49,6 @@ router.get('/PastFlights',async function(req, res){
     res.status(ResponseHandler(status)).send(status);
 
 }); */
-
-
-
-
 
 
 

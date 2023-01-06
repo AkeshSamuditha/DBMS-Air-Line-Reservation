@@ -14,9 +14,9 @@ Request No: 01✅
 Description: Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
 Request Type: GET
 Request URL: http://localhost:3000/api/getPassengersByFlight
-Input: {"Flight_ID": "F1"}
+Input: {"Flight*ID": "F1"}
 Response:{Above, Below}
-SQL Query:Select (SELECT COUNT(_) FROM tickets WHERE Adult_or_Child LIKE '%A%' AND Flight = "F1") as Above_18, (SELECT COUNT(_) FROM tickets WHERE Adult_or_Child LIKE '%C%'AND Flight = "F1") as Below_18;
+SQL Query:Select (SELECT COUNT(*) FROM tickets WHERE Adult*or_Child LIKE '%A%' AND Flight = "F1") as Above_18, (SELECT COUNT(*) FROM tickets WHERE Adult_or_Child LIKE '%C%'AND Flight = "F1") as Below_18;
 
 Request No: 02✅
 Description: Given a date range, number of passengers travelling to a given destination
@@ -36,12 +36,12 @@ Description: Given a date range, number of bookings by each passenger type
 Request Type: GET
 Request URL: http://localhost:3000/api/getBookingsByPassengerType
 input: {
-"From_Date": "2022-01-01",
+"From*Date": "2022-01-01",
 "To_Date": "2023-01-31"
 }
 Response: {passenger_type, count}
-SQL Query: SELECT (SELECT count(_) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time_of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%G%') AS Guests,
-(SELECT count(_) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time_of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%R%') AS Registered ;
+SQL Query: SELECT (SELECT count(*) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time*of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%G%') AS Guests,
+(SELECT count(*) FROM tickets, Users WHERE Users.PID = tickets.PID AND Time_of_booking BETWEEN "2022-01-01" AND "2023-01-31" AND User_type LIKE '%R%') AS Registered ;
 
 Request No: 04 ✅
 Description: Given origin and destination, all past flights, status, passenger counts data
@@ -234,7 +234,7 @@ select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Flight_Sta
 from Flights Right Join Routes On Route = Route_ID
 where Flight_ID in (select Flight from Tickets where PID = '1') AND Date_of_travel >= CURDATE();
 
-Request No: 17 ✅
+Request No: 17✅
 Description: Past Flights of the user
 Request Type: Get
 Request URL: http://localhost:3000/api/PastFlights

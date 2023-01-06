@@ -146,7 +146,7 @@ Response: {Class, seat_ID}
 SQL Query:
 Select Class, seat_ID
 from tickets
-where Flight_ID = 'Flight_ID'
+where Flight = 'Flight_ID'
 Order by Class, seat_ID;
 
 Request No: 10 ✅

@@ -104,7 +104,7 @@ create table Session_table(
 	Last_used_time int,
 
 	Primary Key(User_Id),
-	foreign key(User_Id) references users(PID) On UPDATE Cascade
+	foreign key(User_Id) references users(PID) ON UPDATE CASCADE
 );
 
 create table Airports(
@@ -178,6 +178,9 @@ BEGIN
 	DECLARE i INT DEFAULT 1;
 	DECLARE A_ID varchar(5) DEFAULT 'A1';
 	DECLARE M_ID varchar(4) default NEW.MODEL_ID;
+	
+	START TRANSACTION;
+
 	WHILE i <= (New.No_of_planes) DO
 		IF (Select id from Airplanes order by id desc limit 1) is null THEN
 			SET A_ID = 'A1';
@@ -187,6 +190,8 @@ BEGIN
 		Insert Into Airplanes(Airplane_ID, Model) values (A_ID, M_ID);
 		SET i = i + 1;
 	END WHILE;
+
+	COMMIT;
 END//
 DELIMITER;
 
@@ -214,15 +219,18 @@ CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
 RETURNS int
 DETERMINISTIC
 BEGIN
-DECLARE price int DEFAULT 0;
-DECLARE discount int DEFAULT 0;
-DECLARE user_categories char(1);
-Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
-if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
-	set user_categories = (Select User_category from Registered_Users where PID = PID);
-	set discount = (select discount from user_categories where User = user_categories);
-end if;
-return Price - (Price * discount);
+	DECLARE price int DEFAULT 0;
+	DECLARE discount int DEFAULT 0;
+	DECLARE user_categories char(1);
+	
+	Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
+	
+	if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
+		set user_categories = (Select User_category from Registered_Users where PID = PID);
+		set discount = (select discount from user_categories where User = user_categories);
+	end if;
+	
+	return Price - (Price * discount);
 END//
 Delimiter ;
 
@@ -231,10 +239,13 @@ DELIMITER //
 CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), DOB Date, Address varchar(50))
 BEGIN
 	DECLARE Last_PID INT DEFAULT 0;
+	
 	START TRANSACTION;
+	
 	INSERT INTO USERS(Title, First_Name, Last_Name, Email, Telephone, Country, User_type) VALUES (Title, First_Name, Last_Name, Email, Telephone, Country, 'G');
 	SET Last_PID = LAST_INSERT_ID();
 	INSERT INTO Registered_Users(PID, UserName, Password, Date_of_Birth, Address) VALUES (Last_PID, UserName, Password, DOB, Address);
+	
 	COMMIT;
 END//
 DELIMITER ;
@@ -255,23 +266,15 @@ BEGIN
 	DECLARE ticket_price int;
     DECLARE R varchar(5);
 	SET Adult_or_Child = UPPER(Adult_or_Child);
+	SET R = (SELECT Route FROM flights where FLIGHT_ID = F);
+    SET ticket_price = Ticket_Price(PID, R, C);
+
 	START TRANSACTION;	
 	
-    SET R = (SELECT Route FROM flights where FLIGHT_ID = F);
-    SET ticket_price = Ticket_Price(PID, R, C);
-    
     INSERT INTO tickets(Flight,class, seat_ID, price, PID, Adult_or_Child) values (F, C, seat_ID, ticket_price, PID, Adult_or_Child);
-    
-	IF C = 'F' THEN
-    	UPDATE flights SET flights.Tickets_Remaining_First_Class = Flights.Tickets_Remaining_First_Class - 1 WHERE Flight_ID = F;
-	ELSEIF C = 'B' THEN
-		UPDATE flights SET flights.Tickets_Remaining_Business_Class = Flights.Tickets_Remaining_Business_Class - 1 WHERE Flight_ID = F;
-	ELSEIF C = 'E' THEN
-		UPDATE flights SET flights.Tickets_Remaining_Economy_Class = Flights.Tickets_Remaining_Economy_Class - 1 WHERE Flight_ID = F;
-	END IF;
+	CALL Change_Tickets_Remaining(F, C, -1);
 
 	UPDATE Registered_Users SET Total_bookings = Total_bookings + 1 WHERE PID = PID;
-
 	UPDATE Flights set Revenue = Revenue + ticket_price WHERE Flight_ID = F;
 
     COMMIT;
@@ -280,17 +283,26 @@ DELIMITER ;
 
 
 DELIMITER //
-Create PROCEDURE cancel_ticket(Ticket_ID int)
+Create PROCEDURE cancel_ticket(Ticket int)
 BEGIN
 
 	DECLARE PID varchar(5);
+	DECLARE F varchar(5);
+	DECLARE C char(1);
 
-	SET PID = (SELECT PID FROM tickets WHERE Ticket_ID = Ticket_ID);
-	
-	DELETE FROM tickets WHERE Ticket_ID = Ticket_ID;
-	UPDATE flights SET Tickets_Remaining = Tickets_Remaining + 1 WHERE Flight_ID = F;
-	UPDATE Registered_Users SET Total_bookings = Total_bookings - 1 WHERE PID = PID;
-    UPDATE Flights set Revenue = Revenue - (select price from Tickets where Ticket_ID = Tickets.Ticket_ID) WHERE Flight_ID = F;
+
+	SET PID = (SELECT PID FROM tickets WHERE Ticket_ID = Ticket LIMIT 1);
+	SET F = (SELECT Flight FROM tickets WHERE Ticket_ID = Ticket);
+	SET C = (SELECT class FROM tickets WHERE Ticket_ID = Ticket);
+
+	START TRANSACTION;
+
+	CALL Change_Tickets_Remaining(F, C, 1);
+	UPDATE Registered_Users SET Total_bookings = Total_bookings - 1 WHERE Registered_Users.PID = PID;
+    UPDATE Flights set Revenue = Revenue - (select price from Tickets where Tickets.Ticket_ID = Ticket) WHERE Flight_ID = F;
+	DELETE FROM tickets WHERE Ticket_ID = Ticket;
+
+	COMMIT;
 END//
 DELIMITER;
 
@@ -318,6 +330,18 @@ BEGIN
 END//
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE Change_Tickets_Remaining(F varchar(5), C char(1), N int) 
+BEGIN
+	IF C = 'F' THEN
+    	UPDATE flights SET flights.Tickets_Remaining_First_Class = Flights.Tickets_Remaining_First_Class + N WHERE Flight_ID = F;
+	ELSEIF C = 'B' THEN
+		UPDATE flights SET flights.Tickets_Remaining_Business_Class = Flights.Tickets_Remaining_Business_Class + N WHERE Flight_ID = F;
+	ELSEIF C = 'E' THEN
+		UPDATE flights SET flights.Tickets_Remaining_Economy_Class = Flights.Tickets_Remaining_Economy_Class + N WHERE Flight_ID = F;
+	END IF;
+END//
+DELIMITER ;
 
 select * from Flights;
 select * from airplanes;

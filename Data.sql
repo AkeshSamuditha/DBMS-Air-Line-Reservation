@@ -25,10 +25,7 @@ Insert into Locations(Location, Parent_ID) values('Buffalo City', 20);
 
 
 insert into Users(Title, First_Name, Last_Name, Email, Telephone, Country) 
-values
-('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.com', '+94701123891',  'Sri Lanka'), 
-('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka'),
-('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka');
+values('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.com', '+94701123891',  'Sri Lanka'), ('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka'),('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka');
 
 Insert into Airports(Airport_code, Airport_Name, Location) values('BIA','Bandaranaike International Airport' ,2);
 Insert into Airports(Airport_code, Airport_Name, Location) values('HRI','Mattala Rajapaksa International Airport', 6);

@@ -2,7 +2,7 @@ const {hash,compare} = require("bcryptjs");
 const {executeSQL} = require("../DB/db");
 const {sign, verify} = require("jsonwebtoken");
 const Method = require("../Controller/method");
-const {Guest,RegUser} = require("./User");
+const {RegUser} = require("./User");
 const { parse } = require('querystring');
 const ACCESS_TOKEN_SECRECT = "Group20Project";
 
@@ -139,7 +139,7 @@ const getAccessToken = (data)=>{
 };
 
 
-var ExtractUser =async function(req,res, next){
+var ExtractRegUser =async function(req,res, next){
 
     var method = new Method(req,res);
 
@@ -161,6 +161,33 @@ var ExtractUser =async function(req,res, next){
         console.log(err);
         console.log("Invaild token"); //when token expires
         res.sendStatus(203);
+    }
+}
+
+var UpdateSession =async function(req,res, next){
+
+    var method = new Method(req,res);
+
+    var token = method.getToken();
+    console.log(token);
+    
+    console.log(token);
+    try{
+        const {sessionID,PID} = verify(token,ACCESS_TOKEN_SECRECT);
+        if(sessionID){
+            
+            var user = RegUsers.get(PID);
+            console.log(user);
+            await user.setLastUsedTime();
+            req.user = user;
+        }
+
+        next();
+    }
+    catch(err){
+        //console.log(err);
+        console.log("Invaild token or no token"); //when token expires
+        next();
     }
 }
 
@@ -194,11 +221,7 @@ var RestoreSession = async function(){
 
 
 function userFactory(pid,username,type,fname,lname,sessionID,lastUsedTime){
-    if(type=="Guest"){
-        var user = new Guest(pid,username,type,fname,lname,sessionID,lastUsedTime);
-    }else if (type=="Registered"){
-        var user = new RegUser(pid,username,type,fname,lname,sessionID,lastUsedTime);
-    }
+    var user = new RegUser(pid,username,type,fname,lname,sessionID,lastUsedTime);
     return(user)
 }
 
@@ -217,4 +240,5 @@ function ShowCurrentUsers(){
     }
 }
 
-module.exports = {login,register,getAccessToken,ExtractUser,RestoreSession,logout,ShowCurrentUsers};
+module.exports = {login,register,getAccessToken,ExtractRegUser,UpdateSession,RestoreSession,logout,ShowCurrentUsers};
+

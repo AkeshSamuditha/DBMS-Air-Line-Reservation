@@ -2,7 +2,7 @@ const {hash,compare} = require("bcryptjs");
 const {executeSQL} = require("../DB/db");
 const uniqid = require('uniqid');
 
-class Guest{
+class RegUser{
     constructor(PID,UserName,type,fname,lname,sessionID,lastUsedTime){
         this.PID = PID;
         this.UserName = UserName;
@@ -52,12 +52,7 @@ class Guest{
             return("Error");
         }
     }
-}
 
-class RegUser extends Guest{
-    constructor(UserName,type,fname,lname,sessionID,lastUsedTime){
-        super(UserName,type,fname,lname,sessionID,lastUsedTime);        
-    }
     async setLastUsedTime(){
 
         this.lastUsedTime = Number(new Date().getTime());
@@ -97,6 +92,31 @@ class RegUser extends Guest{
             return("Error");
         }  
     }
+
+    async getBookedFlightDetails(From,To,From_Date,To_Date){
+        try{
+            const sqlQuary = ``;
+
+            const data = await executeSQL(sqlQuary);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
+
+    async getPastFlights(PID){
+        try{
+            const sqlQuary = ``;
+
+            const data = await executeSQL(sqlQuary);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
+
+    
 }
 
-module.exports = {Guest,RegUser};
+
+module.exports = {RegUser};

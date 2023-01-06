@@ -78,8 +78,6 @@ create table users(
 
 	primary key(PID),
 
-	
-	
 	check (Title In ("Mr." , "Mrs.", "Ms.", "Miss", Null)));
             
 
@@ -128,7 +126,6 @@ create table Routes(
 	foreign key(Origin_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade,
 	foreign key(Destination_ID) references Airports(Airport_code) ON UPDATE CASCADE on delete Cascade
 );
-
 
 
 create table Flights(
@@ -194,7 +191,6 @@ END//
 DELIMITER;
 
   
-
 DELIMITER //
 CREATE FUNCTION get_tickets_remaining(Airplane varchar(5), Class char(1))
 RETURNS int
@@ -211,6 +207,7 @@ BEGIN
 	RETURN tickets;
 END//
 Delimiter ;
+
 
 DELIMITER //
 CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
@@ -243,7 +240,6 @@ END//
 DELIMITER ;
 
 
-
 DELIMITER //
 CREATE PROCEDURE new_flight(F varchar(5), A varchar(5), R VARCHAR(5), D DATE, D_time TIME, A_time TIME)
 BEGIN
@@ -251,7 +247,6 @@ BEGIN
 	VALUES (F, A, R, D, D_time, A_time, get_tickets_remaining(A, 'F'), get_tickets_remaining(A,'B'), get_tickets_remaining(A,'E'));
 END//
 DELIMITER ;
-
 
 
 DELIMITER //
@@ -282,6 +277,7 @@ BEGIN
     COMMIT;
 END//
 DELIMITER ;
+
 
 DELIMITER //
 Create PROCEDURE cancel_ticket(Ticket_ID int)
@@ -321,7 +317,6 @@ BEGIN
 		ELSE 'N' END);
 END//
 DELIMITER ;
-
 
 
 select * from Flights;

@@ -16,7 +16,6 @@ create table user_categories(
 -- insert into user_categories(User, Discription, Discount, Threashold) values ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
 
 
-
 CREATE TABLE Locations(
 	location_ID int AUTO_INCREMENT,
 	Location varchar(30),
@@ -195,45 +194,6 @@ BEGIN
 END//
 DELIMITER;
 
-  
-DELIMITER //
-CREATE FUNCTION get_tickets_remaining(Airplane varchar(5), Class char(1))
-RETURNS int
-DETERMINISTIC
-BEGIN
-	DECLARE tickets int DEFAULT 0;
-	IF Class = 'F' THEN
-		Set tickets = (SELECT seat_count_First_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	ELSEIF Class = 'B' THEN
-		Set tickets = (SELECT seat_count_Buisness_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	ELSEIF Class = 'E' THEN
-		Set tickets = (SELECT seat_count_Economy_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	END IF;	
-	RETURN tickets;
-END//
-Delimiter ;
-
-
-DELIMITER //
-CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
-RETURNS int
-DETERMINISTIC
-BEGIN
-	DECLARE price int DEFAULT 0;
-	DECLARE discount int DEFAULT 0;
-	DECLARE user_categories char(1);
-	
-	Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
-	
-	if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
-		set user_categories = (Select User_category from Registered_Users where PID = PID);
-		set discount = (select discount from user_categories where User = user_categories);
-	end if;
-	
-	return Price - (Price * discount);
-END//
-Delimiter ;
-
 
 DELIMITER //
 CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), DOB Date, Address varchar(50))
@@ -342,6 +302,45 @@ BEGIN
 	END IF;
 END//
 DELIMITER ;
+
+
+DELIMITER //
+CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
+RETURNS int
+DETERMINISTIC
+BEGIN
+	DECLARE price int DEFAULT 0;
+	DECLARE discount int DEFAULT 0;
+	DECLARE user_categories char(1);
+	
+	Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
+	
+	if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
+		set user_categories = (Select User_category from Registered_Users where PID = PID);
+		set discount = (select discount from user_categories where User = user_categories);
+	end if;
+	
+	return Price - (Price * discount);
+END//
+Delimiter ;
+
+
+DELIMITER //
+CREATE FUNCTION get_tickets_remaining(Airplane varchar(5), Class char(1))
+RETURNS int
+DETERMINISTIC
+BEGIN
+	DECLARE tickets int DEFAULT 0;
+	IF Class = 'F' THEN
+		Set tickets = (SELECT seat_count_First_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	ELSEIF Class = 'B' THEN
+		Set tickets = (SELECT seat_count_Buisness_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	ELSEIF Class = 'E' THEN
+		Set tickets = (SELECT seat_count_Economy_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	END IF;
+	RETURN tickets;
+END//
+Delimiter ;
 
 select * from Flights;
 select * from airplanes;

@@ -87,5 +87,3 @@ Select * from Locations;
 select * from AirPlane_Models;
 select * from routes order by Route_ID;
 select * from Registered_Users;
-
-Sele

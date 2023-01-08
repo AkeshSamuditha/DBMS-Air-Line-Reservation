@@ -170,6 +170,46 @@ CREATE table Tickets(
 );
 
 DELIMITER //
+CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
+RETURNS int
+DETERMINISTIC
+BEGIN
+	DECLARE price int DEFAULT 0;
+	DECLARE discount int DEFAULT 0;
+	DECLARE user_categories char(1);
+	
+	Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
+	
+	if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
+		set user_categories = (Select User_category from Registered_Users where PID = PID);
+		set discount = (select discount from user_categories where User = user_categories);
+	end if;
+	
+	return Price - (Price * discount);
+END//
+Delimiter ;
+
+
+DELIMITER //
+CREATE FUNCTION get_tickets_remaining(Airplane varchar(5), Class char(1))
+RETURNS int
+DETERMINISTIC
+BEGIN
+	DECLARE tickets int DEFAULT 0;
+	IF Class = 'F' THEN
+		Set tickets = (SELECT seat_count_First_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	ELSEIF Class = 'B' THEN
+		Set tickets = (SELECT seat_count_Buisness_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	ELSEIF Class = 'E' THEN
+		Set tickets = (SELECT seat_count_Economy_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
+	END IF;
+	RETURN tickets;
+END//
+Delimiter ;
+
+
+
+DELIMITER //
 CREATE TRIGGER new_airplane_model 
 After INSERT ON AirPlane_Models 
 FOR EACH ROW
@@ -304,43 +344,6 @@ END//
 DELIMITER ;
 
 
-DELIMITER //
-CREATE FUNCTION Ticket_Price(PID int, Route varchar(5), C char(1))
-RETURNS int
-DETERMINISTIC
-BEGIN
-	DECLARE price int DEFAULT 0;
-	DECLARE discount int DEFAULT 0;
-	DECLARE user_categories char(1);
-	
-	Set Price = (Select Price_per_air_mile from class_types WHERE Class = C)*(SELECT Miles FROM routes WHERE Route_ID = Route);
-	
-	if (Select User_type from users where PID = PID LIMIT 1) = 'R' then
-		set user_categories = (Select User_category from Registered_Users where PID = PID);
-		set discount = (select discount from user_categories where User = user_categories);
-	end if;
-	
-	return Price - (Price * discount);
-END//
-Delimiter ;
-
-
-DELIMITER //
-CREATE FUNCTION get_tickets_remaining(Airplane varchar(5), Class char(1))
-RETURNS int
-DETERMINISTIC
-BEGIN
-	DECLARE tickets int DEFAULT 0;
-	IF Class = 'F' THEN
-		Set tickets = (SELECT seat_count_First_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	ELSEIF Class = 'B' THEN
-		Set tickets = (SELECT seat_count_Buisness_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	ELSEIF Class = 'E' THEN
-		Set tickets = (SELECT seat_count_Economy_Class FROM AirPlane_Models WHERE Model_ID = (Select Model FROM Airplanes WHERE Airplane_ID = Airplane));
-	END IF;
-	RETURN tickets;
-END//
-Delimiter ;
 
 select * from Flights;
 select * from airplanes;

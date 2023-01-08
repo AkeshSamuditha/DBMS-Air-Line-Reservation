@@ -38,20 +38,6 @@ class RegUser{
     getType(){
         return(this.userTP);
     }
-    
-    
-
-    async getAstrObj(id){
-
-        var astrObj = new spaceOBJ();
-        const status = await astrObj.setDataByDB(id);
-
-        if (status != "Error"){
-            return(astrObj);
-        }else{
-            return("Error");
-        }
-    }
 
     async setLastUsedTime(){
 
@@ -93,9 +79,11 @@ class RegUser{
         }  
     }
 
-    async getBookedFlightDetails(From,To,From_Date,To_Date){
+    async getBookedFlightDetails(){
         try{
-            const sqlQuary = ``;
+            const sqlQuary = `select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Flight_Status
+            from Flights Right Join Routes On Route = Route_ID
+            where Flight_ID in (select Flight from Tickets where PID = '${this.PID}') AND Date_of_travel >= CURDATE();`;
 
             const data = await executeSQL(sqlQuary);
             return(data);
@@ -104,9 +92,11 @@ class RegUser{
         }
     }
 
-    async getPastFlights(PID){
+    async RGetPastFlights(){
         try{
-            const sqlQuary = ``;
+            const sqlQuary = `select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Flight_Status
+            from Flights Right Join Routes On Route = Route_ID
+            where Flight_ID in (select Flight from Tickets where PID = '${this.PID}') AND Date_of_travel < CURDATE();`;
 
             const data = await executeSQL(sqlQuary);
             return(data);

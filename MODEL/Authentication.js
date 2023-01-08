@@ -32,12 +32,8 @@ async function register(method){
         
         }else{
             
-            /*
-            await executeSQL('INSERT INTO users SET ?',{Title:Title,First_Name:First_Name,Last_Name:Last_Name,Email:Email,Telephone:Telephone,Country:Country});
-            const PID = await executeSQL('SELECT PID FROM users WHERE Email = ?',[Email]);
-            await executeSQL('INSERT INTO registered_users SET ?',{PID:PID[0].PID, UserName:UserName,Password:hashedPassword,Age:Age,Address:Address}); */
             const hashedPassword = await hash(Password,10);
-            await executeSQL(`CALL New_Registered_User('${Title}', '${First_Name}', '${Last_Name}', '${Email}', '${Telephone}', '${Country}', '${UserName}', '${hashedPassword}', '${Date_of_Birth}', '${Address}')`);
+            await executeSQL(`CALL New_Registered_User(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,[Title,First_Name,Last_Name,Email,Telephone,Country,UserName,hashedPassword,Date_of_Birth,Address]);
             console.log(UserName + " successfuly added");
             return ("User added");
         }
@@ -59,7 +55,7 @@ async function login(method){
     
     try{
 
-        const credential = await executeSQL('SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users,registered_users WHERE users.Email =?',[Email]);
+        const credential = await executeSQL('SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users join registered_users on users.PID = registered_users.PID WHERE users.Email =?',[Email]);
         if(!credential[0])
             return ("Error : Invalid Email or Password");
         console.log(credential[0].Password);
@@ -249,5 +245,4 @@ function ShowCurrentUsers(){
 }
 
 module.exports = {login,register,getAccessToken,ExtractRegUser,UpdateSession,RestoreSession,logout,ShowCurrentUsers};
-
 

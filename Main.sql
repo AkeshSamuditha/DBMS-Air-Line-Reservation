@@ -208,33 +208,6 @@ END//
 Delimiter ;
 
 
-
-DELIMITER //
-CREATE TRIGGER new_airplane_model 
-After INSERT ON AirPlane_Models 
-FOR EACH ROW
-BEGIN
-	DECLARE i INT DEFAULT 1;
-	DECLARE A_ID varchar(5) DEFAULT 'A1';
-	DECLARE M_ID varchar(4) default NEW.MODEL_ID;
-	
-	START TRANSACTION;
-
-	WHILE i <= (New.No_of_planes) DO
-		IF (Select id from Airplanes order by id desc limit 1) is null THEN
-			SET A_ID = 'A1';
-		ELSE
-			SET A_ID = concat('A', (Select id from Airplanes order by id desc limit 1)+1);
-		END IF;
-		Insert Into Airplanes(Airplane_ID, Model) values (A_ID, M_ID);
-		SET i = i + 1;
-	END WHILE;
-
-	COMMIT;
-END//
-DELIMITER;
-
-
 DELIMITER //
 CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), DOB Date, Address varchar(50))
 BEGIN
@@ -343,7 +316,26 @@ BEGIN
 END//
 DELIMITER ;
 
-
+DELIMITER //
+CREATE TRIGGER new_airplane_model 
+After INSERT ON AirPlane_Models 
+FOR EACH ROW
+BEGIN
+	DECLARE i INT DEFAULT 1;
+	DECLARE A_ID varchar(5) DEFAULT 'A1';
+	DECLARE M_ID varchar(4) default NEW.MODEL_ID;
+	
+	WHILE i <= (New.No_of_planes) DO
+		IF (Select id from Airplanes order by id desc limit 1) is null THEN
+			SET A_ID = 'A1';
+		ELSE
+			SET A_ID = concat('A', (Select id from Airplanes order by id desc limit 1)+1);
+		END IF;
+		Insert Into Airplanes(Airplane_ID, Model) values (A_ID, M_ID);
+		SET i = i + 1;
+	END WHILE;
+END//
+DELIMITER ;
 
 select * from Flights;
 select * from airplanes;

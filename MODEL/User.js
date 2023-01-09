@@ -83,9 +83,9 @@ class RegUser{
         try{
             const sqlQuary = `select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Flight_Status
             from Flights Right Join Routes On Route = Route_ID
-            where Flight_ID in (select Flight from Tickets where PID = '${this.PID}') AND Date_of_travel >= CURDATE();`;
+            where Flight_ID in (select Flight from Tickets where PID = ?) AND Date_of_travel >= CURDATE();`;
 
-            const data = await executeSQL(sqlQuary);
+            const data = await executeSQL(sqlQuary,[this.PID]);
             return(data);
         }catch(err){
             return err;
@@ -96,11 +96,12 @@ class RegUser{
         try{
             const sqlQuary = `select Origin_ID, Destination_ID, Date_of_travel, Dep_time, Arr_time, Flight_Status
             from Flights Right Join Routes On Route = Route_ID
-            where Flight_ID in (select Flight from Tickets where PID = '${this.PID}') AND Date_of_travel < CURDATE();`;
+            where Flight_ID in (select Flight from Tickets where PID = ?) AND Date_of_travel < CURDATE();`;
 
-            const data = await executeSQL(sqlQuary);
+            const data = await executeSQL(sqlQuary,[this.PID]);
             return(data);
         }catch(err){
+            console.log(err);
             return err;
         }
     }

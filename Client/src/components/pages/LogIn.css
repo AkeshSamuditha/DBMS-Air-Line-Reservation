@@ -1,0 +1,62 @@
+.email-form h2 {
+    margin-bottom: 2rem;
+}
+
+.input-areas::placeholder {
+    color: #b1b1b1;
+}
+
+/* .input-areas {
+    padding: 8px 20px;
+    border-radius: 2px;
+    margin-right: 10px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    margin-bottom: 16px; */
+/* border: 1px solid #fff; */
+/* } */
+
+.input-areas {
+    padding: 8px 20px;
+    border-radius: 2px;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+    border: none;
+    font-size: 18px;
+    /* margin-bottom: 16px; */
+    /* border: 1px solid #fff; */
+}
+
+
+.log-in-btns {
+    margin-top: 32px;
+    height: 40px;
+}
+
+.log-in-btns .btn {
+    margin: 0px;
+    width: 150px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.log-in {
+    align-content: center;
+}
+
+.sign-up-redirect>p {
+    color: #fff;
+    font-size: 15px;
+    margin-top: 0px;
+}
+
+.login-status {
+    color: #fff;
+    font-size: 15px;
+    margin-top: 0px;
+}

@@ -84,7 +84,7 @@ create table registered_users(
 	Registered_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- YYYY-MM-DD HH:MM:SS
 	PID int,
 	UserName varchar(30) NOT NULL unique,
-	Password varchar(60) NOT NULL,
+	Password varchar(64) NOT NULL,
 	Date_of_Birth Date NOT NULL, -- YYYY-MM-DD
 	Address varchar(50),
     user_category char(1) NOT NULL DEFAULT 'N',
@@ -209,7 +209,7 @@ Delimiter ;
 
 
 DELIMITER //
-CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(30), DOB Date, Address varchar(50))
+CREATE PROCEDURE New_Registered_User(Title varchar(4), First_Name varchar(30), Last_Name varchar(30), Email varchar(30), Telephone varchar(15), Country varchar(30), UserName varchar(30), Password varchar(64), DOB Date, Address varchar(50))
 BEGIN
 	DECLARE Last_PID INT DEFAULT 0;
 	

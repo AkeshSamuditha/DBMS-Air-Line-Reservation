@@ -8,110 +8,121 @@ const ACCESS_TOKEN_SECRECT = "Group20Project";
 
 var RegUsers = new Map();
 
-async function register(method){
+async function register(method) {
+  const body = method.getBody();
 
-    const body = method.getBody();
+  const Title = body.Title;
+  const First_Name = body.First_Name;
+  const Last_Name = body.Last_Name;
+  const Email = body.Email;
+  const Telephone = body.Telephone;
+  const Country = body.Country;
+  const UserName = body.UserName;
+  const Password = body.password;
+  const Date_of_Birth = body.DOB;
+  const Address = body.Address;
 
-    const Title = body.Title;
-    const First_Name = "body.First_Name";
-    const Last_Name = "body.Last_Name";
-    const Email = body.Email;
-    const Telephone = "172398127";
-    const Country = "body.Country";
-    const UserName = "body.UserName";
-    const Password = body.password;
-    const Date_of_Birth = "2022/12/21";
-    const Address = "body.Address";
+  try {
+    const data = await executeSQL(
+      "SELECT UserName FROM registered_users WHERE UserName = ?",
+      [UserName]
+    );
 
-    try{
-        const data = await executeSQL('SELECT UserName FROM registered_users WHERE UserName = ?',[UserName]);
-        
-        if(data[0]){
-
-            return ("Error : Username already exists");
-        
-        }else{
-            
-            const hashedPassword = await hash(Password,10);
-            await executeSQL(`CALL New_Registered_User(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,[Title,First_Name,Last_Name,Email,Telephone,Country,UserName,hashedPassword,Date_of_Birth,Address]);
-            console.log(UserName + " successfuly added");
-            return ("User added");
-        }
-
-    }catch(e){
-        console.log(e);
-        return ("Error");
-        
-        
-    }      
+    if (data[0]) {
+      return "Error : Username already exists";
+    } else {
+      const hashedPassword = await hash(Password, 10);
+      await executeSQL(
+        `CALL New_Registered_User(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          Title,
+          First_Name,
+          Last_Name,
+          Email,
+          Telephone,
+          Country,
+          UserName,
+          hashedPassword,
+          Date_of_Birth,
+          Address,
+        ]
+      );
+      console.log(UserName + " successfuly added");
+      return "User added";
+    }
+  } catch (e) {
+    console.log(e);
+    return "Error";
+  }
 }
 
-async function login(method){
+async function login(method) {
+  const body = method.getBody();
 
-    const body = method.getBody();
+  const Email = body.Email;
+  const Password = body.Password;
 
-    const Email = body.Email;
-    const Password = body.Password;    
-    
-    try{
+  try {
+    const credential = await executeSQL(
+      "SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users join registered_users on users.PID = registered_users.PID WHERE users.Email =?",
+      [Email]
+    );
+    console.log(method.body);
+    if (!credential[0]) return "Error : Invalid Email or Password";
+    console.log(credential[0].Password);
 
-        const credential = await executeSQL('SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users join registered_users on users.PID = registered_users.PID WHERE users.Email =?',[Email]);
-        console.log(method.body);
-        if(!credential[0])
-            return ("Error : Invalid Email or Password");
-        console.log(credential[0].Password);
-        
-        const status = await compare(Password,credential[0].Password);
-        const PID = credential[0].PID;
-        const UserName = credential[0].UserName;
-        const fname = credential[0].First_Name;
-        const lname = credential[0].Last_Name;
-        
-        if (status){
-            console.log("Password Matched");
-            var user = userFactory(PID,UserName,"Registered",fname,lname);
+    const status = await compare(Password, credential[0].Password);
+    const PID = credential[0].PID;
+    const UserName = credential[0].UserName;
+    const fname = credential[0].First_Name;
+    const lname = credential[0].Last_Name;
 
-            if (RegUsers.has(PID)){
+    if (status) {
+      console.log("Password Matched");
+      var user = userFactory(PID, UserName, "Registered", fname, lname);
 
-                RegUsers.delete(PID);
+      if (RegUsers.has(PID)) {
+        RegUsers.delete(PID);
 
-                await executeSQL('UPDATE session_table SET Session_id = ?, Last_used_time=? WHERE User_Id= ?',[user.sessionID,Number(new Date().getTime()),user.PID]);
-                
-                console.log("User Already logged in, logging out previous session");
+        await executeSQL(
+          "UPDATE session_table SET Session_id = ?, Last_used_time=? WHERE User_Id= ?",
+          [user.sessionID, Number(new Date().getTime()), user.PID]
+        );
 
-            }else{
-
-                try{
-                    await executeSQL('INSERT INTO session_table VALUES (?,?,?)',[user.sessionID,user.PID,Number(new Date().getTime())]);
-                }
-                catch(e){
-                    console.log(e);
-                    console.log("Error");
-                }
-            }
-    
-            RegUsers.set(PID,user);
-
-            const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
-    
-            //method.setToken(token,true,50000000);
-
-            console.log(UserName + " Successfully Logged In !!!");
-            method.res.header("token", token);
-            return ({"token":token,"user":user});
-
-        }else{
-            console.log(e)
-            return("Error");
+        console.log("User Already logged in, logging out previous session");
+      } else {
+        try {
+          await executeSQL("INSERT INTO session_table VALUES (?,?,?)", [
+            user.sessionID,
+            user.PID,
+            Number(new Date().getTime()),
+          ]);
+        } catch (e) {
+          console.log(e);
+          console.log("Error");
         }
+      }
 
-    }catch(e){
-        console.log(e);
-        return("Error");
+      RegUsers.set(PID, user);
+
+      const token = getAccessToken({
+        sessionID: user.sessionID,
+        PID: user.PID,
+      });
+
+      //method.setToken(token,true,50000000);
+
+      console.log(UserName + " Successfully Logged In !!!");
+      method.res.header("token", token);
+      return { token: token, user: user };
+    } else {
+      console.log(e);
+      return "Error";
     }
-
-    
-    
+  } catch (e) {
+    console.log(e);
+    return "Error";
+  }
 }
 
 async function logout(user){

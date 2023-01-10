@@ -5,14 +5,30 @@ import axios from "axios";
 import "./SignUp.css";
 
 function SignUp() {
-  const [userNameReg, setUsernameReg] = useState("");
+  const [titleReg, setTitleReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
+  const [firstNameReg, setFirstNameReg] = useState("");
+  const [lastNameReg, setLastNameReg] = useState("");
+  const [emailReg, setEmailReg] = useState("");
+  const [countryReg, setCountryReg] = useState("");
+  const [userNameReg, setUsernameReg] = useState("");
+  const [birthDayReg, setBirthdayReg] = useState("");
+  const [addressReg, setAddressReg] = useState("");
+  const [telephoneReg, setTelephoneReg] = useState("");
 
   const register = () => {
     axios
       .post("http://localhost:6969/Auth/Register", {
-        Email: userNameReg,
+        Email: emailReg,
         password: passwordReg,
+        Title: titleReg,
+        First_Name: firstNameReg,
+        Last_Name: lastNameReg,
+        Country: countryReg,
+        Telephone: telephoneReg,
+        UserName: userNameReg,
+        DOB: birthDayReg,
+        Address: addressReg,
       })
       .then((response) => {
         console.log(response);
@@ -25,7 +41,7 @@ function SignUp() {
         <form>
           <div className="Parent">
             <div>
-              <label for="title">Title</label>
+              <label>Title</label>
               <br />
               <select name="title" className="input-box-mr" id="title">
                 <option value="Mr">Mr</option>
@@ -35,95 +51,127 @@ function SignUp() {
               </select>
             </div>
             <div>
-              <label for="first-name">First Name</label>
+              <label>First Name</label>
               <br />
               <input
                 className="footer-input"
                 name="first-name"
                 type="first-name"
                 placeholder="Eg: John"
+                onChange={(e) => {
+                  setFirstNameReg(e.target.value);
+                }}
                 required
               />
             </div>
           </div>
           <div>
-            <label for="last-name">Last Name</label>
+            <label>Last Name</label>
             <br />
             <input
               className="footer-input"
               name="last-name"
               type="last-name"
               placeholder="Eg: Doe"
+              onChange={(e) => {
+                setLastNameReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="email">Email</label>
+            <label>Email</label>
             <br />
             <input
               className="footer-input"
               name="email"
               type="email"
               placeholder="Eg: johndoe@example.com"
+              onChange={(e) => {
+                setEmailReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="tp">Telephone</label>
+            <label>Telephone</label>
             <br />
             <input
               className="footer-input"
               name="tp"
               type="tp"
               placeholder="Eg: 0xx-xx-xx-xxx"
+              onChange={(e) => {
+                setTelephoneReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="country">Email</label>
+            <label>Country</label>
             <br />
             <input
               className="footer-input"
               name="country"
               type="country"
               placeholder="Eg: USA"
+              onChange={(e) => {
+                setCountryReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="username">User Name</label>
+            <label>User Name</label>
             <br />
             <input
               className="footer-input"
               name="username"
               type="username"
               placeholder="Eg: JohnDoe"
+              onChange={(e) => {
+                setUsernameReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="password">Password</label>
+            <label>Password</label>
             <br />
             <input
               className="footer-input"
               name="password"
               type="password"
+              onChange={(e) => {
+                setPasswordReg(e.target.value);
+              }}
               required
             />
           </div>
           <div>
-            <label for="dob">From</label>
+            <label>Date of Birth</label>
             <br />
-            <input type="date" className="input-box" id="dob" name="dob" />
+            <input
+              type="date"
+              className="input-box"
+              id="dob"
+              name="dob"
+              onChange={(e) => {
+                setBirthdayReg(e.target.value);
+              }}
+            />
           </div>
           <div>
-            <label for="address">Email</label>
+            <label>Address</label>
             <br />
             <input
               className="footer-input"
               name="address"
               type="address"
               placeholder="Eg: No x, Some Rd, Somewhere"
+              onChange={(e) => {
+                setAddressReg(e.target.value);
+              }}
               required
             />
           </div>

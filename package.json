@@ -111,7 +111,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev-start" : "nodemon index.js"
+    "dev-start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -125,6 +125,7 @@
   },
   "homepage": "https://github.com/AkeshSamduitha/DBMS-Air-Line-Reservation#readme",
   "devDependencies": {
+    "nodeman": "^1.1.2",
     "nodemon": "^2.0.20"
   }
 }

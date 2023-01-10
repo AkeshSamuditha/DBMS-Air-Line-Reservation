@@ -38,10 +38,9 @@ export default function Login() {
       })
       .then(response => {
         console.log(response);
-        if (response.data.message === 400) {
-          setLoginStatus(response.data.message);
+        if (response.data.message == "400") {
+          setLoginStatus("Invalid Username or Passwrod");
         } else {
-          setLoginStatus(response.data.user.Email);
           handleSubmit();
         }
       });

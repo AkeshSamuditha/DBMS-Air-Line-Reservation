@@ -32,15 +32,16 @@ export default function Login() {
 
   const login = () => {
     axios
-      .post("http://localhost:3001/login", {
-        email: email,
-        password: password,
+      .post("http://localhost:6969/Auth/login", {
+        Email: email,
+        Password: password,
       })
-      .then((response) => {
-        if (response.data.message) {
+      .then(response => {
+        console.log(response);
+        if (response.data.message === 400) {
           setLoginStatus(response.data.message);
         } else {
-          setLoginStatus(response.data[0].email);
+          setLoginStatus(response.data.user.Email);
           handleSubmit();
         }
       });
@@ -93,7 +94,7 @@ export default function Login() {
               />
             </form>
             <div className="log-in-btns">
-              <Link target={"_self"}>
+              <Link to='/Auth/login' target={"_self"}>
                 <Button
                   className="btns"
                   buttonStyle="btn--outline"
@@ -106,7 +107,7 @@ export default function Login() {
             </div>
             <div className="login-status">{loginStatus}</div>
             <div className="sign-up-redirect">
-              <Link to="./sign-up" style={{ color: "white" }}>
+              <Link to="./Auth/Register" style={{ color: "white" }}>
                 Don't have an account? Sign Up
               </Link>
             </div>

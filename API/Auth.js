@@ -24,10 +24,20 @@ router.post('/Register',async function(req, res){
     var method = new Method(req,res);
     
     const status = await register(method);
-    
+    console.log(status);
     res.status(ResponseHandler(status)).send(status);
 
 });
 
+// Request No: 08
+router.post('/logout',async function(req, res){
+    console.log("logout");
+    // var method = new Method(req,res);
+    
+    const status = await logout(user);
+    // console.log(status);
+    // res.status(ResponseHandler(status)).send(status);
+
+});
 
 module.exports = router;

@@ -13,15 +13,15 @@ async function register(method){
     const body = method.getBody();
 
     const Title = body.Title;
-    const First_Name = body.First_Name;
-    const Last_Name = body.Last_Name;
+    const First_Name = "body.First_Name";
+    const Last_Name = "body.Last_Name";
     const Email = body.Email;
-    const Telephone = body.Telephone;
-    const Country = body.Country;
-    const UserName = body.UserName;
-    const Password = body.pass;
-    const Date_of_Birth = body.Date_of_Birth;
-    const Address = body.Address;
+    const Telephone = "172398127";
+    const Country = "body.Country";
+    const UserName = "body.UserName";
+    const Password = body.password;
+    const Date_of_Birth = "2022/12/21";
+    const Address = "body.Address";
 
     try{
         const data = await executeSQL('SELECT UserName FROM registered_users WHERE UserName = ?',[UserName]);
@@ -56,6 +56,7 @@ async function login(method){
     try{
 
         const credential = await executeSQL('SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users join registered_users on users.PID = registered_users.PID WHERE users.Email =?',[Email]);
+        console.log(method.body);
         if(!credential[0])
             return ("Error : Invalid Email or Password");
         console.log(credential[0].Password);
@@ -67,7 +68,7 @@ async function login(method){
         const lname = credential[0].Last_Name;
         
         if (status){
-
+            console.log("Password Matched");
             var user = userFactory(PID,UserName,"Registered",fname,lname);
 
             if (RegUsers.has(PID)){

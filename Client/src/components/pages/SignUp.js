@@ -10,8 +10,8 @@ function SignUp() {
 
   const register = () => {
     axios
-      .post("http://localhost:3001/register", {
-        email: userNameReg,
+      .post("http://localhost:6969/Auth/Register", {
+        Email: userNameReg,
         password: passwordReg,
       })
       .then((response) => {
@@ -51,7 +51,7 @@ function SignUp() {
           />
         </form>
         <div className="sign-up-btns">
-          <Link to={"/log-in"}>
+          <Link to={"/Auth/login"}>
             <Button
               className="btns"
               buttonStyle="btn--outline"

@@ -15,10 +15,10 @@ function App() {
         <Navbar />
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/book-a-flight" component={BookAFlight} />
+          <Route path="/api/BookFlight" component={BookAFlight} />
           <Route path="/destinations" component={Destinations} />
-          <Route path="/log-in" component={LogIn} />
-          <Route path="/sign-up" component={SignUp} />
+          <Route path="/Auth/login" component={LogIn} />
+          <Route path="/Auth/Register" component={SignUp} />
         </Switch>
       </Router>
     </>

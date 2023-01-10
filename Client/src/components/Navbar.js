@@ -90,7 +90,7 @@ function Navbar() {
               )}
               <li>
                 <Link
-                  to="/log-in"
+                  to="/Auth/login"
                   className="nav-links-mobile"
                   onClick={inlinefunction}
                 >
@@ -136,7 +136,7 @@ function Navbar() {
               </li>
               <li>
                 <Link
-                  to="/log-in"
+                  to="/Auth/login"
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
@@ -145,7 +145,7 @@ function Navbar() {
               </li>
               <li>
                 <Link
-                  to="/sign-up"
+                  to="/Auth/Register"
                   className="nav-links-mobile"
                   onClick={closeMobileMenu}
                 >
@@ -153,10 +153,10 @@ function Navbar() {
                 </Link>
               </li>
             </ul>
-            <Link to="/log-in" className="btn-mobile">
+            <Link to="/Auth/login" className="btn-mobile">
               {button && <Button buttonStyle="btn--outline">LOG IN</Button>}
             </Link>
-            <Link to="/sign-up" className="btn-mobile">
+            <Link to="/Auth/Register" className="btn-mobile">
               {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
             </Link>
           </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import "../../App.css";
 import "./Destinations.css";
-import CardItem from "/../CardItem";
+import CardItem from "./../CardItem";
 
 export default function Destinations() {
   return (

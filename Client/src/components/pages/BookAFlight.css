@@ -1,0 +1,61 @@
+.booking-input {
+  width: 50%;
+  padding: 8px 20px;
+  border-radius: 3px;
+  margin-top: 300px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: none;
+  border: none;
+  font-size: 18px;
+  background-color: aliceblue;
+  align-content: center;
+  padding-top: 30px;
+}
+
+.book-your-flight {
+  align-content: center;
+}
+
+.input-box {
+  padding: 8px 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  margin-bottom: 16px;
+  border: 1px solid rgb(192, 192, 192);
+}
+
+.find-a-flight-btn {
+  margin-top: 32px;
+  height: 40px;
+  text-decoration: none;
+}
+
+.find-a-flight-btn .btn {
+  margin: 0px;
+  width: 300 px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.find-a-flight {
+  align-content: center;
+}
+
+.Parent {
+  display: flex;
+  flex-direction: row;
+}
+
+.child1 {
+  width: 50%;
+}
+
+.child2 {
+  width: 50%;
+}

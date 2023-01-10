@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import "./LogIn.css";
 import { Link } from "react-router-dom";
@@ -6,11 +6,29 @@ import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
 
-export default function LogIn() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
+
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    setCount(JSON.parse(window.localStorage.getItem("count")));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("count", count);
+  }, [count]);
+
+  const increaseCount = () => {
+    return setCount(count + 1);
+  };
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   const login = () => {
     axios
@@ -28,18 +46,24 @@ export default function LogIn() {
       });
   };
 
-  const [success, setSuccess] = useState(false);
-
   const handleSubmit = (e) => {
-    setSuccess(true);
+    increaseCount();
+    refreshPage();
   };
 
   return (
     <>
-      {success ? (
-        <div>
-          <h1>You are logged in</h1>
-          <Link to={"/"}>Go to home</Link>
+      {count > 0 ? (
+        <div className="logged-in">
+          <div className="logged-in-container">
+            <div className="heading">
+              <h1>You are logged in</h1>
+            </div>
+            <br />
+            <div className="back-link">
+              <Link to={"/"}>Go to home</Link>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="log-in">
@@ -69,7 +93,7 @@ export default function LogIn() {
               />
             </form>
             <div className="log-in-btns">
-              <Link>
+              <Link target={"_self"}>
                 <Button
                   className="btns"
                   buttonStyle="btn--outline"
@@ -82,7 +106,7 @@ export default function LogIn() {
             </div>
             <div className="login-status">{loginStatus}</div>
             <div className="sign-up-redirect">
-              <Link to="./sign-up" style={{ color: "white" }} onClick={login}>
+              <Link to="./sign-up" style={{ color: "white" }}>
                 Don't have an account? Sign Up
               </Link>
             </div>

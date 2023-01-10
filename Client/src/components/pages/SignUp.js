@@ -22,6 +22,12 @@ function SignUp() {
   return (
     <div className="sign-up">
       <div className="input-areas">
+        <select name="from" className="input-box-mr" id="from">
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Ms">Ms</option>
+          <option value="Miss">Miss</option>
+        </select>
         <form>
           <input
             className="footer-input"

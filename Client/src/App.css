@@ -44,6 +44,13 @@
   font-size: 100px;
 }
 
+.logged-in {
+  background-image: url('/public/images/img-2.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 89vh;
+  text-align: center;
+}
 .sign-up {
   background-image: url('/public/images/img-4.jpg');
   background-position: center;

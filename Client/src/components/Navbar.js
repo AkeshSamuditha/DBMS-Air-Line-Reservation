@@ -12,12 +12,29 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
 
+  const [count, setCount] = useState();
+
+  useEffect(() => {
+    setCount(JSON.parse(window.localStorage.getItem("count")));
+  }, []);
+
+  const resetCount = () => {
+    window.localStorage.removeItem("count");
+    setCount(0);
+    window.location.reload();
+  };
+
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
     } else {
       setButton(true);
     }
+  };
+
+  const inlinefunction = () => {
+    closeMobileMenu();
+    resetCount();
   };
 
   useEffect(() => {
@@ -28,66 +45,123 @@ function Navbar() {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            B Airways
-            <FontAwesomeIcon icon={faTypo3} />
-          </Link>
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"} />
+      {count > 0 ? (
+        <nav className="navbar">
+          <div className="navbar-container">
+            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+              B Airways
+              <FontAwesomeIcon icon={faTypo3} />
+            </Link>
+            <div className="menu-icon" onClick={handleClick}>
+              <i className={click ? "fas fa-times" : "fas fa-bars"} />
+            </div>
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/book-a-flight"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Book A Flight
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/destinations"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Destinations
+                </Link>
+              </li>
+              {button && (
+                <Button
+                  className="btn-mobile"
+                  buttonStyle="btn--outline"
+                  onClick={resetCount}
+                >
+                  LOG OUT
+                </Button>
+              )}
+              <li>
+                <Link
+                  to="/log-in"
+                  className="nav-links-mobile"
+                  onClick={inlinefunction}
+                >
+                  Log Out
+                </Link>
+              </li>
+            </ul>
           </div>
-          <ul className={click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/book-a-flight"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Book A Flight
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                to="/destinations"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Destinations
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/log-in"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Log In
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/sign-up"
-                className="nav-links-mobile"
-                onClick={closeMobileMenu}
-              >
-                Sign Up
-              </Link>
-            </li>
-          </ul>
-          <Link to="/log-in" className="btn-mobile">
-            {button && <Button buttonStyle="btn--outline">LOG IN</Button>}
-          </Link>
-          <Link to="/sign-up" className="btn-mobile">
-            {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
-          </Link>
-        </div>
-      </nav>
+        </nav>
+      ) : (
+        <nav className="navbar">
+          <div className="navbar-container">
+            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+              B Airways
+              <FontAwesomeIcon icon={faTypo3} />
+            </Link>
+            <div className="menu-icon" onClick={handleClick}>
+              <i className={click ? "fas fa-times" : "fas fa-bars"} />
+            </div>
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/book-a-flight"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Book A Flight
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/destinations"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Destinations
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/log-in"
+                  className="nav-links-mobile"
+                  onClick={closeMobileMenu}
+                >
+                  Log In
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/sign-up"
+                  className="nav-links-mobile"
+                  onClick={closeMobileMenu}
+                >
+                  Sign Up
+                </Link>
+              </li>
+            </ul>
+            <Link to="/log-in" className="btn-mobile">
+              {button && <Button buttonStyle="btn--outline">LOG IN</Button>}
+            </Link>
+            <Link to="/sign-up" className="btn-mobile">
+              {button && <Button buttonStyle="btn--outline">SIGN UP</Button>}
+            </Link>
+          </div>
+        </nav>
+      )}
     </>
   );
 }

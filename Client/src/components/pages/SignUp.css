@@ -6,16 +6,22 @@
     color: #b1b1b1;
 }
 
-.input-areas {
+.input-areas-signup {
     padding: 8px 20px;
     border-radius: 2px;
-    margin: 0;
+    /* margin: 0; */
+        margin-top: 5%;
     position: absolute;
+    top: 500px;
     left: 50%;
     transform: translate(-50%, -50%);
     outline: none;
     border: none;
+    width: 30%;
+        padding-left: 45px;
+        padding-top: 45px;
     font-size: 18px;
+    background-color: rgba(0, 0, 0, 0.5);
     /* margin-bottom: 16px; */
     /* border: 1px solid #fff; */
 }

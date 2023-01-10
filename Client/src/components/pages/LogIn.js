@@ -67,7 +67,7 @@ export default function Login() {
         </div>
       ) : (
         <div className="log-in">
-          <div className="input-areas">
+          <div className="input-areas-login">
             <form>
               <input
                 className="footer-input"

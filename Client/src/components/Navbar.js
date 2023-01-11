@@ -57,12 +57,10 @@ function Navbar() {
           setToken("");
           localStorage.removeItem("token");
           console.log(token);
-          window.location.reload();
+          window.location.replace("http://localhost:3000");
           setLogoutStatus("Logged Out");
         }
       });
-
-    window.location.replace("http://localhost:3000/Auth/logout");
   };
 
   const showButton = () => {

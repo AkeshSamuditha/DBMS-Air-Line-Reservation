@@ -29,7 +29,6 @@ export default function Login() {
     if (token !== localStorage.getItem("token")) {
       localStorage.setItem("token", token);
       console.log(token);
-      console.log("shit");
     }
   }, [token]);
 

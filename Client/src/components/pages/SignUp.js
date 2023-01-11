@@ -31,6 +31,13 @@ function SignUp() {
         Address: addressReg,
       })
       .then((response) => {
+        if (response.data.status == "400") {
+          alert("Invalid Username or Passwrod");
+        }
+        axios.post("http://localhost:6969/Auth/login", {
+          Email: emailReg,
+          Password: passwordReg,
+        });
         console.log(response);
       });
   };

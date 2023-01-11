@@ -47,7 +47,7 @@ export default function Login() {
       .then((response) => {
         console.log(response);
         if (response.data.status === "400") {
-          setUser(response.data.data.user);
+          setUser(response.data.data);
           setLoginStatus("Invalid Username or Passwrod");
         } else {
           handleSubmit();

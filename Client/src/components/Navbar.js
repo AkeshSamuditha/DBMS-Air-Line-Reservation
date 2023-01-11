@@ -21,20 +21,22 @@ function Navbar() {
   }, []);
 
   const logout = () => {
-    axios
-      .post("http://localhost:6969/API/registered/logout", {
-        user: user,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.message == "400") {
-          setLogoutStatus("Error While Logging Out");
-        } else {
-          window.location.reload();
-          setUser("");
-          setLogoutStatus("Logged Out");
-        }
-      });
+    // axios
+    //   .post("http://localhost:6969/API/registered/logout", {
+    //     user: user,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.data.message == "400") {
+    //       setLogoutStatus("Error While Logging Out");
+    //     } else {
+    //       window.location.reload();
+    //       setUser("");
+    //       setLogoutStatus("Logged Out");
+    //     }
+    //   });
+    setUser("");
+    window.location.replace("http://localhost:3000/Auth/logout");
   };
 
   // const resetUser = () => {
@@ -64,7 +66,7 @@ function Navbar() {
 
   return (
     <>
-      {user !== "" ? (
+      {user !== null ? (
         <nav className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>

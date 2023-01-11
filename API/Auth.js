@@ -24,8 +24,7 @@ router.post("/Register", async function (req, res) {
 
   const status = await register(method);
   console.log(status);
-  res.send({ status: ResponseHandler(status), data: status });
+  res.send({ status: ResponseHandler(status) });
 });
-
 
 module.exports = router;

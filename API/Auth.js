@@ -14,7 +14,7 @@ router.post("/login", async function (req, res) {
   var status = await login(method);
 
   console.log(status);
-  res.send({ status: ResponseHandler(status), data: status });
+  res.send({ status: ResponseHandler(status), token: status.token });
 });
 
 // Request No: 08

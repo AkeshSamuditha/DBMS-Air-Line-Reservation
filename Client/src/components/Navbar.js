@@ -14,7 +14,7 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
   const [logoutStatus, setLogoutStatus] = useState("");
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState("NOTIN");
 
   useEffect(() => {
     setUser(JSON.parse(window.localStorage.getItem("count")));
@@ -35,7 +35,9 @@ function Navbar() {
     //       setLogoutStatus("Logged Out");
     //     }
     //   });
-    setUser("");
+    setUser("NOTIN");
+    console.log(user);
+
     window.location.replace("http://localhost:3000/Auth/logout");
   };
 
@@ -66,7 +68,7 @@ function Navbar() {
 
   return (
     <>
-      {user !== null ? (
+      {user !== "NOTIN" ? (
         <nav className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
@@ -77,6 +79,11 @@ function Navbar() {
               <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  User
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                   Home
@@ -132,6 +139,11 @@ function Navbar() {
               <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  Userrr
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                   Home

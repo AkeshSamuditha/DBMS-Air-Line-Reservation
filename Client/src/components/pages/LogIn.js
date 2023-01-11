@@ -12,7 +12,7 @@ export default function Login() {
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState("NOTIN");
 
   // useEffect(() => {
   //   setCount(JSON.parse(window.localStorage.getItem("count")));
@@ -49,8 +49,8 @@ export default function Login() {
         if (response.data.status === "400") {
           setLoginStatus("Invalid Username or Passwrod");
         } else {
-          console.log(response.data.data.token);
-          setUser(response.data.data.token);
+          console.log(response.data.token);
+          setUser(response.data.token);
           handleSubmit();
         }
       });
@@ -58,14 +58,14 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     // increaseCount();
-    setUser();
+    // setUser();
     // refreshPage();
     console.log(user);
   };
 
   return (
     <>
-      {user === null ? (
+      {user !== "NOTIN" ? (
         <div className="logged-in">
           <div className="logged-in-container">
             <div className="heading">
@@ -79,6 +79,7 @@ export default function Login() {
         </div>
       ) : (
         <div className="log-in">
+          console.log(user);
           <div className="input-areas-login">
             <form>
               <input

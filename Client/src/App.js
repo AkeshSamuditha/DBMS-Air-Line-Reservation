@@ -7,6 +7,7 @@ import BookAFlight from "./components/pages/BookAFlight";
 import Destinations from "./components/pages/Destinations";
 import LogIn from "./components/pages/LogIn";
 import SignUp from "./components/pages/SignUp";
+import LogOut from "./components/pages/LogOut";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/destinations" component={Destinations} />
           <Route path="/Auth/login" component={LogIn} />
           <Route path="/Auth/Register" component={SignUp} />
+          <Route path="/Auth/Logout" component={LogOut} />
         </Switch>
       </Router>
     </>

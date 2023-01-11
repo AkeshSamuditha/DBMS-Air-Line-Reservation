@@ -12,19 +12,27 @@ export default function Login() {
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  const [count, setCount] = useState(0);
+  const [user, setUser] = useState("");
+
+  // useEffect(() => {
+  //   setCount(JSON.parse(window.localStorage.getItem("count")));
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("count", count);
+  // }, [count]);
+
+  // const increaseCount = () => {
+  //   return setCount(count + 1);
+  // };
 
   useEffect(() => {
-    setCount(JSON.parse(window.localStorage.getItem("count")));
+    setUser(JSON.parse(window.localStorage.getItem("user")));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("count", count);
-  }, [count]);
-
-  const increaseCount = () => {
-    return setCount(count + 1);
-  };
+    window.localStorage.setItem("user", user);
+  }, [user]);
 
   const refreshPage = () => {
     window.location.reload();
@@ -36,9 +44,10 @@ export default function Login() {
         Email: email,
         Password: password,
       })
-      .then(response => {
+      .then((response) => {
         console.log(response);
-        if (response.data.message == "400") {
+        if (response.data.status === "400") {
+          setUser(response.data.data.user);
           setLoginStatus("Invalid Username or Passwrod");
         } else {
           handleSubmit();
@@ -47,13 +56,12 @@ export default function Login() {
   };
 
   const handleSubmit = (e) => {
-    increaseCount();
     refreshPage();
   };
 
   return (
     <>
-      {count > 0 ? (
+      {user !== "" ? (
         <div className="logged-in">
           <div className="logged-in-container">
             <div className="heading">
@@ -93,7 +101,7 @@ export default function Login() {
               />
             </form>
             <div className="log-in-btns">
-              <Link to='/Auth/login' target={"_self"}>
+              <Link to="/Auth/login" target={"_self"}>
                 <Button
                   className="btns"
                   buttonStyle="btn--outline"

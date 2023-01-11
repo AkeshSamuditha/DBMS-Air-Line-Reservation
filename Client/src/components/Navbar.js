@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
+import axios from "axios";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -11,18 +12,36 @@ function Navbar() {
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+  const [logoutStatus, setLogoutStatus] = useState("");
 
-  const [count, setCount] = useState();
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    setCount(JSON.parse(window.localStorage.getItem("count")));
+    setUser(JSON.parse(window.localStorage.getItem("count")));
   }, []);
 
-  const resetCount = () => {
-    window.localStorage.removeItem("count");
-    setCount(0);
-    window.location.reload();
+  const logout = () => {
+    axios
+      .post("http://localhost:6969/API/registered/logout", {
+        user: user,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.message == "400") {
+          setLogoutStatus("Error While Logging Out");
+        } else {
+          window.location.reload();
+          setUser("");
+          setLogoutStatus("Logged Out");
+        }
+      });
   };
+
+  // const resetUser = () => {
+  //   window.localStorage.removeItem("user");
+  //   ;
+  //   ;
+  // };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -34,7 +53,7 @@ function Navbar() {
 
   const inlinefunction = () => {
     closeMobileMenu();
-    resetCount();
+    logout();
   };
 
   useEffect(() => {
@@ -45,7 +64,7 @@ function Navbar() {
 
   return (
     <>
-      {count > 0 ? (
+      {user !== "" ? (
         <nav className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
@@ -83,7 +102,7 @@ function Navbar() {
                 <Button
                   className="btn-mobile"
                   buttonStyle="btn--outline"
-                  onClick={resetCount}
+                  onClick={logout}
                 >
                   LOG OUT
                 </Button>

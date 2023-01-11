@@ -63,7 +63,7 @@ router.delete('/logout',async function(req, res){
 
     console.log(status);
     
-    res.status(ResponseHandler(status)).send(status);
+    res.send(ResponseHandler(status));
     
 });
 

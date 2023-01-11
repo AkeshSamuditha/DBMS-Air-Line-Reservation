@@ -1,0 +1,17 @@
+.heading {
+    text-align: center;
+    font-size: large;
+}
+
+
+.logged-out-container {
+    position: relative;
+    left: 25%;
+    top: 25%;
+    width: 50%;
+    height: 50%;
+    padding-top: 7%;
+    background-color: azure;
+    border-radius: 5px;
+    opacity: 0.5;
+}

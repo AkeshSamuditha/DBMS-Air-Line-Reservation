@@ -27,11 +27,11 @@ export default function Login() {
   // };
 
   useEffect(() => {
-    setUser(JSON.parse(window.localStorage.getItem("user")));
+    setUser(window.localStorage.getItem("user"));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("user", user);
+    window.localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
   const refreshPage = () => {
@@ -47,21 +47,25 @@ export default function Login() {
       .then((response) => {
         console.log(response);
         if (response.data.status === "400") {
-          setUser(response.data.data);
           setLoginStatus("Invalid Username or Passwrod");
         } else {
+          console.log(response.data.data.token);
+          setUser(response.data.data.token);
           handleSubmit();
         }
       });
   };
 
   const handleSubmit = (e) => {
-    refreshPage();
+    // increaseCount();
+    setUser();
+    // refreshPage();
+    console.log(user);
   };
 
   return (
     <>
-      {user !== "" ? (
+      {user === null ? (
         <div className="logged-in">
           <div className="logged-in-container">
             <div className="heading">

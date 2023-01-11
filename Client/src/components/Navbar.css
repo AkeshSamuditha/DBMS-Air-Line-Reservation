@@ -156,3 +156,30 @@
     transition: 250ms;
   }
 }
+
+.dropdown .btn {
+  position: relative;
+  padding: 8px 20px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  list-style-type: none;
+  margin: 5px 0;
+  padding: 0;
+  border: 1px solid gray;
+  width: 150px;
+}
+
+.menu > li {
+  margin: 0;
+  width: 150px;
+}
+
+.menu > li:hover {
+  background-color: lightgray;
+}

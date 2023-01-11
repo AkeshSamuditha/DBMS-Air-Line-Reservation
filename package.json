@@ -125,6 +125,7 @@
   },
   "homepage": "https://github.com/AkeshSamduitha/DBMS-Air-Line-Reservation#readme",
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.0",
     "nodeman": "^1.1.2",
     "nodemon": "^2.0.20"
   }

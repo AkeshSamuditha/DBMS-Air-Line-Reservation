@@ -25,11 +25,10 @@ export default function Login() {
   const [token, setToken] = useToken();
 
   useEffect(() => {
-    console.log("Before", token);
+    console.log(token);
     if (token !== localStorage.getItem("token")) {
       localStorage.setItem("token", token);
       console.log(token);
-      console.log("shit");
     }
   }, [token]);
 
@@ -40,11 +39,11 @@ export default function Login() {
         Password: password,
       })
       .then((response) => {
-        console.log(response);
-        if (response.data.status === "400") {
+        console.log("shit", response);
+        if (response.data.status == "400") {
           setLoginStatus("Invalid Username or Passwrod");
         } else {
-          console.log(response.data.data.token);
+          console.log(response);
           handleLogin(response);
           window.location.reload();
         }
@@ -53,7 +52,7 @@ export default function Login() {
 
   function handleLogin(response) {
     setToken(response.data.data.token);
-    console.log(token);
+    console.log("ent", token);
   }
 
   return (
@@ -72,7 +71,6 @@ export default function Login() {
         </div>
       ) : (
         <div className="log-in">
-          console.log(user);
           <div className="input-areas-login">
             <form>
               <input
@@ -112,7 +110,7 @@ export default function Login() {
             </div>
             <div className="login-status">{loginStatus}</div>
             <div className="sign-up-redirect">
-              <Link to="./Auth/Register" style={{ color: "white" }}>
+              <Link to="./Register" style={{ color: "white" }}>
                 Don't have an account? Sign Up
               </Link>
             </div>

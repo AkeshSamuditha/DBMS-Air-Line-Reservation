@@ -14,7 +14,7 @@ router.post("/login", async function (req, res) {
   var status = await login(method);
 
   console.log(status);
-  res.send({ status: ResponseHandler(status), token: status.token });
+  res.send({ status: ResponseHandler(status), data: status });
 });
 
 // Request No: 08
@@ -24,7 +24,8 @@ router.post("/Register", async function (req, res) {
 
   const status = await register(method);
   console.log(status);
-  res.send({ status: ResponseHandler(status) });
+  res.send({ status: ResponseHandler(status), data: status });
 });
+
 
 module.exports = router;

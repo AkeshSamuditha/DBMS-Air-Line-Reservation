@@ -83,7 +83,7 @@ on Model_ID = airplanes.Model) as A
 on Airplane = Airplane_ID
 GROUP by Model_ID;
 
-Request No: 06
+Request No: 06 
 Description: Login
 Request Type: GET
 Request URL: http://localhost:3000/Auth/login
@@ -92,8 +92,8 @@ input:
 Email: "Mr",
 Password: "John",
 }
-Response: {මොනවද ඕන දෙනව}
-SQL Query: Select \* from users, Registered_Users where Email = 'Email' and Password = 'Password' users.PID = Registered_Users.PID;
+Response: 
+SQL Query: Select * from users, Registered_Users where Email = 'Email' and Password = 'Password' users.PID = Registered_Users.PID;
 
 Request No: 07✅
 Description: Register

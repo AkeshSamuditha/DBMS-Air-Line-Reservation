@@ -15,6 +15,9 @@ function SignUp() {
   const [birthDayReg, setBirthdayReg] = useState("");
   const [addressReg, setAddressReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
+  
+  const port = process.env.port;
+  const concatenatedString = "http://localhost:" + port + "/API/Register";
 
   const register = () => {
     axios
@@ -31,6 +34,13 @@ function SignUp() {
         Address: addressReg,
       })
       .then((response) => {
+        if (response.data.status == "400") {
+          alert("Invalid Username or Passwrod");
+        }
+        axios.post("http://localhost:6969/Auth/login", {
+          Email: emailReg,
+          Password: passwordReg,
+        });
         console.log(response);
       });
   };

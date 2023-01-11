@@ -21,8 +21,9 @@ class Method{
         return this.url.searchParams.get(query);
     }
     getToken(){
-        var token = this.req.headers['authorization'];
-
+        console.log(this.req.headers);
+        var token = this.req.headers["authorization"];
+        console.log("Ai bn uba mehema", token);
         return(token);
     }
 

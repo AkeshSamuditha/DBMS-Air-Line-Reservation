@@ -5,6 +5,8 @@ import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function useToken() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -126,9 +128,9 @@ function Navbar() {
               </li>
               <div>
                 {button && (
-                  <Button buttonStyle="btn--outline" onClick={handleOpen}>
+                  <FontAwesomeIcon icon={faUser} onClick={handleOpen}>
                     User Name
-                  </Button>
+                  </FontAwesomeIcon>
                 )}
                 {open ? (
                   <ul className="menu">

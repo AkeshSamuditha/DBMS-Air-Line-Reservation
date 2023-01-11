@@ -102,7 +102,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/book-a-flight"
+                  to="/api/BookFlight"
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
@@ -157,7 +157,7 @@ function Navbar() {
               </li>
               <li className="nav-item">
                 <Link
-                  to="/book-a-flight"
+                  to="/api/BookFlight"
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >

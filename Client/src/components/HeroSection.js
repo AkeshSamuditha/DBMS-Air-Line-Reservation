@@ -11,7 +11,7 @@ function HeroSection() {
       <h1>A WHOLE JOURNEY AWAITS YOU</h1>
       <p>What are you waiting for?</p>
       <div className="hero-btns">
-        <Link to="/book-a-flight">
+        <Link to="/api/BookFlight">
           <Button
             className="btns"
             buttonStyle="btn--outline"

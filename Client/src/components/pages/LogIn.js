@@ -110,7 +110,7 @@ export default function Login() {
             </div>
             <div className="login-status">{loginStatus}</div>
             <div className="sign-up-redirect">
-              <Link to="./Auth/Register" style={{ color: "white" }}>
+              <Link to="./Register" style={{ color: "white" }}>
                 Don't have an account? Sign Up
               </Link>
             </div>

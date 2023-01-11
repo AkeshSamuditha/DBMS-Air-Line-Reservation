@@ -18,7 +18,7 @@ export default function BookAFlight() {
         <form>
           <div className="Parent">
             <div className="child1">
-              <label for="from">From</label>
+              <label>From</label>
               <br />
               <select name="from" className="input-box" id="from">
                 <option>Select</option>
@@ -37,7 +37,7 @@ export default function BookAFlight() {
             </div>
 
             <div className="child2">
-              <label for="to">To</label>
+              <label>To</label>
               <br />
               <select name="to" className="input-box" id="to">
                 <option>Select</option>
@@ -57,7 +57,7 @@ export default function BookAFlight() {
           </div>
           <div className="Parent">
             <div className="child1">
-              <label for="depart">From</label>
+              <label>From</label>
               <br />
               <input
                 type="date"
@@ -68,7 +68,7 @@ export default function BookAFlight() {
               />
             </div>
             <div className="child2">
-              <label for="return">To</label>
+              <label>To</label>
               <br />
               <input
                 type="date"
@@ -81,7 +81,7 @@ export default function BookAFlight() {
           </div>
           <div className="Parent">
             <div className="child1">
-              <label for="adults">Adults</label>
+              <label>Adults</label>
               <br />
               <select name="adults" className="input-box" id="adults">
                 <option value="1">1</option>
@@ -92,7 +92,7 @@ export default function BookAFlight() {
               </select>
             </div>
             <div className="child2">
-              <label for="children">Children</label>
+              <label>Children</label>
               <br />
               <select name="children" className="input-box" id="children">
                 <option value="1">1</option>
@@ -104,7 +104,7 @@ export default function BookAFlight() {
             </div>
           </div>
           <div>
-            <label for="class">Class</label>
+            <label>Class</label>
             <br />
             <select
               id="class"

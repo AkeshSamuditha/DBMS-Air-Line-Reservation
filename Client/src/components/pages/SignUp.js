@@ -15,6 +15,9 @@ function SignUp() {
   const [birthDayReg, setBirthdayReg] = useState("");
   const [addressReg, setAddressReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
+  
+  const port = process.env.port;
+  const concatenatedString = "http://localhost:" + port + "/API/Register";
 
   const register = () => {
     axios

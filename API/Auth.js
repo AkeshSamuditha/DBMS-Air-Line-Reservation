@@ -6,7 +6,7 @@ const Method = require("../Controller/method");
 
 const { login, register, logout } = require("../MODEL/Authentication");
 
-//Request No: 07
+//Request No: 06
 router.post("/login", async function (req, res) {
   console.log("login");
   var method = new Method(req, res);
@@ -17,7 +17,7 @@ router.post("/login", async function (req, res) {
   res.send({ status: ResponseHandler(status), data: status });
 });
 
-// Request No: 08
+// Request No: 07
 router.post("/Register", async function (req, res) {
   console.log("register");
   var method = new Method(req, res);

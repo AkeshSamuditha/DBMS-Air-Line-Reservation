@@ -72,6 +72,7 @@ export default function Login() {
         </div>
       ) : (
         <div className="log-in">
+          console.log(user);
           <div className="input-areas-login">
             <form>
               <input

@@ -1,0 +1,63 @@
+.booking-table-btn {
+  margin-top: 32px;
+  height: 65px;
+  width: 65px;
+  font-size: 18px;
+}
+
+.booking-table-btn .btn {
+  margin: 0px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.input-box {
+  padding: 8px 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  margin-bottom: 16px;
+  border: 1px solid rgb(192, 192, 192);
+}
+
+.reserve-box {
+  width: 50%;
+  height: 700px;
+  padding-left: 5%;
+  border-radius: 5px;
+  margin-top: 250px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -20%);
+  outline: none;
+  border: none;
+  font-size: 18px;
+  background-color: rgba(240, 248, 255, 1);
+  align-content: center;
+  padding-top: 30px;
+}
+
+.Parent {
+  display: flex;
+  flex-direction: row;
+}
+
+.child1 {
+  width: 50%;
+}
+
+.child2 {
+  width: 50%;
+}
+.table_align {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.table_container {
+  height: 250px;
+}

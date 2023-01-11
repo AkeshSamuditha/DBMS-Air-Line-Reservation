@@ -34,34 +34,21 @@ function Navbar() {
 
   const config = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token,
     },
   };
 
-  // const logout = async () => {
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     };
-  //     await axios.post(
-  //       "http://localhost:6969/API/registered/logout",
-  //       {},
-  //       config
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   localStorage.removeItem("token");
-  //   console.log(token);
-  //   window.location.reload();
-  //   setLogoutStatus("Logged Out");
-  // };
-
   const logout = () => {
     axios
-      .post("http://localhost:6969/API/registered/logout", {}, config)
+      .delete(
+        "http://localhost:6969/API/registered/logout",
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+        config
+      )
       .then((response) => {
         console.log(response);
         if (response.data.message == "400") {
@@ -110,11 +97,6 @@ function Navbar() {
               <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
-              <li className="nav-item">
-                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                  User
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                   Home
@@ -170,11 +152,6 @@ function Navbar() {
               <i className={click ? "fas fa-times" : "fas fa-bars"} />
             </div>
             <ul className={click ? "nav-menu active" : "nav-menu"}>
-              <li className="nav-item">
-                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                  Userrr
-                </Link>
-              </li>
               <li className="nav-item">
                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
                   Home

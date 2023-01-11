@@ -6,37 +6,32 @@ import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
 
+function useToken() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {
+    localStorage.setItem("token", token);
+  }, [token]);
+
+  return [token, setToken];
+}
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  const [user, setUser] = useState("");
-
-  // useEffect(() => {
-  //   setCount(JSON.parse(window.localStorage.getItem("count")));
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("count", count);
-  // }, [count]);
-
-  // const increaseCount = () => {
-  //   return setCount(count + 1);
-  // };
+  const [token, setToken] = useToken();
 
   useEffect(() => {
-    setUser(window.localStorage.getItem("user"));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
-
-  const refreshPage = () => {
-    window.location.reload();
-  };
+    console.log("Before", token);
+    if (token !== localStorage.getItem("token")) {
+      localStorage.setItem("token", token);
+      console.log(token);
+      console.log("shit");
+    }
+  }, [token]);
 
   const login = () => {
     axios
@@ -50,22 +45,20 @@ export default function Login() {
           setLoginStatus("Invalid Username or Passwrod");
         } else {
           console.log(response.data.data.token);
-          setUser(response.data.data.token);
-          handleSubmit();
+          handleLogin(response);
+          window.location.reload();
         }
       });
   };
 
-  const handleSubmit = (e) => {
-    // increaseCount();
-    setUser();
-    // refreshPage();
-    console.log(user);
-  };
+  function handleLogin(response) {
+    setToken(response.data.data.token);
+    console.log(token);
+  }
 
   return (
     <>
-      {user === null ? (
+      {token ? (
         <div className="logged-in">
           <div className="logged-in-container">
             <div className="heading">

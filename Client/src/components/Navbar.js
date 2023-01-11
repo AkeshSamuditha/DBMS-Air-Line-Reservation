@@ -6,6 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 
+function useToken() {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {
+    localStorage.setItem("token", token);
+  }, [token]);
+
+  return [token, setToken];
+}
+
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
@@ -14,36 +24,59 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
   const [logoutStatus, setLogoutStatus] = useState("");
 
-  const [user, setUser] = useState("");
+  const [token, setToken] = useToken();
 
-  useEffect(() => {
-    setUser(JSON.parse(window.localStorage.getItem("count")));
-  }, []);
+  // useEffect(() => {
+  //   if (token !== localStorage.getItem("token")) {
+  //     localStorage.setItem("token", token);
+  //   }
+  // }, [token]);
 
-  const logout = () => {
-    // axios
-    //   .post("http://localhost:6969/API/registered/logout", {
-    //     user: user,
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //     if (response.data.message == "400") {
-    //       setLogoutStatus("Error While Logging Out");
-    //     } else {
-    //       window.location.reload();
-    //       setUser("");
-    //       setLogoutStatus("Logged Out");
-    //     }
-    //   });
-    setUser("");
-    window.location.replace("http://localhost:3000/Auth/logout");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   };
 
-  // const resetUser = () => {
-  //   window.localStorage.removeItem("user");
-  //   ;
-  //   ;
+  // const logout = async () => {
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     };
+  //     await axios.post(
+  //       "http://localhost:6969/API/registered/logout",
+  //       {},
+  //       config
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   localStorage.removeItem("token");
+  //   console.log(token);
+  //   window.location.reload();
+  //   setLogoutStatus("Logged Out");
   // };
+
+  const logout = () => {
+    axios
+      .post("http://localhost:6969/API/registered/logout", {}, config)
+      .then((response) => {
+        console.log(response);
+        if (response.data.message == "400") {
+          setLogoutStatus("Error While Logging Out");
+        } else {
+          setToken("");
+          localStorage.removeItem("token");
+          console.log(token);
+          window.location.reload();
+          setLogoutStatus("Logged Out");
+        }
+      });
+
+    window.location.replace("http://localhost:3000/Auth/logout");
+  };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -66,7 +99,7 @@ function Navbar() {
 
   return (
     <>
-      {user !== null ? (
+      {token ? (
         <nav className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>

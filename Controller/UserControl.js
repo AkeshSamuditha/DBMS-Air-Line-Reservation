@@ -1,16 +1,7 @@
 const {executeSQL} = require("../DB/db");
 
 class UserControl{
-    async getReservation(method,user){
-        try{
-            const body = method.getBody();
-            // const count = body.count;
-            const data = await executeSQL(`SELECT * FROM tickets`);
-            return(data);
-        }catch(err){
-            return err;
-        }
-    }
+
     /////////////////////////// GET ///////////////////////////	
     async getFlights(method){
         try{
@@ -37,6 +28,37 @@ class UserControl{
     }
 
     
+    async getPassengersByFlight(method){
+        try{
+            const body = method.getBody();
+
+            const Flight_ID = body.Flight_ID;
+ 
+            const sqlQuary = `Select (SELECT COUNT(*) FROM tickets WHERE Adult*or_Child LIKE '%A%' AND Flight = ?) as Above_18, (SELECT COUNT(*) FROM tickets WHERE Adult_or_Child LIKE '%C%'AND Flight = ?) as Below_18;`;
+
+            const data = await executeSQL(sqlQuary,[Flight_ID,Flight_ID]);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
+
+    async getPassengersByDestination(method){
+        try{
+            const body = method.getBody();
+
+            const Destination_ID = body.Destination_ID;
+            const From_Date = body.From_Date;
+            const To_Date = body.To_Date;
+
+            const sqlQuary = `Select count(\*) FROM Tickets WHERE Flight IN (Select Flight_ID from Flights Where (Route IN (Select Route_ID FROM routes WHERE Destination_ID = ? ) AND Date_of_travel BETWEEN ? AND ?));`;
+
+            const data = await executeSQL(sqlQuary,[Destination_ID,From_Date,To_Date]);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
 
     async getBookingsByPassengerType(method){
         try{

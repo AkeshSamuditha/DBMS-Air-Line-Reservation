@@ -5,6 +5,8 @@ import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
+import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function useToken() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -82,6 +84,12 @@ function Navbar() {
 
   window.addEventListener("resize", showButton);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
       {token ? (
@@ -118,15 +126,36 @@ function Navbar() {
                   Destinations
                 </Link>
               </li>
-              {button && (
-                <Button
-                  className="btn-mobile"
-                  buttonStyle="btn--outline"
-                  onClick={logout}
-                >
-                  LOG OUT
-                </Button>
-              )}
+              <div>
+                {button && (
+                  <FontAwesomeIcon icon={faUser} onClick={handleOpen}>
+                    User Name
+                  </FontAwesomeIcon>
+                )}
+                {open ? (
+                  <ul className="menu">
+                    <li className="menu-item">
+                      <Link to="/seat-reservation" className="btn-mobile">
+                        <Button
+                          buttonStyle="btn--dropdown"
+                          buttonSize="btn--dropdown_size"
+                        >
+                          Your Profile
+                        </Button>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Button
+                        buttonStyle="btn--dropdown"
+                        buttonSize="btn--dropdown_size"
+                        onClick={logout}
+                      >
+                        Log Out
+                      </Button>
+                    </li>
+                  </ul>
+                ) : null}
+              </div>
               <li>
                 <Link
                   to="/Auth/login"

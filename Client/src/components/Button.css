@@ -1,5 +1,6 @@
 :root {
   --primary: #fff;
+  --secondary: #242424;
 }
 
 .btn {
@@ -25,6 +26,17 @@
   transition: all 0.3s ease-out;
 }
 
+.btn--dropdown {
+  background-color: #fff;
+  color: #242424;
+  width: 150px;
+  padding: 8px 0px;
+  margin: 0px;
+  border: 1px solid var(--primary);
+  border-radius: 0px;
+  transition: all 0.3s ease-out;
+}
+
 .btn--medium {
   padding: 8px 20px;
   font-size: 18px;
@@ -35,10 +47,75 @@
   font-size: 20px;
 }
 
+.btn--dropdown_size {
+  width: 150px;
+  height: 45px;
+  padding: 0px 0px;
+  font-size: 18px;
+  margin: 0px;
+}
+
 .btn--large:hover,
 .btn--medium:hover {
   transition: all 0.3s ease-out;
   background: #fff;
   color: #242424;
   transition: 250ms;
+}
+
+.btn--dropdown_size:hover {
+  transition: all 0.3s ease-out;
+  background: #242424;
+  color: #fff;
+  transition: 250ms;
+}
+
+.btn--black {
+  background-color: #242424;
+  color: #fff;
+  width: 150px;
+  height: 60px;
+  padding: 8px 20px;
+  margin: 0px;
+  transition: all 0.3s ease-out;
+}
+
+.btn--black_size {
+  padding: 8px 20px;
+  font-size: 18px;
+  border-radius: 3px;
+}
+
+.btn--black_size:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: #242424;
+  transition: 250ms;
+  border: 1px solid var(--secondary);
+}
+
+.btn--table-not-selected {
+  background-color: #242424;
+  color: #fff;
+  transition: all 0.3s ease-out;
+}
+.btn--table-selected {
+  background-color: #fff;
+  color: #242424;
+  transition: all 0.3s ease-out;
+}
+
+.btn--table_size {
+  height: 65px;
+  width: 65px;
+  font-size: 18px;
+  border-radius: 3px;
+}
+
+.btn--table_size:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: #242424;
+  transition: 250ms;
+  border: 1px solid var(--secondary);
 }

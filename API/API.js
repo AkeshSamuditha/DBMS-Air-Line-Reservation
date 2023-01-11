@@ -13,21 +13,19 @@ router.use('/registered',regApiController);
 router.use(UpdateSession);
 const uController = new UserController();
 
-/////////////////////sample////////////////////////
 
-router.get('/getReservation',async function(req, res){
+////////////////////////////////////////////////////// GET Requests/////////////////////////////////////////////////////
+// Request No: 01
+router.get('/getPassengersByFlight',async function(req, res){
 
     var method = new Method(req,res);
     
-    const statusANDData = await uController.getReservation(method);
-    console.log(statusANDData);
+    const status = await uController.getPassengersByFlight(method);
+    console.log(status);
     
-    res.status(ResponseHandler(statusANDData)).send(statusANDData);
+    res.status(ResponseHandler(status)).send(status);
 
 });
-
-////////////////////////////////////////////////////// GET Requests/////////////////////////////////////////////////////
-
 
 // Request No: 02
 router.get('/getPassengersByDestination',async function(req, res){
@@ -65,9 +63,7 @@ router.get('/getPastFlights',async function(req, res){
 
 });
 
-//Request No: 06
-
-
+//Request No: 05
 router.get('/getRevenueByAircraftType',async function(req, res){
 
     var method = new Method(req,res);
@@ -196,22 +192,4 @@ router.post('/GuestUserLogin',async function(req, res){
 ////////////////////////////////////////////////////// DELETE Requests/////////////////////////////////////////////////////
 
 module.exports = router;
-
-
-
-
-
-
-
-
-/* Request No: 05
-Description: Given origin and destination, all past flights, states, passenger counts data
-Request Type: GET/POST/DELETE/UPDATE 
-Request URL: 
-Response: What is given in Response
-SQL Query: SQL query to Access DB */
-
-
-
-
 

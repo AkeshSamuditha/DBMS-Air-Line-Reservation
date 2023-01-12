@@ -171,9 +171,9 @@ var ExtractRegUser =async function(req,res, next){
         next();
     }
     catch(err){
-        console.log(err);
-        console.log("Invaild token"); //when token expires
-        res.sendStatus(203);
+      console.log(err);
+      console.log("Invaild token"); //when token expires
+      res.sendStatus(203);
     }
 }
 

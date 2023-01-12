@@ -3,6 +3,141 @@ const {executeSQL} = require("../DB/db");
 class UserControl{
 
     /////////////////////////// GET ///////////////////////////	
+    
+    
+    
+    async getPassengersByFlight(method) {
+        try {
+        const body = method.getBody();
+        
+        const Destination_ID = body.Destination_ID;
+        const From_Date = body.From_Date;
+        const To_Date = body.To_Date;
+    
+        const sqlQuary = `
+            SELECT (
+                SELECT COUNT(*) 
+                FROM tickets 
+                WHERE adult_or_child LIKE '%A%' AND flight = ?) as Above_18, (
+                SELECT COUNT(*) 
+                FROM tickets 
+                WHERE adult_or_child LIKE '%C%'AND flight = ?) as Below_18;`;
+
+        const data = await executeSQL(sqlQuary,[Flight_ID,Flight_ID]);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }  
+    //2
+    async getPassengersByDestination(method) {
+        try {
+            const body = method.getBody();
+
+            const Destination_ID = body.Destination_ID;
+            const From_Date = body.From_Date;
+            const To_Date = body.To_Date;
+
+            const sqlQuary = `
+                SELECT COUNT(*) 
+                FROM tickets 
+                WHERE flight IN (
+                    SELECT flight_ID 
+                    FROM flights 
+                    WHERE (route IN (
+                        SELECT route_ID 
+                        FROM routes 
+                        WHERE destination_ID = ?) 
+                    AND date_of_travel BETWEEN ? AND ?));
+            `;
+
+            const data = await executeSQL(sqlQuary,[Destination_ID,From_Date,To_Date]);
+                return(data);
+            }catch(err){
+                return err;
+        }
+    }
+    //3
+    async getBookingsByPassengerType(method) {
+        try {
+            const body = method.getBody();
+
+            const From_Date = body.From_Date;
+            const To_Date = body.To_Date;
+
+
+            const sqlQuary = `
+            SELECT (
+                    SELECT COUNT(*) 
+                    FROM tickets, users 
+                    WHERE users.PID = tickets.PID 
+                    AND Time_of_booking BETWEEN ? AND ? 
+                    AND user_type LIKE '%G%') AS Guests,
+                    (SELECT COUNT(*) 
+                    FROM tickets, users 
+                    WHERE users.PID = tickets.PID 
+                    AND Time_of_booking BETWEEN ? AND ? 
+                    AND user_type LIKE '%R%') AS Registered;`;
+
+            const data = await executeSQL(sqlQuary,[From_Date,To_Date,From_Date,To_Date]);
+            return(data);
+            }catch(err){
+                return err;
+        }
+    }
+
+    //4
+    async getPastFlights(method) {
+        try {
+            const body = method.getBody();
+
+            const Origin_ID = body.Origin_ID;
+            const Destination_ID = body.Destination_ID;
+
+            const sqlQuary = `
+                SELECT flight_ID, airplane, date_of_travel, dep_time, arr_time, (seat_count-(tickets_RemainingB + tickets_RemainingE + tickets_RemainingP)) as passenger_count
+                FROM (flights LEFT JOIN Airplanes_w_seasts 
+                ON airplane = airplane_ID)
+                WHERE route IN (
+                    SELECT route_ID
+                    FROM routes
+                    WHERE origin_ID = ? AND destination_ID = ? AND date_of_travel < CURDATE());`;
+
+            const data = await executeSQL(sqlQuary,[Origin_ID,Destination_ID]);
+
+            return(data);
+            }catch(err){
+                return err;
+        }
+    }
+        
+    //5
+    async getRevenueByAircraftType(method) {
+        try {
+            const body = method.getBody();
+
+            const Model = body.Model;
+            const Brand = body.Brand;
+
+            const sqlQuary = `
+                SELECT model_ID, model, brand, revenue
+                FROM flights LEFT JOIN (
+                    SELECT airplane_ID, model_ID, airplane_models.model, brand
+                    FROM airplanes LEFT JOIN airplane_models
+                    ON model_ID = airplanes.model) as A
+                ON airplane = airplane_ID
+                GROUP BY model_ID;`;
+
+            const data = await executeSQL(sqlQuary);
+            return(data);
+            
+        }catch(err){
+            return err;
+        }
+    }
+
+
+    
     //8
     async getFlights(method) {
         try {

@@ -7,16 +7,6 @@ import "./../Button.css";
 import axios from "axios";
 import Footer from "../Footer";
 
-function useToken() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
-  useEffect(() => {
-    localStorage.setItem("token", token);
-  }, [token]);
-
-  return [token, setToken];
-}
-
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +14,16 @@ export default function Login() {
   const [loginStatus, setLoginStatus] = useState("");
 
   const [token, setToken] = useToken();
+
+  function useToken() {
+    const [token, setToken] = useState(localStorage.getItem("token"));
+
+    useEffect(() => {
+      localStorage.setItem("token", token);
+    }, [token]);
+
+    return [token, setToken];
+  }
 
   useEffect(() => {
     console.log(token);

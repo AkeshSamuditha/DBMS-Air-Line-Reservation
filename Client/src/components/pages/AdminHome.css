@@ -1,0 +1,89 @@
+.container {
+  /* margin: 10px 20px 10px 20px; */
+  margin: 10px auto;
+  border-radius: 5px;
+}
+
+/* styling for the first span element */
+span:nth-child(1) {
+  color: black;
+  font-size: 18px;
+}
+
+/* styling for the second span element */
+span:nth-child(2) {
+  color: black;
+  /* text-decoration: underline; */
+  font-weight: bolder;
+}
+
+/* styling for the third span element */
+span:nth-child(3) {
+  color: black;
+  font-size: 18px;
+}
+h1 {
+  color: black;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-item {
+  background-color: rgba(1, 21, 133, 0.573);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.adminForm {
+  width: 400px; /* Set the width of the form */
+  margin: 20px auto; /* Center the form on the page */
+  text-align: center; /* Center the form's content */
+  padding: 30px; /* Add some padding to the form */
+  background-color: #ffffff; /* White background color for the form */
+  border: 1px solid #cccccc; /* Gray border for the form */
+  border-radius: 10px; /* Round the corners of the form */
+  box-shadow: 0px 0px 10px #cccccc; /* Add a shadow to the form */
+}
+.adminFormSelect {
+  width: 100%; /* Make the select field take up the full width of the form */
+  padding: 12px 20px; /* Add some padding to the select field */
+  margin-bottom: 20px; /* Add some margin at the bottom of the select field */
+  border: 1px solid #cccccc; /* Add a gray border to the select field */
+  border-radius: 5px; /* Round the corners of the select field */
+  box-sizing: border-box; /* Make sure the select field takes into account the border and padding */
+}
+
+/* Style the labels */
+.adminFormLabel {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.adminFormInput {
+  width: 100%; /* Make the input fields take up the full width of the form */
+  padding: 12px 20px; /* Add some padding to the input fields */
+  margin-bottom: 20px; /* Add some margin at the bottom of the input fields */
+  border: 1px solid #cccccc; /* Add a gray border to the input fields */
+  border-radius: 5px; /* Round the corners of the input fields */
+  box-sizing: border-box; /* Make sure the input fields take into account the border and padding */
+}
+
+.space {
+  height: 30px;
+}
+h2 {
+  text-align: center;
+}
+
+.admin-btn-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  align-content: flex-end;
+}

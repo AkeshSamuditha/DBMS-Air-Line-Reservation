@@ -27,12 +27,6 @@ function Navbar() {
 
   const [token, setToken] = useToken();
 
-  const config = {
-    headers: {
-      Authorization: token,
-    },
-  };
-
   const logout = () => {
     axios
       .delete(
@@ -40,9 +34,8 @@ function Navbar() {
         {
           headers: {
             Authorization: token,
-          },
-        },
-        config
+          }
+        }
       )
       .then((response) => {
         console.log(response);

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
+import Footer from "../Footer";
 
 function useToken() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -58,64 +59,70 @@ export default function Login() {
   return (
     <>
       {token ? (
-        <div className="logged-in">
-          <div className="logged-in-container">
-            <div className="heading">
-              <h1>You are logged in</h1>
-            </div>
-            <br />
-            <div className="back-link">
-              <Link to={"/"}>Go to home</Link>
+        <>
+          <div className="logged-in">
+            <div className="logged-in-container">
+              <div className="heading">
+                <h1>You are logged in</h1>
+              </div>
+              <br />
+              <div className="back-link">
+                <Link to={"/"}>Go to home</Link>
+              </div>
             </div>
           </div>
-        </div>
+          <Footer />
+        </>
       ) : (
-        <div className="log-in">
-          <div className="input-areas-login">
-            <form>
-              <input
-                className="footer-input"
-                name="email"
-                type="email"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                placeholder="Your Email"
-                required
-              />
-            </form>
-            <form>
-              <input
-                className="footer-input"
-                name="password"
-                type="password"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                placeholder="Password"
-                required
-              />
-            </form>
-            <div className="log-in-btns">
-              <Link to="/Auth/login" target={"_self"}>
-                <Button
-                  className="btns"
-                  buttonStyle="btn--outline"
-                  buttonSize="btn--large"
-                  onClick={login}
-                >
-                  Log In
-                </Button>
-              </Link>
-            </div>
-            <div className="login-status">{loginStatus}</div>
-            <div className="sign-up-redirect">
-              <Link to="./Register" style={{ color: "white" }}>
-                Don't have an account? Sign Up
-              </Link>
+        <>
+          <div className="log-in">
+            <div className="input-areas-login">
+              <form>
+                <input
+                  className="footer-input"
+                  name="email"
+                  type="email"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  placeholder="Your Email"
+                  required
+                />
+              </form>
+              <form>
+                <input
+                  className="footer-input"
+                  name="password"
+                  type="password"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                  placeholder="Password"
+                  required
+                />
+              </form>
+              <div className="log-in-btns">
+                <Link to="/Auth/login" target={"_self"}>
+                  <Button
+                    className="btns"
+                    buttonStyle="btn--outline"
+                    buttonSize="btn--large"
+                    onClick={login}
+                  >
+                    Log In
+                  </Button>
+                </Link>
+              </div>
+              <div className="login-status">{loginStatus}</div>
+              <div className="sign-up-redirect">
+                <Link to="./Register" style={{ color: "white" }}>
+                  Don't have an account? Sign Up
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+          <Footer />
+        </>
       )}
     </>
   );

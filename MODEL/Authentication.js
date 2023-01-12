@@ -143,7 +143,7 @@ async function logout(user){
 
 
 const getAccessToken = (data)=>{
-    token = sign(data, ACCESS_TOKEN_SECRECT,{algorithm: "HS256",expiresIn:"500m"});
+  token = sign(data, ACCESS_TOKEN_SECRECT,{algorithm: "HS256",expiresIn:"500m"});
   console.log(token);
   return token;
 };
@@ -164,7 +164,7 @@ var ExtractRegUser =async function(req,res, next){
       await user.setLastUsedTime();
       req.user = user;
 
-            const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
+      const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
       res.header("token", token);
     }
 

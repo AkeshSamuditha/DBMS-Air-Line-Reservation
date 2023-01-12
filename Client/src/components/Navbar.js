@@ -27,11 +27,11 @@ function Navbar() {
 
   const [token, setToken] = useToken();
 
-  const config = {
-    headers: {
-      Authorization: token,
-    },
-  };
+  // useEffect(() => {
+  //   if (token !== localStorage.getItem("token")) {
+  //     localStorage.setItem("token", token);
+  //   }
+  // }, [token]);
 
   const logout = () => {
     axios
@@ -41,8 +41,7 @@ function Navbar() {
           headers: {
             Authorization: token,
           },
-        },
-        config
+        }
       )
       .then((response) => {
         console.log(response);

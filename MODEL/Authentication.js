@@ -73,10 +73,11 @@ async function login(method) {
 
     const status = await compare(Password, credential[0].Password);
     const PID = credential[0].PID;
-    const UserName = credential[0].UserName;
-    const fname = credential[0].First_Name;
-    const lname = credential[0].Last_Name;
-
+    const UserName = credential[0].username;
+    const fname = credential[0].first_Name;
+    const lname = credential[0].last_Name;
+      
+    // console.log("1",fname, lname, credential)
     if (status) {
       console.log("Password Matched");
       var user = userFactory(PID, UserName, "Registered", fname, lname);

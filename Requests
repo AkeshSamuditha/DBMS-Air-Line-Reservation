@@ -169,7 +169,7 @@ input:
 Response: NONE
 SQL_Query: CALL cancel_ticket("Ticket_ID")
 
-Request_No: 12 
+Request_No: 12 ✅ 
 Description: Seat Price
 Type: Get
 URL: http://localhost:3000/api/SeatPrice

@@ -20,11 +20,8 @@ class Method{
     searchURL(query){
         return this.url.searchParams.get(query);
     }
-    getToken(){
-        console.log(this.req.headers);
+    getToken() {
         var token = this.req.headers["authorization"];
-        console.log("Ai bn uba mehema", token);
-        return(token);
     }
 
     setUser(user){

@@ -1,8 +1,8 @@
-const {hash,compare} = require("bcryptjs");
-const {executeSQL} = require("../DB/db");
-const {sign, verify} = require("jsonwebtoken");
+const { hash, compare } = require("bcryptjs");
+const { executeSQL } = require("../DB/db");
+const { sign, verify } = require("jsonwebtoken");
 const Method = require("../Controller/method");
-const {RegUser} = require("./User");
+const { RegUser } = require("./User");
 const { parse } = require('querystring');
 const ACCESS_TOKEN_SECRECT = "Group20Project";
 
@@ -24,7 +24,7 @@ async function register(method) {
 
   try {
     const data = await executeSQL(
-      "SELECT UserName FROM registered_users WHERE UserName = ?",
+      "SELECT username FROM registered_users WHERE UserName = ?",
       [UserName]
     );
 
@@ -64,12 +64,12 @@ async function login(method) {
 
   try {
     const credential = await executeSQL(
-      "SELECT users.PID, UserName , Password, First_Name, Last_Name FROM users join registered_users on users.PID = registered_users.PID WHERE users.Email =?",
+      "SELECT users.PID, username, password, first_Name, last_Name FROM users JOIN registered_users on users.PID = registered_users.PID WHERE users.email =?",
       [Email]
     );
-    console.log(method.body);
+    // console.log(method.body);
     if (!credential[0]) return "Error : Invalid Email or Password";
-    console.log(credential[0].Password);
+    // console.log(credential[0].Password);
 
     const status = await compare(Password, credential[0].Password);
     const PID = credential[0].PID;
@@ -85,7 +85,7 @@ async function login(method) {
         RegUsers.delete(PID);
 
         await executeSQL(
-          "UPDATE session_table SET Session_id = ?, Last_used_time=? WHERE User_Id= ?",
+          "UPDATE session_table SET Session_id = ?, last_used_time=? WHERE user_Id= ?",
           [user.sessionID, Number(new Date().getTime()), user.PID]
         );
 
@@ -127,15 +127,15 @@ async function login(method) {
 
 async function logout(user){
 
-    RegUsers.delete(user.PID);
+  RegUsers.delete(user.PID);
 
-    try{
-        await executeSQL('DELETE FROM session_table WHERE User_ID = ?',[user.PID]);
-    }
+  try {
+    await executeSQL('DELETE FROM session_table WHERE user_iD = ?', [user.PID]);
+  }
     catch(e){
-        console.log("database error");
-    }
-    
+    console.log("database error");
+  }
+
     return(user.UserName + " Successfully Logged Out !!!")
 
 }
@@ -144,8 +144,8 @@ async function logout(user){
 
 const getAccessToken = (data)=>{
     token = sign(data, ACCESS_TOKEN_SECRECT,{algorithm: "HS256",expiresIn:"500m"});
-    console.log(token);
-    return token;
+  console.log(token);
+  return token;
 };
 
 
@@ -153,86 +153,84 @@ var ExtractRegUser =async function(req,res, next){
 
     var method = new Method(req,res);
 
-    var token = method.getToken();
-    console.log(token);
-    try{
-        const {sessionID,PID} = verify(token,ACCESS_TOKEN_SECRECT);
-        if(sessionID){
-            
-            var user = RegUsers.get(PID);
-            console.log(user);
-            await user.setLastUsedTime();
-            req.user = user;
+  var token = method.getToken();
+  // console.log(token);
+  try {
+    const { sessionID, PID } = verify(token, ACCESS_TOKEN_SECRECT);
+    if (sessionID) {
+
+      var user = RegUsers.get(PID);
+      // console.log(user);
+      await user.setLastUsedTime();
+      req.user = user;
 
             const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
-            res.header("token", token);
-        }
+      res.header("token", token);
+    }
 
-        next();
-    }
+    next();
+  }
     catch(err){
-        console.log(err);
-        console.log("Invaild token"); //when token expires
-        res.sendStatus(203);
-    }
+    console.log(err);
+    console.log("Invaild token"); //when token expires
+    res.sendStatus(203);
+  }
 }
 
 var UpdateSession =async function(req,res, next){
 
     var method = new Method(req,res);
 
-    var token = method.getToken();
-    console.log(token);
-    
-    console.log(token);
-    try{
-        const {sessionID,PID} = verify(token,ACCESS_TOKEN_SECRECT);
-        if(sessionID){
-            
-            var user = RegUsers.get(PID);
-            console.log(user);
-            await user.setLastUsedTime();
-            req.user = user;
+  var token = method.getToken();
+  // console.log(token);
+  try {
+    const { sessionID, PID } = verify(token, ACCESS_TOKEN_SECRECT);
+    if (sessionID) {
+
+      var user = RegUsers.get(PID);
+      // console.log(user);
+      await user.setLastUsedTime();
+      req.user = user;
 
             const token = getAccessToken({sessionID:user.sessionID,PID:user.PID});
-            res.header("token", token);
-        }
+      res.header("token", token);
+    }
 
-        next();
-    }
+    next();
+  }
     catch(err){
-        //console.log(err);
-        console.log("Invaild token or no token"); //when token expires
-        next();
-    }
+    //console.log(err);
+    console.log("Invaild token or no token"); //when token expires
+    next();
+  }
 }
 
 
 var RestoreSession = async function(){
 
-    console.log("Restoring Sessions");
+  console.log("Restoring Sessions");
 
-    var data = null;
+  var data = null;
 
-    try{
-        data = await executeSQL('SELECT * FROM session_table LEFT JOIN users on session_table.User_Id = users.PID LEFT JOIN registered_users on session_table.User_Id = registered_users.PID');
-    }catch(e){
-        console.log(e);
-        console.log("error");
-    }
-    //console.log(data);
-   
+  try {
+    data = await executeSQL('SELECT * FROM session_table LEFT JOIN users ON session_table.User_Id = users.PID LEFT JOIN registered_users ON session_table.user_Id = registered_users.PID');
+  } catch (e) {
+    console.log(e);
+    console.log("error");
+  }
+  //console.log(data);
+
     if (data == null){
-        return;
-    }
+    return;
+  }
     for (const [key, value] of data.entries()){
 
         var user = userFactory(value.PID,value.UserName,"Registered",value.First_Name,value.Last_Name,value.Session_id,value.Last_used_time);
         RegUsers.set(value.PID,user)
-    
-    }
 
-    ShowCurrentUsers();
+  }
+
+  ShowCurrentUsers();
 }
 
 
@@ -243,17 +241,17 @@ function userFactory(pid,username,type,fname,lname,sessionID,lastUsedTime){
 
 function ShowCurrentUsers(){
 
-    var CurrUsers = "Logged in: ";
-    console.log(RegUsers.entries());
+  var CurrUsers = "Logged in: ";
+  console.log(RegUsers.entries());
     for (const [key, value] of RegUsers.entries()){
         CurrUsers = CurrUsers + value.UserName + "  " ;
-    }
+  }
 
     if (CurrUsers=="Logged in: "){
-        console.log("Nobody Logged in");
+    console.log("Nobody Logged in");
     }else{
-        console.log(CurrUsers);
-    }
+    console.log(CurrUsers);
+  }
 }
 
 module.exports = {login,register,getAccessToken,ExtractRegUser,UpdateSession,RestoreSession,logout,ShowCurrentUsers};

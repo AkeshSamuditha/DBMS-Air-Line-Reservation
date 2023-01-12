@@ -127,7 +127,7 @@ function Navbar() {
                   {open ? (
                     <ul className="menu">
                       <li className="menu-item">
-                        <Link to="/seat-reservation" className="btn-mobile">
+                        <Link to="/Auth/UserProfile" className="btn-mobile">
                           <Button
                             buttonStyle="btn--dropdown"
                             buttonSize="btn--dropdown_size"

@@ -8,6 +8,7 @@
 .home,
 .book-a-flight,
 .destinations,
+.userprofile,
 .log-in,
 .sign-up {
   display: flex;
@@ -35,6 +36,14 @@
   font-size: 100px;
 }
 
+.userprofile {
+  background-image: url('/public/images/img-9.jpg');
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
 .log-in {
   background-image: url('/public/images/img-8.jpg');
   background-position: center;

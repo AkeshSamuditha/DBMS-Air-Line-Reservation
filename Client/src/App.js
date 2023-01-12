@@ -8,6 +8,7 @@ import Destinations from "./components/pages/Destinations";
 import LogIn from "./components/pages/LogIn";
 import SignUp from "./components/pages/SignUp";
 import LogOut from "./components/pages/LogOut";
+import UserProfile from "./components/pages/UserProfile";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
           <Route path="/Auth/login" component={LogIn} />
           <Route path="/Auth/Register" component={SignUp} />
           <Route path="/Auth/Logout" component={LogOut} />
+          <Route path="/Auth/UserProfile" component={UserProfile} />
+          <Route path="admin-home" component={LogIn} />
+          <Route path="admin-flights" component={LogIn} />
         </Switch>
       </Router>
     </>

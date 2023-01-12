@@ -23,17 +23,17 @@ export default function BookAFlight() {
                 <br />
                 <select name="from" className="input-box" id="from">
                   <option value="default">Select</option>
+                  <option value="DPS">Bali (DPS)</option>
+                  <option value="BKK">Bangkok (BKK)</option>
+                  <option value="MAA">Chennai (MAA)</option>
                   <option value="BIA">Colombo (BIA)</option>
+                  <option value="CGK">Indonesia (CGK)</option>
                   <option value="HRI">Maththala (MRI)</option>
                   <option value="BFK">Minnesota (BFK)</option>
-                  <option value="DEL">New Delhi (DEL)</option>
                   <option value="BOM">Mumbai (BOM)</option>
-                  <option value="MAA">Chennai (MAA)</option>
-                  <option value="BKK">Bangkok (BKK)</option>
-                  <option value="SIN">Singapore (SIN)</option>
-                  <option value="CGK">Indonesia (CGK)</option>
-                  <option value="DPS">Bali (DPS)</option>
+                  <option value="DEL">New Delhi (DEL)</option>
                   <option value="JFK">New York (JFK)</option>
+                  <option value="SIN">Singapore (SIN)</option>
                 </select>
               </div>
 
@@ -42,23 +42,23 @@ export default function BookAFlight() {
                 <br />
                 <select name="to" className="input-box" id="to">
                   <option value="default">Select</option>
+                  <option value="DPS">Bali (DPS)</option>
+                  <option value="BKK">Bangkok (BKK)</option>
+                  <option value="MAA">Chennai (MAA)</option>
                   <option value="BIA">Colombo (BIA)</option>
+                  <option value="CGK">Indonesia (CGK)</option>
                   <option value="HRI">Maththala (MRI)</option>
                   <option value="BFK">Minnesota (BFK)</option>
-                  <option value="DEL">New Delhi (DEL)</option>
                   <option value="BOM">Mumbai (BOM)</option>
-                  <option value="MAA">Chennai (MAA)</option>
-                  <option value="BKK">Bangkok (BKK)</option>
-                  <option value="SIN">Singapore (SIN)</option>
-                  <option value="CGK">Indonesia (CGK)</option>
-                  <option value="DPS">Bali (DPS)</option>
+                  <option value="DEL">New Delhi (DEL)</option>
                   <option value="JFK">New York (JFK)</option>
+                  <option value="SIN">Singapore (SIN)</option>
                 </select>
               </div>
             </div>
             <div className="Parent">
               <div className="child1">
-                <label for="depart">Time Period From</label>
+                <label for="depart">From Date</label>
                 <br />
                 <input
                   type="date"
@@ -69,7 +69,7 @@ export default function BookAFlight() {
                 />
               </div>
               <div className="child2">
-                <label for="return">Time Period To</label>
+                <label for="return">To Date</label>
                 <br />
                 <input
                   type="date"

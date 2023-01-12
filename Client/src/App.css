@@ -11,7 +11,8 @@
 .userprofile,
 .log-in,
 .sign-up,
-.guest-user {
+.guest-user,
+.admin-login {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -45,8 +46,18 @@
   color: #fff;
   font-size: 100px;
 }
+
 .log-in {
   background-image: url("/public/images/img-8.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
+
+.admin-login {
+  background-image: url('/public/images/img-11.jpg');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -61,6 +72,7 @@
   height: 89vh;
   text-align: center;
 }
+
 .sign-up {
   background-image: url("/public/images/img-4.jpg");
   background-position: center;

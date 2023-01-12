@@ -56,7 +56,7 @@ export default function AdminLogIn() {
   }
 
   return (
-    <div className="log-in">
+    <div className="admin-login">
       <div className="input-areas-login">
         <form>
           <input

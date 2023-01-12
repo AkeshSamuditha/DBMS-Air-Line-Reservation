@@ -7,13 +7,15 @@ class UserControl{
     async getFlights(method) {
         try {
             const body = method.getBody();
-            const From = body.From;
-            const To = body.To;
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
+            const From = body.from;
+            const To = body.to;
+            const From_Date = body.from_date;
+            const To_Date = body.to_date;
+            // console.log(body)
+            // console.log("SHIT",From,To,From_Date,To_Date);
 
             const sqlQuary = `
-                SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status
+                SELECT flight_ID, date_of_travel, dep_time, arr_time, tickets_remainingP, tickets_remainingB, tickets_remainingE, flight_Status
                 FROM flights
                 WHERE route = (
                     SELECT route_ID
@@ -23,6 +25,7 @@ class UserControl{
                 ) AND (Tickets_remainingP + Tickets_remainingB + Tickets_remainingE > 0);`;
 
             const data = await executeSQL(sqlQuary,[From,To,From_Date,To_Date]);
+            // console.log(data);
             return(data);
         }catch(err){
             return err;
@@ -103,7 +106,7 @@ class UserControl{
         }
     }
 
-    
+
     async RGetPastFlights(user){
         try{
             const data = await user.RGetPastFlights();

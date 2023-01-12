@@ -40,17 +40,17 @@ export default function BookAFlight() {
       ToDate
     );
     axios
-      .post("http://localhost:3000/api/getflights", {
-        From: Location01,
-        To: Location02,
-        From_Date: FromDate,
-        To_Date: ToDate,
+      .post("http://localhost:6969/api/getFlights", {
+        from: Location01,
+        to: Location02,
+        from_date: FromDate,
+        to_date: ToDate,
       })
       .then((response) => {
         console.log("shit", response);
         if (response.data.status == "400") {
         } else {
-          console.log(response);
+          console.log(response.data);
           // window.location.reload();
         }
       });

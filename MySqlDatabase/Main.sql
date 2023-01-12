@@ -117,7 +117,7 @@ CREATE TABLE admins(
 	admin_password VARCHAR(60) NOT NULL,
 	
 	PRIMARY KEY(admin_id),
-	CHECK LENGTH(admin_password) >= 8
+	CHECK (LENGTH(admin_password) >= 8)
 );
 
 

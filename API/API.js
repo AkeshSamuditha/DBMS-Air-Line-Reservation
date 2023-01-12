@@ -30,12 +30,12 @@ router.get('/getReservation',async function(req, res){
 
 
 // Request No: 08
-router.get('/getFlights',async function(req, res){
+router.post('/getFlights',async function(req, res){
 
     var method = new Method(req,res);
-    
+    // console.log("method body", req);
     const status = await uController.getFlights(method);
-    console.log(status);
+    // console.log(status);
     
     res.status(ResponseHandler(status)).send(status);
 

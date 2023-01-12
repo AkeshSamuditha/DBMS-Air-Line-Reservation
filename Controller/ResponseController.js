@@ -8,7 +8,6 @@ function ResponseHandler(status) {
       return "200";
     }
   } else {
-    console.log("2");
     return "200";
   }
 }

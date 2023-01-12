@@ -1,62 +1,68 @@
-insert into user_categories(User, Discription, Discount, Threashold) values ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
-insert into class_types(Class, Discription, Price_per_air_mile) values ('E', 'Economy', 8), ('B','Buisness',15), ('F','First',25);
-
-Insert into Locations(Location) values('Sri Lanka');
-Insert into Locations(Location, Parent_ID) values('Colombo', 1);
-Insert into Locations(Location) values('USA');
-Insert into Locations(Location, Parent_ID) values('New York State', 3);
-Insert into Locations(Location, Parent_ID) values('New York City', 4);
-Insert into Locations(Location, Parent_ID) values('Hambantota', 1);
-Insert into Locations(Location) values('India');
-Insert into Locations(Location, Parent_ID) values('Delhi', 7);
-Insert into Locations(Location, Parent_ID) values('Palam', 8);
-Insert into Locations(Location, Parent_ID) values('Maharashtra', 7);
-Insert into Locations(Location, Parent_ID) values('Mumbai', 10);
-Insert into Locations(Location, Parent_ID) values('Tamil Nadu', 7);
-Insert into Locations(Location, Parent_ID) values('Chennai', 12);
-Insert into Locations(Location) values('Thailand');
-Insert into Locations(Location, Parent_ID) values('Bangkok',14);
-Insert into Locations(location) values('Singapore');
-Insert into Locations(Location) values('Indoneasia');
-Insert into Locations(Location, Parent_ID) values('Jakarta', 17);
-Insert into Locations(Location, Parent_ID) values('Bali Island', 17);
-Insert into Locations(Location, Parent_ID) values('Oklohoma', 3);
-Insert into Locations(Location, Parent_ID) values('Buffalo City', 20);
+INSERT INTO user_categories(category, discription, Discount, threashold) VALUES ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
+INSERT INTO class_types(class, discription, price_per_air_mile) VALUES ('E', 'Economy', 8), ('B','Buisness',15), ('P','Platinum',25);
+INSERT INTO admins(admin_name, admin_password) VALUES ('admin', 'admin'); 
 
 
-insert into Users(Title, First_Name, Last_Name, Email, Telephone, Country) 
-values('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.com', '+94701123891',  'Sri Lanka'), ('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka'),('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka');
+INSERT INTO locations(location) VALUES('Sri Lanka');
+INSERT INTO locations(location, parent_ID) VALUES('Colombo', 1);
+INSERT INTO locations(location) VALUES('USA');
+INSERT INTO locations(location, parent_ID) VALUES('New York State', 3);
+INSERT INTO locations(location, parent_ID) VALUES('New York City', 4);
+INSERT INTO locations(location, parent_ID) VALUES('Hambantota', 1);
+INSERT INTO locations(location) VALUES('India');
+INSERT INTO locations(location, parent_ID) VALUES('Delhi', 7);
+INSERT INTO locations(location, parent_ID) VALUES('Palam', 8);
+INSERT INTO locations(location, parent_ID) VALUES('Maharashtra', 7);
+INSERT INTO locations(location, parent_ID) VALUES('Mumbai', 10);
+INSERT INTO locations(location, parent_ID) VALUES('Tamil Nadu', 7);
+INSERT INTO locations(location, parent_ID) VALUES('Chennai', 12);
+INSERT INTO locations(location) VALUES('Thailand');
+INSERT INTO locations(location, parent_ID) VALUES('Bangkok',14);
+INSERT INTO locations(location) VALUES('Singapore');
+INSERT INTO locations(location) VALUES('Indoneasia');
+INSERT INTO locations(location, parent_ID) VALUES('Jakarta', 17);
+INSERT INTO locations(location, parent_ID) VALUES('Bali Island', 17);
+INSERT INTO locations(location, parent_ID) VALUES('Oklohoma', 3);
+INSERT INTO locations(location, parent_ID) VALUES('Buffalo City', 20);
 
-Insert into Airports(Airport_code, Airport_Name, Location) values('BIA','Bandaranaike International Airport' ,2);
-Insert into Airports(Airport_code, Airport_Name, Location) values('HRI','Mattala Rajapaksa International Airport', 6);
-Insert into Airports(Airport_code, Airport_Name, Location) values('BFK', 'Buffalo Municipal Airport', 21 );
-Insert into Airports(Airport_code, Airport_Name, Location) values('DEL', 'Indira Gandhi International Airport', 9);
-Insert into Airports(Airport_code, Airport_Name, Location) values('BOM', 'Chhatrapati Shivaji Maharaj International Airport', 11);
-Insert into Airports(Airport_code, Airport_Name, Location) values('MAA', 'Chennai International Airport', 13 );
-Insert into Airports(Airport_code, Airport_Name, Location) values('BKK', 'Bangkok Airport ', 15);
-Insert into Airports(Airport_code, Airport_Name, Location) values('SIN', 'Singapore Changi Airport', 16);
-Insert into Airports(Airport_code, Airport_Name, Location) values('CGK', 'Soekarno–Hatta International Airport', 18);
-Insert into Airports(Airport_code, Airport_Name, Location) values('DPS', 'Denpasar Bali Airport', 19);
-Insert into Airports(Airport_code, Airport_Name, Location) values('JFK', 'John F. Kennedy International Airport', 5);
+
+INSERT INTO users(title, first_Name, last_Name, email, telephone, country) VALUES
+('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.com', '+94701123891',  'Sri Lanka'),
+('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka'),
+('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka');
 
 
-insert into Routes values ('R1','BIA','JFK', 9396.32);
-insert into Routes values ('R2','BOM','JFK', 8542.41 );
-insert into Routes values ('R3','BIA','BOM', 948.51 );
-insert into Routes values ('R4','DEL','JFK', 7913.95 );
-insert into Routes values ('R5','MAA','JFK', 8995.55 );
-insert into Routes values ('R6','SIN','JFK', 9395.88 );
-insert into Routes values ('R7','CGK','JFK', 9745.95 );
-insert into Routes values ('R8','JFK','CGK', 9745.95 );
-insert into Routes values ('R9','JFK','SIN', 9395.88 );
-insert into Routes values ('R10','JFK','DEL', 7913.95 );
-insert into Routes values ('R11','JFK','BOM', 8542.41 );
-insert into Routes values ('R12','JFK','BIA', 9396.32);
-insert into Routes values ('R13','BOM','BIA', 948.51 );
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('BIA','Bandaranaike International Airport' ,2);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('HRI','Mattala Rajapaksa International Airport', 6);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('BFK', 'Buffalo Municipal Airport', 21 );
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('DEL', 'Indira Gandhi International Airport', 9);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('BOM', 'Chhatrapati Shivaji Maharaj International Airport', 11);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('MAA', 'Chennai International Airport', 13 );
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('BKK', 'Bangkok Airport ', 15);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('SIN', 'Singapore Changi Airport', 16);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('CGK', 'Soekarno–Hatta International Airport', 18);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('DPS', 'Denpasar Bali Airport', 19);
+INSERT INTO airports(airport_code, airport_Name, location) VALUES('JFK', 'John F. Kennedy International Airport', 5);
 
-insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M1', 'Boeing','747','20', '50', '400','4');
-insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M2','Airbus','A350','20', '50','700','5');
-insert into AirPlane_Models(Model_ID, Model, Brand, seat_count_First_Class,seat_count_Buisness_Class,seat_count_Economy_Class, No_of_planes) values ('M3','Airbus','A352','20', '50','900','1');
+
+INSERT INTO routes VALUES ('R1','BIA','JFK', 9396.32);
+INSERT INTO routes VALUES ('R2','BOM','JFK', 8542.41 );
+INSERT INTO routes VALUES ('R3','BIA','BOM', 948.51 );
+INSERT INTO routes VALUES ('R4','DEL','JFK', 7913.95 );
+INSERT INTO routes VALUES ('R5','MAA','JFK', 8995.55 );
+INSERT INTO routes VALUES ('R6','SIN','JFK', 9395.88 );
+INSERT INTO routes VALUES ('R7','CGK','JFK', 9745.95 );
+INSERT INTO routes VALUES ('R8','JFK','CGK', 9745.95 );
+INSERT INTO routes VALUES ('R9','JFK','SIN', 9395.88 );
+INSERT INTO routes VALUES ('R10','JFK','DEL', 7913.95 );
+INSERT INTO routes VALUES ('R11','JFK','BOM', 8542.41 );
+INSERT INTO routes VALUES ('R12','JFK','BIA', 9396.32);
+INSERT INTO routes VALUES ('R13','BOM','BIA', 948.51 );
+
+
+INSERT INTO airplane_models(model_ID, model, brand, seat_countP,seat_countB,seat_countE, no_of_planes) VALUES ('M1', 'Boeing','747','20', '100', '450','4');
+INSERT INTO airplane_models(model_ID, model, brand, seat_countP,seat_countB,seat_countE, no_of_planes) VALUES ('M2','Airbus','A350','25', '60','270','5');
+INSERT INTO airplane_models(model_ID, model, brand, seat_countP,seat_countB,seat_countE, no_of_planes) VALUES ('M3','Airbus','A352','40', '80','240','1');
  
 
 CALL new_flight('F1','A1','R1','2023-01-01','04:15:00','15:00:00');
@@ -67,23 +73,55 @@ CALL new_flight('F5','A1','R5','2023-01-03','08:30:00','18:00:00');
 CALL new_flight('F6','A2','R6','2023-01-03','05:30:00','12:00:00');
 CALL new_flight('F7','A3','R7','2023-01-04','06:30:00','12:00:00');
 CALL new_flight('F8','A4','R9','2023-01-04','08:30:00','14:30:00');
-CALL new_flight('F9','A1','R8','2023-01-05','05:30:00','15:30:00');
+CALL new_flight('F9','A10','R8','2023-01-05','05:30:00','15:30:00');
 CALL new_flight('F10','A2','R10','2023-01-05','09:30:00','18:00:00');
 CALL new_flight('F11','A3','R8','2023-01-06','05:30:00','14:00:00');
+CALL new_flight('F12','A5','R13','2023-01-06','06:00:00','10:00:00');
+CALL new_flight('F13','A4','R7','2023-01-06','06:45:00','16:45:00');
+CALL new_flight('F14','A8','R11','2023-01-06','07:30:00','16:00:00');
+CALL new_flight('F15','A3','R9','2023-01-07','08:00:00','17:00:00');
+CALL new_flight('F16','A10','R7','2023-01-07','12:30:00','22:30:00');
+CALL new_flight('F17','A2','R12','2023-01-07','06:00:00','16:00:00');
+CALL new_flight('F18','A3','R12','2023-01-08','07:00:00','17:00:00');
+CALL new_flight('F19','A4','R8','2023-01-07','06:30:00','15:00:00');
+CALL new_flight('F20','A5','R3','2023-01-07','08:30:00','09:30:00');
+CALL new_flight('F21','A1','R8','2023-01-08','05:30:00','15:30:00');
+CALL new_flight('F22','A6','R1','2023-01-08','04:15:00','15:00:00');
+CALL new_flight('F23','A3','R3','2023-01-09','09:30:00','10:45:00');
+CALL new_flight('F24','A4','R9','2023-01-08','09:30:00','15:30:00');
+CALL new_flight('F25','A5','R13','2023-01-08','05:00:00','09:00:00');
+CALL new_flight('F26','A9','R9','2023-01-09','08:00:00','17:00:00');
+CALL new_flight('F27','A2','R9','2023-01-09','08:30:00','17:45:00');
+CALL new_flight('F28','A3','R2','2023-01-10','05:30:00','14:00:00');
+CALL new_flight('F29','A4','R6','2023-01-09','05:30:00','12:00:00');
+CALL new_flight('F30','A6','R7','2023-01-09','04:15:00','15:00:00');
+CALL new_flight('F31','A6','R6','2023-01-10','05:45:00','12:30:00');
+CALL new_flight('F32','A1','R6','2023-01-10','05:30:00','12:00:00');
+CALL new_flight('F33','A2','R6','2023-01-10','06:30:00','13:00:00');
+CALL new_flight('F34','A3','R11','2023-01-11','07:30:00','16:00:00');
+CALL new_flight('F35','A10','R12','2023-01-10','07:00:00','17:00:00');
+CALL new_flight('F36','A5','R11','2023-01-10','08:30:00','17:45:00');
+CALL new_flight('F37','A6','R10','2023-01-11','09:30:00','18:00:00');
+CALL new_flight('F38','A1','R11','2023-01-11','07:30:00','16:00:00');
+CALL new_flight('F39','A2','R12','2023-01-11','07:00:00','17:00:00');
+CALL new_flight('F40','A7','R2','2023-01-12','08:30:00','17:00:00');
+CALL new_flight('F41','A4','R1','2023-01-11','04:15:00','15:00:00');
+CALL new_flight('F42','A5','R2','2023-01-11','05:30:00','14:00:00');
 
-CALL new_ticket('F2', 'E', 2, '2', 'A' );
-CALL new_ticket('F2', 'E', 3, '2', 'C' );
-CALL new_ticket('F1', 'E', 3, '1', 'A' );
-CALL new_ticket('F1', 'B', 1, '3', 'C' );
-CALL new_ticket('F1', 'F', 1, '1', 'A' );
-CALL new_ticket('F1', 'F', 2, '3', 'C' );
+
+CALL new_ticket('F2', 'E', '2', '2', 'A' );
+CALL new_ticket('F2', 'E', '3', '2', 'C' );
+CALL new_ticket('F1', 'E', '3', '1', 'A' );
+CALL new_ticket('F1', 'B', '1', '3', 'C' );
+CALL new_ticket('F1', 'P', '1', '1', 'A' );
+CALL new_ticket('F1', 'P', '2', '3', 'C' );
 
 
 select * from Flights;
 select * from airplanes;
 select * from tickets;
-SELECT * FROM Users;
-Select * from Locations;
-select * from AirPlane_Models;
+SELECT * FROM users;
+Select * from locations;
+select * from airPlane_models;
 select * from routes order by Route_ID;
-select * from Registered_Users;
+select * from Registered_users;

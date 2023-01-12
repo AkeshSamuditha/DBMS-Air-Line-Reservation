@@ -6,9 +6,7 @@ class UserControl{
     //1
     async getPassengersByFlight(method,user) {
         try {
-            const body = method.getBody();
-
-            const Flight_ID = body.Flight_ID;
+            const Flight_ID =  method.searchURL("Flight_ID");
 
             const data = await user.getPassengersByFlight(Flight_ID);
             return(data);
@@ -19,11 +17,9 @@ class UserControl{
     //2
     async getPassengersByDestination(method,user) {
         try {
-            const body = method.getBody();
-
-            const Destination_ID = body.Destination_ID;
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
+            const Destination_ID = method.searchURL("Destination_ID");
+            const From_Date = method.searchURL("From_Date");
+            const To_Date = method.searchURL("To_Date");
 
             const data = await user.getPassengersByDestination(Destination_ID,From_Date,To_Date);
             return(data);
@@ -34,10 +30,8 @@ class UserControl{
     //3
     async getBookingsByPassengerType(method,user) {
         try {
-            const body = method.getBody();
-
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
+            const From_Date = method.searchURL("From_Date");
+            const To_Date = method.searchURL("To_Date");
 
             const data = await user.getBookingsByPassengerType(From_Date,To_Date);
             return(data);
@@ -49,10 +43,8 @@ class UserControl{
     //4
     async getPastFlights(method,user) {
         try {
-            const body = method.getBody();
-
-            const Origin_ID = body.Origin_ID;
-            const Destination_ID = body.Destination_ID;
+            const Origin_ID = method.searchURL("Origin_ID");
+            const Destination_ID = method.searchURL("Destination_ID");
 
             const data = await user.getPastFlights(Origin_ID,Destination_ID);
             return(data);
@@ -64,10 +56,8 @@ class UserControl{
     //5
     async getRevenueByAircraftType(method,user) {
         try {
-            const body = method.getBody();
-
-            const Model = body.Model;
-            const Brand = body.Brand;
+            const Model = method.searchURL("Model");
+            const Brand = method.searchURL("Brand");
 
             const data = await user.getRevenueByAircraftType(Model,Brand);
             return(data);
@@ -78,12 +68,11 @@ class UserControl{
     //8
     async getFlights(method) {
         try {
-            const body = method.getBody();
-            const From = body.From;
-            const To = body.To;
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
-
+            const From = method.searchURL("From");
+            const To = method.searchURL("To");
+            const From_Date = method.searchURL("From_Date");
+            const To_Date = method.searchURL("To_Date");
+            
             const sqlQuary = `
                 SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status
                 FROM flights
@@ -107,9 +96,7 @@ class UserControl{
     //9
     async getAvailableSeats(method) {
         try {
-            const body = method.getBody();
-
-            const Flight_ID = body.Flight_ID;
+            const Flight_ID = method.searchURL("Flight_ID");
 
             const sqlQuary = `
                 SELECT class, seat_ID
@@ -127,11 +114,9 @@ class UserControl{
     //12
     async getSeatPrice(method) {
         try {
-            const body = method.getBody();
-
-            const PID = body.PID;
-            const Route = body.Route;
-            const Class = body.Class;
+            const PID = method.searchURL("PID");
+            const Route = method.searchURL("Route");
+            const Class = method.searchURL("Class");
 
             const sqlQuary = `CALL Ticket_Price(?, ?, ?);`;
 
@@ -145,9 +130,7 @@ class UserControl{
     //14
     async getFlightStatus(method) {
         try {
-            const body = method.getBody();
-
-            const Flight_ID = body.Flight_ID;
+            const Flight_ID = method.searchURL("Flight_ID");
 
             const sqlQuary = `SELECT flight_Status FROM flights WHERE flight_ID = ?;`;
 

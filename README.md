@@ -13,20 +13,13 @@ make sure to edit .env with the relavant information of your sql database.
 
 Then open a terminal inside that new folder and install the following using those commands.
 
-  npm init --yes
+  npm install   -- install all dependencies
   
-  npm i express
+  npm run dev-start   -- start server
   
-  npm i dotenv
+Go to Client/Src
   
-  npm i bcryptjs
+  npm install
   
-  npm i jsonwebtoken
+  npm start
   
-  npm i uniqid
-  
-  npm i nodemon
-  
-finally, start the Application using
-  
-nodemon index.js

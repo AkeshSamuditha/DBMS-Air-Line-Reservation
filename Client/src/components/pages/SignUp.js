@@ -17,14 +17,12 @@ function SignUp() {
   const [addressReg, setAddressReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
 
-  const port = process.env.port;
-  const concatenatedString = "http://localhost:" + port + "/API/Register";
 
   const register = () => {
     axios
       .post("http://localhost:6969/Auth/Register", {
         Email: emailReg,
-        password: passwordReg,
+        Password: passwordReg,
         Title: titleReg,
         First_Name: firstNameReg,
         Last_Name: lastNameReg,

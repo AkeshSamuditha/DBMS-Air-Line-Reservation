@@ -72,6 +72,8 @@ class UserControl{
             const To = method.searchURL("To");
             const From_Date = method.searchURL("From_Date");
             const To_Date = method.searchURL("To_Date");
+
+            console.log(From,To,From_Date,To_Date)
             
             const sqlQuary = `
                 SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status
@@ -220,7 +222,7 @@ class UserControl{
             const Country = body.Country;
 
 
-            const sqlQuary = `INSERT INTO users(title, first_Name, last_Name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);`;
+            const sqlQuary = `INSERT INTO users(title, first_name, last_name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);`;
 
             const data = await executeSQL(sqlQuary,[Title,First_Name,Last_Name,Email,Telephone,Country]);
 

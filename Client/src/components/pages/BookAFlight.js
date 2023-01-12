@@ -39,19 +39,24 @@ export default function BookAFlight() {
       "To Date",
       ToDate
     );
-    axios
-      .post("http://localhost:6969/api/getFlights", {
-        from: Location01,
-        to: Location02,
-        from_date: FromDate,
-        to_date: ToDate,
+    axios.get("http://localhost:6969/api/getFlights", {
+        params: {
+          // From: Location01,
+          // To: Location02,
+          // From_Date: FromDate,
+          // To_Date: ToDate,
+          From: "BIA",
+          To: "JFK",
+          From_Date: "2023-01-01",
+          To_Date: "2024-01-01",
+        }
       })
       .then((response) => {
-        console.log("shit", response);
         if (response.data.status == "400") {
         } else {
-          console.log(response.data);
+          console.log(response.data[0].flight_ID);
           // window.location.reload();
+          
         }
       });
   };

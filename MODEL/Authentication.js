@@ -57,7 +57,7 @@ async function register(method) {
   const Telephone = body.Telephone;
   const Country = body.Country;
   const UserName = body.UserName;
-  const Password = body.password;
+  const Password = body.Password;
   const Date_of_Birth = body.DOB;
   const Address = body.Address;
 
@@ -184,7 +184,7 @@ async function adminLogout(user){
   
 
   try{
-    AdminUsers.delete(user.Admin_id);
+    AdminUsers.delete(user.admin_id);
   }
   catch(e){
       console.log("'logout error'");

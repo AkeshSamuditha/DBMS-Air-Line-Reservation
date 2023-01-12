@@ -69,13 +69,13 @@ async function login(method) {
     );
     // console.log(method.body);
     if (!credential[0]) return "Error : Invalid Email or Password";
-    // console.log(credential[0].Password);
+    // console.log(credential[0].password);
 
-    const status = await compare(Password, credential[0].Password);
+    const status = await compare(Password, credential[0].password);
     const PID = credential[0].PID;
-    const UserName = credential[0].UserName;
-    const fname = credential[0].First_Name;
-    const lname = credential[0].Last_Name;
+    const UserName = credential[0].username;
+    const fname = credential[0].first_name;
+    const lname = credential[0].last_name;
 
     if (status) {
       console.log("Password Matched");
@@ -225,7 +225,7 @@ var RestoreSession = async function(){
   }
     for (const [key, value] of data.entries()){
 
-        var user = userFactory(value.PID,value.UserName,"Registered",value.First_Name,value.Last_Name,value.Session_id,value.Last_used_time);
+        var user = userFactory(value.PID,value.username,"Registered",value.first_name,value.last_name,value.session_id,value.last_used_time);
         RegUsers.set(value.PID,user)
 
   }

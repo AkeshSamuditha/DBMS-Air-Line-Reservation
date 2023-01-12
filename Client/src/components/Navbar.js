@@ -27,12 +27,6 @@ function Navbar() {
 
   const [token, setToken] = useToken();
 
-  // useEffect(() => {
-  //   if (token !== localStorage.getItem("token")) {
-  //     localStorage.setItem("token", token);
-  //   }
-  // }, [token]);
-
   const logout = () => {
     axios
       .delete(
@@ -40,7 +34,7 @@ function Navbar() {
         {
           headers: {
             Authorization: token,
-          },
+          }
         }
       )
       .then((response) => {

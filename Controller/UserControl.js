@@ -10,7 +10,7 @@ class UserControl{
         try {
         const body = method.getBody();
         
-        const Flight_ID = body.flight_ID;
+        const flight_ID = body.flight_ID;
     
         const sqlQuary = `
             SELECT (
@@ -21,7 +21,7 @@ class UserControl{
                 FROM tickets 
                 WHERE adult_or_child LIKE '%C%'AND flight = ?) as Below_18;`;
 
-        const data = await executeSQL(sqlQuary,[Flight_ID,Flight_ID]);
+        const data = await executeSQL(sqlQuary,[flight_ID,flight_ID]);
             return(data);
         }catch(err){
             return err;
@@ -32,9 +32,9 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Destination_ID = body.Destination_ID;
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
+            const destination_ID = body.festination_ID;
+            const from_date = body.from_date;
+            const to_date = body.to_date;
 
             const sqlQuary = `
                 SELECT COUNT(*) 
@@ -49,7 +49,7 @@ class UserControl{
                     AND date_of_travel BETWEEN ? AND ?));
             `;
 
-            const data = await executeSQL(sqlQuary,[Destination_ID,From_Date,To_Date]);
+            const data = await executeSQL(sqlQuary,[destination_ID,from_date,to_date]);
                 return(data);
             }catch(err){
                 return err;
@@ -60,8 +60,8 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const From_Date = body.From_Date;
-            const To_Date = body.To_Date;
+            const from_date = body.from_date;
+            const to_date = body.to_date;
 
 
             const sqlQuary = `
@@ -77,7 +77,7 @@ class UserControl{
                     AND Time_of_booking BETWEEN ? AND ? 
                     AND user_type LIKE '%R%') AS Registered;`;
 
-            const data = await executeSQL(sqlQuary,[From_Date,To_Date,From_Date,To_Date]);
+            const data = await executeSQL(sqlQuary,[from_date,to_date,from_date,to_date]);
             return(data);
             }catch(err){
                 return err;
@@ -89,11 +89,11 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Origin_ID = body.Origin_ID;
-            const Destination_ID = body.Destination_ID;
+            const origin_ID = body.origin_ID;
+            const destination_ID = body.destination_ID;
 
             const sqlQuary = `
-                SELECT flight_ID, airplane, date_of_travel, dep_time, arr_time, (seat_count-(tickets_RemainingB + tickets_RemainingE + tickets_RemainingP)) as passenger_count
+                SELECT flight_ID, airplane, date_of_travel, dep_time, arr_time, (seat_count-(tickets_remainingB + tickets_remainingE + tickets_remainingP)) as passenger_count
                 FROM (flights LEFT JOIN Airplanes_w_seasts 
                 ON airplane = airplane_ID)
                 WHERE route IN (
@@ -101,7 +101,7 @@ class UserControl{
                     FROM routes
                     WHERE origin_ID = ? AND destination_ID = ? AND date_of_travel < CURDATE());`;
 
-            const data = await executeSQL(sqlQuary,[Origin_ID,Destination_ID]);
+            const data = await executeSQL(sqlQuary,[origin_ID,destination_ID]);
 
             return(data);
             }catch(err){
@@ -114,8 +114,8 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Model = body.Model;
-            const Brand = body.Brand;
+            const model = body.model;
+            const brand = body.brand;
 
             const sqlQuary = `
                 SELECT model_ID, model, brand, revenue
@@ -140,13 +140,12 @@ class UserControl{
     async getFlights(method) {
         try {
             const body = method.getBody();
-            const From = body.from;
-            const To = body.to;
-            const From_Date = body.from_date;
-            const To_Date = body.to_date;
-            // console.log(body)
-            // console.log("SHIT",From,To,From_Date,To_Date);
-
+            
+            const from = body.from;
+            const to = body.to;
+            const from_date = body.from_date;
+            const to_date = body.to_date;
+            
             const sqlQuary = `
                 SELECT flight_ID, date_of_travel, dep_time, arr_time, tickets_remainingP, tickets_remainingB, tickets_remainingE, flight_Status
                 FROM flights
@@ -157,7 +156,7 @@ class UserControl{
                     ORDER BY date_of_travel
                 ) AND (Tickets_remainingP + Tickets_remainingB + Tickets_remainingE > 0);`;
 
-            const data = await executeSQL(sqlQuary,[From,To,From_Date,To_Date]);
+            const data = await executeSQL(sqlQuary,[from,to,from_date,to_date]);
             // console.log(data);
             return(data);
         }catch(err){
@@ -170,14 +169,14 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Flight_ID = body.Flight_ID;
+            const flight_ID = body.flight_ID;
             const sqlQuary = `
                 SELECT class, seat_ID
                 FROM tickets
                 WHERE flight = 'F1'
                 ORDER BY class, seat_ID;`;
 
-            const data = await executeSQL(sqlQuary,[Flight_ID]);
+            const data = await executeSQL(sqlQuary,[flight_ID]);
             return(data);
         }catch(err){
             return err;
@@ -190,12 +189,12 @@ class UserControl{
             const body = method.getBody();
 
             const PID = body.PID;
-            const Route = body.Route;
-            const Class = body.Class;
+            const route = body.route;
+            const Class = body.class;
 
             const sqlQuary = `CALL ticket_price(?, ?, ?);`;
 
-            const data = await executeSQL(sqlQuary,[PID,Route,Class]);
+            const data = await executeSQL(sqlQuary,[PID,route,Class]);
             return(data);
         }catch(err){
             return err;
@@ -207,11 +206,11 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Flight_ID = body.Flight_ID;
+            const flight_ID = body.flight_ID;
 
             const sqlQuary = `SELECT flight_Status FROM flights WHERE flight_ID = ?;`;
 
-            const data = await executeSQL(sqlQuary,[Flight_ID]);
+            const data = await executeSQL(sqlQuary,[flight_ID]);
             return(data);
         }catch(err){
             return err;
@@ -255,15 +254,15 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Flight_ID = body.Flight_ID;
+            const flight_ID = body.flight_ID;
             const Class = body.Class;
             const seat_ID = body.seat_ID;
             const PID = body.PID;
-            const Adult_or_Child = body.Adult_or_Child;
+            const adult_or_child = body.adult_or_Child;
 
             const sqlQuary = `CALL new_ticket(?, ?, ?, ?, ?);`;
 
-            const data = await executeSQL(sqlQuary, [Flight_ID, Class, seat_ID, PID, Adult_or_Child]);
+            const data = await executeSQL(sqlQuary, [flight_ID, Class, seat_ID, PID, adult_or_child]);
 
         }catch(err){
             return err;
@@ -290,17 +289,17 @@ class UserControl{
         try {
             const body = method.getBody();
 
-            const Title = body.Title;
-            const First_Name = body.First_Name;
-            const Last_Name = body.Last_Name;
-            const Email = body.Email;
-            const Telephone = body.Telephone;
-            const Country = body.Country;
+            const title = body.title;
+            const first_name = body.first_Name;
+            const last_name = body.last_Name;
+            const email = body.email;
+            const telephone = body.telephone;
+            const country = body.country;
 
 
             const sqlQuary = `INSERT INTO users(title, first_Name, last_Name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);`;
 
-            const data = await executeSQL(sqlQuary,[Title,First_Name,Last_Name,Email,Telephone,Country]);
+            const data = await executeSQL(sqlQuary,[title,first_name,last_name,email,telephone,country]);
 
         }catch(err){
             return err;

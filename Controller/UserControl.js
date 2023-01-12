@@ -10,9 +10,7 @@ class UserControl{
         try {
         const body = method.getBody();
         
-        const Destination_ID = body.Destination_ID;
-        const From_Date = body.From_Date;
-        const To_Date = body.To_Date;
+        const Flight_ID = body.flight_ID;
     
         const sqlQuary = `
             SELECT (

@@ -2,15 +2,54 @@ const {hash,compare} = require("bcryptjs");
 const {executeSQL} = require("../DB/db");
 const {sign, verify} = require("jsonwebtoken");
 const Method = require("../Controller/method");
-const {RegUser} = require("./User");
+const {RegUser, AdminUser} = require("./User");
 const { parse } = require('querystring');
 const ACCESS_TOKEN_SECRECT = "Group20Project";
 
 var RegUsers = new Map();
+var AdminUsers = new Map();
+
+async function adminLogin(method){
+    const body = method.getBody();
+
+    const admin_name = body.Admin_name;
+    const Password = body.Password;
+
+    try{
+        const credential = await executeSQL(`SELECT * FROM admins WHERE admin_name =?`,[admin_name]);
+        console.log(method.body);
+        if(!credential[0]) return "Error : Invalid admin_id or Password";
+        
+        const status = await compare(Password,credential[0].admin_password);
+
+        if(status){
+          console.log("Password Matched");
+          const Admin_name = credential[0].admin_name;
+          const admin_id = credential[0].admin_id;
+          var adminUser = userFactory(admin_id,Admin_name,"Admin",null,null,null,null);
+
+          AdminUsers.set(admin_id, adminUser);
+
+          const token = getAccessToken({
+            admin_id: adminUser.Admin_id,
+            admin_name: adminUser.UserName
+          });
+    
+    
+          console.log("Admin: "+adminUser.UserName + " Successfully Logged In !!!");
+          method.res.header("token", token);
+          return { token: token, user: adminUser };
+        }
+    }
+    catch(e){
+        console.log(e);
+        return "Error : login failed";
+    }
+}
 
 async function register(method) {
   const body = method.getBody();
-
+  console.log(body);
   const Title = body.Title;
   const First_Name = body.First_Name;
   const Last_Name = body.Last_Name;
@@ -73,11 +112,10 @@ async function login(method) {
 
     const status = await compare(Password, credential[0].Password);
     const PID = credential[0].PID;
-    const UserName = credential[0].username;
-    const fname = credential[0].first_Name;
-    const lname = credential[0].last_Name;
-      
-    // console.log("1",fname, lname, credential)
+    const UserName = credential[0].UserName;
+    const fname = credential[0].First_Name;
+    const lname = credential[0].Last_Name;
+
     if (status) {
       console.log("Password Matched");
       var user = userFactory(PID, UserName, "Registered", fname, lname);
@@ -141,6 +179,21 @@ async function logout(user){
 
 }
 
+async function adminLogout(user){
+
+  
+
+  try{
+    AdminUsers.delete(user.Admin_id);
+  }
+  catch(e){
+      console.log("'logout error'");
+  }
+  
+  return("Admin :"+user.UserName + " Successfully Logged Out !!!")
+
+}
+
 
 
 const getAccessToken = (data)=>{
@@ -176,6 +229,34 @@ var ExtractRegUser =async function(req,res, next){
       console.log("Invaild token"); //when token expires
       res.sendStatus(203);
     }
+}
+
+var ExtractAdminUser =async function(req,res, next){
+
+  var method = new Method(req,res);
+
+  var token = method.getToken();
+  console.log(token);
+  try{
+      const {admin_id,admin_name} = verify(token,ACCESS_TOKEN_SECRECT);
+      if(admin_id){
+          
+          var adminUser = AdminUsers.get(admin_id);
+          console.log(adminUser);
+          await adminUser.setLastUsedTime();
+          req.user = adminUser;
+
+          const token = getAccessToken({admin_id:adminUser.admin_id,admin_name:adminUser.admin_name});
+          res.header("token", token);
+      }
+
+      next();
+  }
+  catch(err){
+    console.log(err);
+    console.log("Invaild token"); //when token expires
+    res.sendStatus(203);
+  }
 }
 
 var UpdateSession =async function(req,res, next){
@@ -228,7 +309,7 @@ var RestoreSession = async function(){
     }
     for (const [key, value] of data.entries()){
 
-        var user = userFactory(value.PID,value.UserName,"Registered",value.First_Name,value.Last_Name,value.Session_id,value.Last_used_time);
+        var user = userFactory(value.PID,value.username,"Registered",value.first_Name,value.last_Name,value.session_id,value.last_used_time);
         RegUsers.set(value.PID,user)
     
     }
@@ -238,8 +319,16 @@ var RestoreSession = async function(){
 
 
 function userFactory(pid,username,type,fname,lname,sessionID,lastUsedTime){
+  if (type=="Registered"){
     var user = new RegUser(pid,username,type,fname,lname,sessionID,lastUsedTime);
-    return(user)
+  }else if (type=="Admin"){
+    var user = new AdminUser(pid,username,type);
+  }
+  else{
+    console.log("invalid user type");
+  }
+  
+  return(user);
 }
 
 function ShowCurrentUsers(){
@@ -257,5 +346,4 @@ function ShowCurrentUsers(){
     }
 }
 
-module.exports = {login,register,getAccessToken,ExtractRegUser,UpdateSession,RestoreSession,logout,ShowCurrentUsers};
-
+module.exports = {adminLogin,login,register,getAccessToken,ExtractAdminUser,ExtractRegUser,UpdateSession,RestoreSession,adminLogout,logout,ShowCurrentUsers};

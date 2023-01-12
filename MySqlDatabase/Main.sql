@@ -68,8 +68,9 @@ CREATE TABLE users(
 
 	PRIMARY KEY(PID),
 	CHECK (user_type IN ("G", "R")),
+	-- CHECK (email LIKE '%@%' AND email Like  %.%),
+	-- CHECK (LENGTH(telephone) = 10),
 	CHECK (title IN ("Mr." , "Mrs.", "Ms.", "Miss", NULL))
-	-- CHECK (LENGTH(telephone) = 10)
 );
 
 CREATE INDEX idx_email ON users(email);           
@@ -92,7 +93,7 @@ CREATE TABLE registered_users(
     
 	-- CHECK (date_of_birth < DATE_SUB(CURDATE(), INTERVAL 18 YEAR)),
 	-- CHECK LENGTH(password) >= 8,
-
+	-- CHECK (column_name LIKE '%@%') 
 	CHECK (total_bookings >= 0)
 );
 

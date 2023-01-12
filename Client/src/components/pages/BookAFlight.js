@@ -58,7 +58,7 @@ export default function BookAFlight() {
             </div>
             <div className="Parent">
               <div className="child1">
-                <label for="depart">Departure Date</label>
+                <label for="depart">Time Period From</label>
                 <br />
                 <input
                   type="date"
@@ -69,7 +69,7 @@ export default function BookAFlight() {
                 />
               </div>
               <div className="child2">
-                <label for="return">Return Date</label>
+                <label for="return">Time Period To</label>
                 <br />
                 <input
                   type="date"

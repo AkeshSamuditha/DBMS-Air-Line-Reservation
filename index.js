@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 
 var apiController = require("./API/API");
 var authController = require("./API/Auth");
+var adminController = require("./API/Admin/AdminAuth")
 
 var {RestoreSession} = require("./MODEL/Authentication");
 
@@ -23,7 +24,6 @@ app.use(function(req, res, next) {
 
 app.use('/api',apiController);
 app.use('/auth',authController);
+app.use('/admin',adminController);
 
-app.listen(process.env.port, () => {
-  console.log("server running");
-});
+app.listen(process.env.port);

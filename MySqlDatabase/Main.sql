@@ -59,15 +59,17 @@ CREATE INDEX idx_airplane_ID ON airplanes (airplane_ID);
 CREATE TABLE users(
     PID INT AUTO_INCREMENT,
 	title CHAR(4),
-	first_Name VARCHAR(30) NOT NULL,
-    last_Name VARCHAR(30) NOT NULL,
-	email VARCHAR(30) NOT NULL,
-	telephone VARCHAR(15) NOT NULL,
+	first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+	email VARCHAR(30) NOT NULL UNIQUE,
+	telephone VARCHAR(15) NOT NULL UNIQUE,
 	country VARCHAR(30) NOT NULL,	
 	user_type CHAR(1) NOT NULL DEFAULT 'G',
 
 	PRIMARY KEY(PID),
-
+	CHECK (user_type IN ("G", "R")),
+	-- CHECK (email LIKE '%@%' AND email Like  %.%),
+	-- CHECK (LENGTH(telephone) = 10),
 	CHECK (title IN ("Mr." , "Mrs.", "Ms.", "Miss", NULL))
 );
 
@@ -79,16 +81,19 @@ CREATE TABLE registered_users(
 	PID int,
 	username VARCHAR(30) NOT NULL UNIQUE,
 	password VARCHAR(60) NOT NULL,
-	date_of_Birth Date NOT NULL, -- YYYY-MM-DD
-	address VARCHAR(50),
+	date_of_birth DATE NOT NULL, -- YYYY-MM-DD
+	address VARCHAR(60),
     user_category CHAR(1) NOT NULL DEFAULT 'N',
 	total_bookings INT NOT NULL DEFAULT 0,
 	
     PRIMARY KEY(PID),
 	
 	FOREIGN KEY(user_category) REFERENCES user_categories(category) ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY(PID) REFERENCES Users(PID) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY(PID) REFERENCES users(PID) ON UPDATE CASCADE ON DELETE RESTRICT,
     
+	-- CHECK (date_of_birth < DATE_SUB(CURDATE(), INTERVAL 18 YEAR)),
+	-- CHECK LENGTH(password) >= 8,
+	-- CHECK (column_name LIKE '%@%') 
 	CHECK (total_bookings >= 0)
 );
 
@@ -108,10 +113,11 @@ CREATE TABLE session_table(
 
 CREATE TABLE admins(
 	admin_id INT AUTO_INCREMENT,
-	admin_name VARCHAR(30) NOT NULL,
+	admin_name VARCHAR(30) NOT NULL UNIQUE,
 	admin_password VARCHAR(60) NOT NULL,
 	
-	PRIMARY KEY(admin_id)
+	PRIMARY KEY(admin_id),
+	CHECK (LENGTH(admin_password) >= 8)
 );
 
 
@@ -139,7 +145,7 @@ CREATE TABLE routes(
 	route_ID VARCHAR(5),
 	origin_ID VARCHAR(3),
 	destination_ID VARCHAR(3),
-	miles int,
+	miles INT,
 	
 	PRIMARY KEY(route_ID),
 	FOREIGN KEY(origin_ID) REFERENCES airports(airport_code) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -157,7 +163,7 @@ CREATE TABLE flights(
 	tickets_remainingP INT NOT NULL DEFAULT 0, -- Tickets remaining in the Platinum Class
 	tickets_remainingB INT NOT NULL DEFAULT 0, -- Buisness Class
 	tickets_remainingE INT NOT NULL DEFAULT 0, -- Economy Class
-	revenue NUMERIC(50,3) NOT NULL DEFAULT 0, --
+	revenue NUMERIC(50,3) NOT NULL DEFAULT 0, 
 	flight_status VARCHAR(10) NOT NULL DEFAULT 'Scheduled',
 	
 	PRIMARY KEY(flight_ID),

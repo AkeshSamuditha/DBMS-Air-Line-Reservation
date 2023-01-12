@@ -1,13 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../App.css";
 import "./BookAFlight.css";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import Footer from "../Footer";
-
-
+import axios from "axios";
 
 export default function BookAFlight() {
+  const [Location01, setLocation01] = useState("");
+  const [Location02, setLocation02] = useState("");
+  const [FromDate, setFromDate] = useState("");
+  const [ToDate, setToDate] = useState("");
+
+  const [selected, setSelect] = useState("");
+
+  const disableDates = () => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    return yyyy + "-" + mm + "-" + dd;
+  };
+
+  const findFlight = () => {
+    console.log(
+      "From",
+      Location01,
+      "To",
+      Location02,
+      "From Date",
+      FromDate,
+      "To Date",
+      ToDate
+    );
+    axios
+      .post("http://localhost:6969/api/getFlights", {
+        from: Location01,
+        to: Location02,
+        from_date: FromDate,
+        to_date: ToDate,
+      })
+      .then((response) => {
+        console.log("shit", response);
+        if (response.data.status == "400") {
+        } else {
+          console.log(response.data);
+          // window.location.reload();
+        }
+      });
+  };
+
   return (
     <>
       <div className="book-your-flight">
@@ -19,13 +67,21 @@ export default function BookAFlight() {
             <h2>
               <center>Book your Flight!</center>
             </h2>
+            {disableDates()}
             <br />
             <form>
               <div className="Parent">
                 <div className="child1">
-                  <label for="from">From</label>
+                  <label>From</label>
                   <br />
-                  <select name="from" className="input-box" id="from">
+                  <select
+                    name="from"
+                    className="input-box"
+                    id="from"
+                    onChange={(e) => {
+                      setLocation01(e.target.value);
+                    }}
+                  >
                     <option value="default">Select</option>
                     <option value="DPS">Bali (DPS)</option>
                     <option value="BKK">Bangkok (BKK)</option>
@@ -42,9 +98,16 @@ export default function BookAFlight() {
                 </div>
 
                 <div className="child2">
-                  <label for="to">To</label>
+                  <label>To</label>
                   <br />
-                  <select name="to" className="input-box" id="to">
+                  <select
+                    name="to"
+                    className="input-box"
+                    id="to"
+                    onChange={(e) => {
+                      setLocation02(e.target.value);
+                    }}
+                  >
                     <option value="default">Select</option>
                     <option value="DPS">Bali (DPS)</option>
                     <option value="BKK">Bangkok (BKK)</option>
@@ -62,7 +125,7 @@ export default function BookAFlight() {
               </div>
               <div className="Parent">
                 <div className="child1">
-                  <label for="depart">From Date</label>
+                  <label>From Date</label>
                   <br />
                   <input
                     type="date"
@@ -70,10 +133,15 @@ export default function BookAFlight() {
                     id="depart"
                     name="depart"
                     placeholder="Depart"
+                    min={disableDates()}
+                    onChange={(e) => {
+                      setSelect(e.target.value);
+                      setFromDate(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="child2">
-                  <label for="return">To Date</label>
+                  <label>To Date</label>
                   <br />
                   <input
                     type="date"
@@ -81,19 +149,22 @@ export default function BookAFlight() {
                     id="return"
                     name="return"
                     placeholder="Return"
+                    min={selected}
+                    onChange={(e) => {
+                      setToDate(e.target.value);
+                    }}
                   />
                 </div>
               </div>
               <div className="find-a-flight-btn">
-                <Link>
-                  <Button
-                    className="find-a-flight-btn"
-                    buttonStyle="btn--black"
-                    buttonSize="btn--black_size"
-                  >
-                    Find a Flight
-                  </Button>
-                </Link>
+                <Button
+                  className="find-a-flight-btn"
+                  buttonStyle="btn--black"
+                  buttonSize="btn--black_size"
+                  onClick={findFlight}
+                >
+                  Find a Flight
+                </Button>
               </div>
             </form>
           </div>

@@ -110,7 +110,7 @@ async function login(method) {
     if (!credential[0]) return "Error : Invalid Email or Password";
     // console.log(credential[0].Password);
 
-    const status = await compare(Password, credential[0].Password);
+    const status = await compare(Password, credential[0].password);
     const PID = credential[0].PID;
     const UserName = credential[0].username;
     const fname = credential[0].first_Name;

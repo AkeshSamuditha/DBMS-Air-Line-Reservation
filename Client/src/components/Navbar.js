@@ -5,7 +5,6 @@ import "./Navbar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
-import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function useToken() {
@@ -27,12 +26,6 @@ function Navbar() {
   const [logoutStatus, setLogoutStatus] = useState("");
 
   const [token, setToken] = useToken();
-
-  // useEffect(() => {
-  //   if (token !== localStorage.getItem("token")) {
-  //     localStorage.setItem("token", token);
-  //   }
-  // }, [token]);
 
   const config = {
     headers: {
@@ -127,34 +120,34 @@ function Navbar() {
                 </Link>
               </li>
               <div>
-                {button && (
-                  <FontAwesomeIcon icon={faUser} onClick={handleOpen}>
-                    User Name
-                  </FontAwesomeIcon>
-                )}
-                {open ? (
-                  <ul className="menu">
-                    <li className="menu-item">
-                      <Link to="/seat-reservation" className="btn-mobile">
+                <li className="nav-links">
+                  <Button className="nav-item" onClick={handleOpen}>
+                    <FontAwesomeIcon icon={faUser} />
+                  </Button>
+                  {open ? (
+                    <ul className="menu">
+                      <li className="menu-item">
+                        <Link to="/seat-reservation" className="btn-mobile">
+                          <Button
+                            buttonStyle="btn--dropdown"
+                            buttonSize="btn--dropdown_size"
+                          >
+                            Your Profile
+                          </Button>
+                        </Link>
+                      </li>
+                      <li className="menu-item">
                         <Button
                           buttonStyle="btn--dropdown"
                           buttonSize="btn--dropdown_size"
+                          onClick={logout}
                         >
-                          Your Profile
+                          Log Out
                         </Button>
-                      </Link>
-                    </li>
-                    <li className="menu-item">
-                      <Button
-                        buttonStyle="btn--dropdown"
-                        buttonSize="btn--dropdown_size"
-                        onClick={logout}
-                      >
-                        Log Out
-                      </Button>
-                    </li>
-                  </ul>
-                ) : null}
+                      </li>
+                    </ul>
+                  ) : null}
+                </li>
               </div>
               <li>
                 <Link

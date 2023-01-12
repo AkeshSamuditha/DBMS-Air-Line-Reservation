@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 
 .home,
@@ -10,7 +10,8 @@
 .destinations,
 .userprofile,
 .log-in,
-.sign-up {
+.sign-up,
+.guest-user {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -19,7 +20,7 @@
 }
 
 .book-a-flight {
-  background-image: url('/public/images/img-2.jpg');
+  background-image: url("/public/images/img-2.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -28,7 +29,7 @@
 }
 
 .destinations {
-  background-image: url('/public/images/img-1.jpg');
+  background-image: url("/public/images/img-1.jpg");
   background-position: center;
   background-size: fill;
   background-repeat: no-repeat;
@@ -37,7 +38,7 @@
 }
 
 .userprofile {
-  background-image: url('/public/images/img-9.jpg');
+  background-image: url("/public/images/img-9.jpg");
   background-position: center;
   background-size: fill;
   background-repeat: no-repeat;
@@ -45,7 +46,7 @@
   font-size: 100px;
 }
 .log-in {
-  background-image: url('/public/images/img-8.jpg');
+  background-image: url("/public/images/img-8.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -54,18 +55,27 @@
 }
 
 .logged-in {
-  background-image: url('/public/images/img-2.jpg');
+  background-image: url("/public/images/img-2.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   height: 89vh;
   text-align: center;
 }
 .sign-up {
-  background-image: url('/public/images/img-4.jpg');
+  background-image: url("/public/images/img-4.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
   height: 140vh;
+}
+
+.guest-user {
+  background-image: url("/public/images/img-9.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
 }

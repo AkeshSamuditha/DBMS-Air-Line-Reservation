@@ -13,67 +13,21 @@ router.use('/registered',regApiController);
 router.use(UpdateSession);
 const uController = new UserController();
 
+/////////////////////sample////////////////////////
+/* 
+router.get('/getReservation',async function(req, res){
+
+    var method = new Method(req,res);
+    
+    const statusANDData = await uController.getReservation(method);
+    console.log(statusANDData);
+    
+    res.status(ResponseHandler(statusANDData)).send(statusANDData);
+
+}); */
 
 ////////////////////////////////////////////////////// GET Requests/////////////////////////////////////////////////////
-// Request No: 01
-router.get('/getPassengersByFlight',async function(req, res){
 
-    var method = new Method(req,res);
-    
-    const status = await uController.getPassengersByFlight(method);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
-
-});
-
-// Request No: 02
-router.get('/getPassengersByDestination',async function(req, res){
-
-    var method = new Method(req,res);
-    
-    const status = await uController.getPassengersByDestination(method);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
-
-});
- 
-// Request No: 03
-router.get('/getBookingsByPassengerType',async function(req, res){
-
-    var method = new Method(req,res);
-    
-    const status = await uController.getBookingsByPassengerType(method);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
-
-});
-
-// Request No: 04
-router.get('/getPastFlights',async function(req, res){
-
-    var method = new Method(req,res);
-    
-    const status = await uController.getPastFlights(method);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
-
-});
-
-//Request No: 05
-router.get('/getRevenueByAircraftType',async function(req, res){
-
-    var method = new Method(req,res);
-    
-    const status = await uController.getRevenueByAircraftType(method);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
-
-});
 
 // Request No: 08
 router.get('/getFlights',async function(req, res){
@@ -192,4 +146,5 @@ router.post('/GuestUserLogin',async function(req, res){
 ////////////////////////////////////////////////////// DELETE Requests/////////////////////////////////////////////////////
 
 module.exports = router;
+
 

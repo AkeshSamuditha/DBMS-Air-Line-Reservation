@@ -27,7 +27,7 @@ export default function BookAFlight() {
     "Date of Travel",
     "Arrival Time",
     "Departure Time",
-    "Tickets Remaining :First Class",
+    "Tickets Remaining :Platinum Class",
     "Tickets Remaining :Bussiness Class",
     "Tickets Remaining :Economic Class",
     "Flight Status",

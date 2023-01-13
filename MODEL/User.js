@@ -79,14 +79,14 @@ class RegUser {
     async getBookedFlightDetails() {
         try {
             const sqlQuary = `
-                SELECT origin_ID, destination_ID, date_of_travel, dep_time, Arr_time, flight_Status
+                SELECT flight_ID, origin_ID, destination_ID, date_of_travel, dep_time, arr_time, flight_Status
                 FROM flights 
                 RIGHT JOIN routes 
                 ON route = route_ID
                 WHERE flight_ID IN (
                     SELECT flight 
                     FROM tickets WHERE PID = ?) 
-                    AND date_of_travel < CURDATE();`
+                    AND date_of_travel >= CURDATE();`;
 
             const data = await executeSQL(sqlQuary, [this.PID]);
             return (data);

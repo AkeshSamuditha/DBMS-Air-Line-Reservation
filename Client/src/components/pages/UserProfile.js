@@ -19,23 +19,40 @@ import axios from "axios";
 // ];
 
 export default function UserProfile() {
+
+  const [flights0, setFlights0] = useState([]);
+
+  const header = [
+    "Flight ID",
+    "Origin ID",
+    "Destination ID",
+    "Date of Travel",
+    "Arrival Time",
+    "Departure Time",
+    "Flight Status",
+  ];
+
+  const flight0Values = Object.values(flights0);
+
+  const fullArray = [header, flight0Values];
+
   const [Pastflights, setPastflights] = useState([]);
   const [token, setToken] = useToken();
 
   useEffect(() => {
     axios
-      .get("http://localhost:6969/auth/api/BookedFlightDetails", {
+      .get("http://localhost:6969/api/registered/BookedflightDetails", {
         headers: {
           Authorization: token,
         },
       })
-      .then((response) => pastFlightDetails(response))
+      .then((response) => bookedFlightDetails(response))
       .catch((error) => console.log(error));
   }, []);
 
-  function pastFlightDetails(response) {
+  function bookedFlightDetails(response) {
     console.log(response);
-    setPastflights(response.data);
+    setFlights0(response.data[0]);
   }
 
   return (
@@ -57,11 +74,36 @@ export default function UserProfile() {
             </div>
             <br />
             <div className="past-flights">
-              <h3>PREVIOUS FLIGHTS WIHT US...</h3>
+              <h3>UPCOMING FLIGHTS WIHT US...</h3>
               <br />
-              <div className="flight-table">
-                {/* <DataGrid columns={columns} rows={rows} /> */}
-              </div>
+              <table>
+                <thead>
+                  <tr>
+                    {fullArray[0].map((item, index) => {
+                      return <th key={index}>{item}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {fullArray.slice(1, fullArray.length).map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td key={item[0]}>{item[0]}</td>
+                        <td key={item[1]}>{item[1]}</td>
+                        <td key={item[2]}>{item[2]}</td>
+                        <td key={item[3]}>{item[3]}</td>
+                        <td key={item[4]}>{item[4]}</td>
+                        <td key={item[5]}>{item[5]}</td>
+                        <td key={item[6]}>{item[6]}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              {/* <div className="flight-table">
+                <div>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>

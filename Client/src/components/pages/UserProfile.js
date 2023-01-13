@@ -71,7 +71,7 @@ export default function UserProfile() {
             <h5 className="membership">{user_category + " Member"}</h5>
             <br />
             <div className="lables">
-              <label>Total tickets booked : </label>
+              <label>Total tickets booked with us: </label>
               <label>{tot_booking}</label>
             </div>
             <br />
@@ -79,17 +79,18 @@ export default function UserProfile() {
         </div>
 
         <>
-          <div>
-            <div className="past-flights">
-              <h3>UPCOMING FLIGHTS WIHT US</h3>
-              <div></div>
-            </div>
+          <div className="userResults">
             {bookedFlightTable.length === 0 ? (
               <div>
-                YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU SOON
+                <center>
+                  YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU SOON
+                </center>
               </div>
             ) : (
               <div>
+                <div>
+                  <h3>UPCOMING FLIGHTS WIHT US</h3>
+                </div>
                 <table>
                   <thead>
                     <tr>

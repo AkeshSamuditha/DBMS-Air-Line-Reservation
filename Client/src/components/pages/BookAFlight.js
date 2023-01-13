@@ -28,7 +28,8 @@ export default function BookAFlight() {
     return yyyy + "-" + mm + "-" + dd;
   };
 
-  const findFlight = () => {
+  const findFlight = (e) => {
+    e.preventDefault();
     axios
       .get("http://localhost:6969/api/getFlights", {
         params: {

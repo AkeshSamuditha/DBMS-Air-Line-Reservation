@@ -22,6 +22,7 @@ class UserControl{
             const To_Date = method.searchURL("To_Date");
 
             const data = await user.getPassengersByDestination(Destination_ID,From_Date,To_Date);
+            console.log(data);
             return(data);
         }catch(err){
             return err;

@@ -163,7 +163,7 @@ class AdminUser extends RegUser{
     async getPassengersByFlight(Flight_ID) {
         try {
             const sqlQuary = `SELECT (
-                                SELECT COUNT(*) 
+                                SELECT COUNT(*)
                                 FROM tickets 
                                 WHERE adult_or_child LIKE '%A%' AND flight = ?) as Above_18, (
                                 SELECT COUNT(*) 
@@ -179,7 +179,7 @@ class AdminUser extends RegUser{
     //2
     async getPassengersByDestination(Destination_ID,From_Date,To_Date) {
         try {
-            const sqlQuary = `SELECT COUNT(*) 
+            const sqlQuary = `SELECT COUNT(*) AS passengers_count
                                 FROM tickets 
                                 WHERE flight IN (
                                     SELECT flight_ID 

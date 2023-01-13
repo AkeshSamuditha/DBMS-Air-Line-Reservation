@@ -26,7 +26,7 @@ input:
 }
 Response: {count}
 SQL_Query: 
-SELECT COUNT(*) FROM tickets WHERE flight IN (SELECT flight_ID FROM flights WHERE (route IN (SELECT route_ID FROM routes WHERE destination_ID = ?) AND date_of_travel BETWEEN ? AND ?));
+SELECT COUNT(*) AS passengers_count FROM tickets WHERE flight IN (SELECT flight_ID FROM flights WHERE (route IN (SELECT route_ID FROM routes WHERE destination_ID = ?) AND date_of_travel BETWEEN ? AND ?));
 
 Request_No: 03✅
 Description: Given a date range, number of bookings by each passenger type

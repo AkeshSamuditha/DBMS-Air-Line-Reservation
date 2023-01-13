@@ -123,6 +123,20 @@ class RegUser {
             return err;
         }
     }
+
+    async getRegUserDetails() {
+        try {
+            const sqlQuary = `
+            SELECT title, first_name, last_name, (SELECT discription FROM user_categories WHERE category = user_category) AS user_category , total_bookings, telephone, email, country, address, date_of_birth, username 
+            FROM registered_users LEFT JOIN users USING(PID) 
+            WHERE PID = ?;`;
+
+            const data = await executeSQL(sqlQuary,[this.PID]);
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
 }
 
 class AdminUser extends RegUser{
@@ -260,21 +274,6 @@ class AdminUser extends RegUser{
             return err;
         }
     }
-
-    async getRegUserDetails() {
-        try {
-            const sqlQuary = `
-            SELECT title, first_name, last_name, (SELECT discription FROM user_categories WHERE category = user_category) AS user_category , total_bookings, telephone, email, country, address, date_of_birth, username 
-            FROM registered_users LEFT JOIN users USING(PID) 
-            WHERE PID = ?;`;
-
-            const data = await executeSQL(sqlQuary,[this.PID]);
-            return(data);
-        }catch(err){
-            return err;
-        }
-    }
-    
 
 }
 

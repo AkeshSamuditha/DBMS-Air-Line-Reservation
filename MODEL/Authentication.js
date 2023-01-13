@@ -172,16 +172,22 @@ async function login(method) {
 
 async function logout(user){
 
-  RegUsers.delete(user.PID);
+  try{
+    RegUsers.delete(user.PID);
+  }
+  catch(e){
+    return "Unrecognized User : logout Failed";
+  }
 
   try {
     await executeSQL('DELETE FROM session_table WHERE user_iD = ?', [user.PID]);
   }
-    catch(e){
+  catch(e){
     console.log("database error");
+    return "Database Error : logout Failed";
   }
   console.log(user.UserName + " Successfully Logged Out !!!");
-    return(user.UserName + " Successfully Logged Out !!!")
+  return(user.UserName + " Successfully Logged Out !!!")
 
 }
 

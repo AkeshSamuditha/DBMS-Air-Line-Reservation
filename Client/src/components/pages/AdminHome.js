@@ -466,7 +466,7 @@ export default function AdminHome() {
             </form>
           </div>
 
-          <div className="container">
+          {/* <div className="container">
             <h2>Add a Flight</h2>
             <form className="adminForm">
               <label className="adminFormLabel">Flight ID:</label>
@@ -525,7 +525,7 @@ export default function AdminHome() {
                 Add Flight
               </Button>
             </form>
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="container">

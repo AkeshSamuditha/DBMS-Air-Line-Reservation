@@ -79,7 +79,7 @@ class UserControl {
       const To_Date = method.searchURL("To_Date");
 
       const sqlQuary = `
-                SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status
+                SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status, route
                 FROM flights
                 WHERE route = (
                     SELECT route_ID
@@ -114,13 +114,13 @@ class UserControl {
   }
 
   //12
-  async getSeatPrice(method) {
+  async getSeatPrice(method, user) {
     try {
       var PID = null;
       if (user && user.PID) {
         PID = user.PID;
       } else {
-        PID = 4;
+        PID = 0;
       }
       //   } else if (user && user.PID) {
       //     PID = body.PID;

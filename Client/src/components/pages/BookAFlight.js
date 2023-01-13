@@ -6,6 +6,8 @@ import { Button } from "../Button";
 import Navbar from "../Navbar";
 import axios from "axios";
 import dateForamt from "dateformat";
+import { useRoute } from "./Route";
+import { useFlight } from "./Flight";
 // import { HashLink } from "react-router-hash-link";
 // import { Link as Jump } from "react-scroll";
 
@@ -16,6 +18,9 @@ export default function BookAFlight() {
   const [ToDate, setToDate] = useState("");
   const [flightsGot, setFlightsGot] = useState(false);
   const [flightTable, setFlightTable] = useState([]);
+
+  const [Route_ID, setRoute_ID] = useRoute();
+  const [Flight_ID, setFlight_ID] = useFlight();
 
   const [selected, setSelect] = useState("");
 
@@ -58,6 +63,13 @@ export default function BookAFlight() {
   function handleFlightDetails(response) {
     setFlightsGot(true);
     setFlightTable(response.data);
+  }
+
+  function handleClick(Route_ID, Flight_ID) {
+    setRoute_ID(Route_ID);
+    setFlight_ID(Flight_ID);
+    // localStorage.setItem("RouteID", JSON.stringify(Route_ID));
+    window.location.href = "/seatReservations";
   }
 
   return (
@@ -224,11 +236,16 @@ export default function BookAFlight() {
                                 <td>{val.Tickets_remainingB}</td>
                                 <td>{val.Tickets_remainingE}</td>
                                 <td>
-                                  <Link to="/seatReservations">
-                                    <button className="edit-button">
-                                      Book Ticekt
-                                    </button>
-                                  </Link>
+                                  {/* <Link to="/seatReservations"> */}
+                                  <button
+                                    className="edit-button"
+                                    onClick={() =>
+                                      handleClick(val.route, val.flight_ID)
+                                    }
+                                  >
+                                    Book Ticekt
+                                  </button>
+                                  {/* </Link> */}
                                 </td>
                               </tr>
                             );

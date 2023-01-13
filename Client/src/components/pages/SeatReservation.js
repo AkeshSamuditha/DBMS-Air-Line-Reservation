@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { Button, Button2 } from "../Button";
 import Navbar from "../Navbar";
 import { useToken } from "./token";
+import { useRoute } from "./Route";
+import { useFlight } from "./Flight";
 import axios from "axios";
 
 export default function SeatReservation() {
@@ -13,30 +15,38 @@ export default function SeatReservation() {
   const [classes, setClasses] = useState("");
   const [selected, setSelected] = useState(false);
   const [temp, setTemp] = useState("");
+  const [temp2, setTemp2] = useState("");
+  const [Route_ID, setRoute_ID] = useRoute();
+  const [Flight_ID, setFlight_ID] = useFlight();
+  const [seatNo, setSeatNo] = useState("");
+  const [type, setType] = useState("");
+
+  useEffect(() => {
+    localStorage.getItem("Route_ID", Route_ID);
+  }, [Route_ID]);
 
   let seatNumbers = [];
   for (let i = 1; i <= noOfSeats; i++) {
     seatNumbers.push(i);
   }
-  const [selectedSeat, setSelectedSeat] = useState(null);
+  // const [selectedSeat, setSelectedSeat] = useState(null);
 
   const [btnState, setBtnState] = useState(false);
   const [token, setToken] = useToken();
 
-  function handleClick() {
+  function handleClick(seatNumber) {
     setBtnState((btnState) => !btnState);
+    setTemp2(seatNumber);
   }
 
   const getPrice = () => {
-    if (classes === "F") {
-    }
     axios
       .get("http://localhost:6969/Api/SeatPrice", {
         headers: {
           Authorization: token,
         },
         params: {
-          Flight_ID: "F1",
+          Route: Route_ID,
           Class: classes,
         },
       })
@@ -49,10 +59,10 @@ export default function SeatReservation() {
       .post(
         "http://localhost:6969/api/Bookflight",
         {
-          Flight_ID: "F1",
-          Class: "F",
-          Seat_ID: "1",
-          Adult_or_Child: "A",
+          Flight_ID: Flight_ID,
+          Class: classes,
+          Seat_ID: seatNo,
+          Adult_or_Child: type,
         },
         // Country: "Mr",
         {
@@ -70,11 +80,20 @@ export default function SeatReservation() {
   }, [temp]);
 
   useEffect(() => {
+    setSeatNo(temp2);
+  }, [temp2]);
+
+  useEffect(() => {
+    console.log(seatNo);
+  }, [seatNo]);
+
+  useEffect(() => {
     getPrice();
   }, [classes]);
 
   function handleChange(e) {
     setTemp(e.target.value);
+    console.log(Route_ID);
   }
 
   let toggleClass = btnState ? "selected" : "not-selected";
@@ -95,15 +114,20 @@ export default function SeatReservation() {
               <div className="child1">
                 <label>Type</label>
                 <br />
-                <select name="adults" className="input-box" id="adults">
+                <select
+                  name="adults"
+                  className="input-box"
+                  id="adults"
+                  onChange={(e) => setType(e.target.value)}
+                >
                   <option value="default" hidden>
                     Select
                   </option>
                   <option value="1" hidden>
                     Type
                   </option>
-                  <option value="2">Adult</option>
-                  <option value="3">Child</option>
+                  <option value="A">Adult</option>
+                  <option value="C">Child</option>
                 </select>
               </div>
               <div className="child2">
@@ -156,8 +180,11 @@ export default function SeatReservation() {
                                 className="booking-table"
                                 buttonStyle="btn--table"
                                 buttonSize="btn--table_size"
-                                onClick={() => handleClick(seatNumber)}
-                                isSelected={selectedSeat === seatNumber}
+                                // isSelected={selectedSeat === seatNumber}
+                                onClick={() => {
+                                  setSeatNo(seatNumber);
+                                  setBtnState((btnState) => !btnState);
+                                }}
                               >
                                 {seatNumber}
                               </Button2>
@@ -171,8 +198,11 @@ export default function SeatReservation() {
                                       className="booking-table"
                                       buttonStyle="btn--table"
                                       buttonSize="btn--table_size"
-                                      onClick={() => handleClick(seatNumber)}
-                                      isSelected={selectedSeat === seatNumber}
+                                      // isSelected={selectedSeat === seatNumber}
+                                      onClick={() => {
+                                        setSeatNo(seatNumber);
+                                        setBtnState((btnState) => !btnState);
+                                      }}
                                     >
                                       {seatNumber}
                                     </Button2>
@@ -186,7 +216,7 @@ export default function SeatReservation() {
                     })}
                   </tbody>
                 </table>
-                ); );
+                );
                 <>
                   {token ? (
                     <div className="booking-table-btn">

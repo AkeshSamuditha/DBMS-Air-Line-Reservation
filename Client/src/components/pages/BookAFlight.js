@@ -6,6 +6,8 @@ import { Button } from "../Button";
 import Navbar from "../Navbar";
 import axios from "axios";
 import dateForamt from "dateformat";
+import { useRoute } from "./Route";
+import { useFlight } from "./Flight";
 // import { HashLink } from "react-router-hash-link";
 // import { Link as Jump } from "react-scroll";
 
@@ -16,6 +18,9 @@ export default function BookAFlight() {
   const [ToDate, setToDate] = useState("");
   const [flightsGot, setFlightsGot] = useState(false);
   const [flightTable, setFlightTable] = useState([]);
+
+  const [Route_ID, setRoute_ID] = useRoute();
+  const [Flight_ID, setFlight_ID] = useFlight();
 
   const [selected, setSelect] = useState("");
 
@@ -60,6 +65,13 @@ export default function BookAFlight() {
     setFlightTable(response.data);
   }
 
+  function handleClick(Route_ID, Flight_ID) {
+    setRoute_ID(Route_ID);
+    setFlight_ID(Flight_ID);
+    // localStorage.setItem("RouteID", JSON.stringify(Route_ID));
+    window.location.href = "/seatReservations";
+  }
+
   return (
     <>
       <Navbar />
@@ -85,6 +97,7 @@ export default function BookAFlight() {
                     id="from"
                     onChange={(e) => {
                       setLocation01(e.target.value);
+                      console.log(Location01);
                     }}
                   >
                     <option value="default" hidden={true}>
@@ -95,7 +108,7 @@ export default function BookAFlight() {
                     <option value="MAA">Chennai (MAA)</option>
                     <option value="BIA">Colombo (BIA)</option>
                     <option value="CGK">Indonesia (CGK)</option>
-                    <option value="HRI">Maththala (MRI)</option>
+                    <option value="MRI">Maththala (MRI)</option>
                     <option value="BFK">Minnesota (BFK)</option>
                     <option value="BOM">Mumbai (BOM)</option>
                     <option value="DEL">New Delhi (DEL)</option>
@@ -113,6 +126,7 @@ export default function BookAFlight() {
                     id="to"
                     onChange={(e) => {
                       setLocation02(e.target.value);
+                      console.log(Location02);
                     }}
                   >
                     <option value="default" hidden={true}>
@@ -123,7 +137,7 @@ export default function BookAFlight() {
                     <option value="MAA">Chennai (MAA)</option>
                     <option value="BIA">Colombo (BIA)</option>
                     <option value="CGK">Indonesia (CGK)</option>
-                    <option value="HRI">Maththala (MRI)</option>
+                    <option value="MRI">Maththala (MRI)</option>
                     <option value="BFK">Minnesota (BFK)</option>
                     <option value="BOM">Mumbai (BOM)</option>
                     <option value="DEL">New Delhi (DEL)</option>
@@ -222,11 +236,16 @@ export default function BookAFlight() {
                                 <td>{val.Tickets_remainingB}</td>
                                 <td>{val.Tickets_remainingE}</td>
                                 <td>
-                                  <Link to="/seatReservations">
-                                    <button className="edit-button">
-                                      Book Ticekt
-                                    </button>
-                                  </Link>
+                                  {/* <Link to="/seatReservations"> */}
+                                  <button
+                                    className="edit-button"
+                                    onClick={() =>
+                                      handleClick(val.route, val.flight_ID)
+                                    }
+                                  >
+                                    Book Ticekt
+                                  </button>
+                                  {/* </Link> */}
                                 </td>
                               </tr>
                             );

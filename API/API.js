@@ -63,7 +63,7 @@ router.get('/SeatPrice',async function(req, res){
 
     var method = new Method(req,res);
     
-    const status = await uController.getSeatPrice(method);
+    const status = await uController.getSeatPrice(method, req.user);
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);

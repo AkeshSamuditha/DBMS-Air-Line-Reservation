@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import axios from "axios";
@@ -18,6 +18,21 @@ function SignUp() {
   const [birthDayReg, setBirthdayReg] = useState("");
   const [addressReg, setAddressReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
+  const [regStatus, setRegStatus] = useState("");
+
+  const disableDates = () => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+      dd = "0" + dd;
+    }
+    if (mm < 10) {
+      mm = "0" + mm;
+    }
+    return yyyy + "-" + mm + "-" + dd;
+  };
 
   const register = () => {
     axios
@@ -46,6 +61,7 @@ function SignUp() {
   return (
     <>
       <div className="sign-up">
+        {disableDates()}
         <div className="input-areas-signup">
           <form>
             <div className="Parent">
@@ -53,6 +69,9 @@ function SignUp() {
                 <label>Title</label>
                 <br />
                 <select name="title" className="input-box-mr" id="title" onChange={setTitleReg()}>
+                  <option value="Title" hidden={true}>
+                    Title
+                  </option>
                   <option value="Mr">Mr</option>
                   <option value="Mrs">Mrs</option>
                   <option value="Ms">Ms</option>
@@ -165,6 +184,7 @@ function SignUp() {
                 className="input-box"
                 id="dob"
                 name="dob"
+                max={disableDates()}
                 onChange={(e) => {
                   setBirthdayReg(e.target.value);
                 }}
@@ -195,6 +215,7 @@ function SignUp() {
               >
                 Sign Up
               </Button>
+              <div className="login-status">{regStatus}</div>
             </Link>
           </div>
         </div>

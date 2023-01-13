@@ -14,8 +14,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
-
   const [token, setToken] = useToken();
+  const port = process.env.port;
+  const concatenated = "http://localhost:" + port + "/Auth/login";
 
   const login = () => {
     axios

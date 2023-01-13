@@ -7,9 +7,12 @@ import Navbar from "../Navbar";
 import { useToken } from "./token";
 import axios from "axios";
 
-
 export default function SeatReservation() {
   const [noOfSeats, setnoOfSeats] = useState(40);
+  const [price, setPrice] = useState();
+  const [classes, setClasses] = useState("");
+  const [selected, setSelected] = useState(false);
+
   let seatNumbers = [];
   for (let i = 1; i <= noOfSeats; i++) {
     seatNumbers.push(i);
@@ -23,17 +26,39 @@ export default function SeatReservation() {
     setBtnState((btnState) => !btnState);
   }
 
+  const getPrice = () => {
+    axios
+
+      .get("http://localhost:6969/Api/SeatPrice", {
+        headers: {
+          Authorization: token,
+        },
+        params: {
+          Flight_ID: "F1",
+          Class: classes,
+        },
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+  };
+
   const Bookflight = () => {
     axios
-      .post("http://localhost:6969/api/Bookflight", {
-        Flight_ID: "F1",
-        Class: "F",
-        Seat_ID: "1",
-        Adult_or_Child: "A",},
+      .post(
+        "http://localhost:6969/api/Bookflight",
+        {
+          Flight_ID: "F1",
+          Class: "F",
+          Seat_ID: "1",
+          Adult_or_Child: "A",
+        },
         // Country: "Mr",
-        {headers: {
-        Authorization: token,
-      }})
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   };
@@ -54,54 +79,55 @@ export default function SeatReservation() {
             <br />
             <div className="Parent">
               <div className="child1">
-                <label>Adults</label>
+                <label>Type</label>
                 <br />
                 <select name="adults" className="input-box" id="adults">
                   <option value="default" hidden>
                     Select
                   </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                  <option value="1" hidden>
+                    Type
+                  </option>
+                  <option value="2">Adult</option>
+                  <option value="3">Child</option>
                 </select>
               </div>
               <div className="child2">
                 <label>Children</label>
                 <br />
-                <select name="children" className="input-box" id="children">
-                  <option value="default" hidden>
-                    Select
-                  </option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                <select
+                  id="class"
+                  className="input-box"
+                  name="class"
+                  placeholder="Class"
+                  onChange={(e) => {
+                    setClasses(e.target.value);
+                    console.log(e.target.value);
+                    getPrice();
+                    setSelected(true);
+                  }}
+                >
+                  <option hidden>Select</option>
+                  <option value="economy">Economy</option>
+                  <option value="business">Business</option>
+                  <option value="first-class">Platinum</option>
                 </select>
               </div>
             </div>
-            <div>
-              <label>Class</label>
-              <br />
-              <select
-                id="class"
-                className="input-box"
-                name="class"
-                placeholder="Class"
-              >
-                <option value="default" hidden>
-                  Select
-                </option>
-                <option value="economy">Economy</option>
-                <option value="business">Business</option>
-                <option value="first-class">Platinum</option>
-              </select>
-            </div>
+            <>
+              <div>
+                {selected ? (
+                  <div>
+                    <center>Price per Ticket = LKR {price} /=</center>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            </>
             <br />
             <div>
-              <h3>Select a desired seat.</h3>
+              <h3>Select a Desired Seat</h3>
             </div>
             <div className="table_container">
               <div className="table_align">
@@ -182,5 +208,3 @@ export default function SeatReservation() {
     </>
   );
 }
-
-

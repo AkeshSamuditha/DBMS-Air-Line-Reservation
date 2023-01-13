@@ -101,7 +101,7 @@ router.post('/BookFlight',async function(req, res){
 
     var method = new Method(req,res);
     
-    const status = await uController.postBookFlight(method);
+    const status = await uController.postBookFlight(method,req.user);
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);

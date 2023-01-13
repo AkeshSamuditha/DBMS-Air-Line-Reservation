@@ -173,16 +173,35 @@ class UserControl{
         }
     }
 
+    async getRegUserDetails(user){
+        try{
+            const data = await user.getRegUserDetails();
+            return(data);
+        }catch(err){
+            return err;
+        }
+    }
+
     /////////////////////////////////// POST ///////////////////////////////////////////////////
     //10
-    async postBookFlight(method) {
+    async postBookFlight(method,user) {
         try {
             const body = method.getBody();
+
+            const PID = null;
+            if(user && body.PID == null){
+                PID = user.PID;
+            }
+            else if(!user && body.PID != null){
+                PID = body.PID;
+            }
+            else{
+                return "Booking failed";
+            }
 
             const Flight_ID = body.Flight_ID;
             const Class = body.Class;
             const seat_ID = body.seat_ID;
-            const PID = body.PID;
             const Adult_or_Child = body.Adult_or_Child;
 
             const sqlQuary = `CALL new_ticket(?, ?, ?, ?, ?);`;

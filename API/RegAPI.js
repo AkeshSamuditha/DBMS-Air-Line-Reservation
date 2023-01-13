@@ -32,6 +32,15 @@ router.get('/PastFlights',async function(req, res){
 
 });
 
+router.get('/RegUserDetails',async function(req, res){
+        
+        const status = await uController.getRegUserDetails(req.user);
+        console.log(status);
+        
+        res.status(ResponseHandler(status)).send(status);
+    
+});
+
 
 
 ////////////////////////////////////////////////////// POST Requests/////////////////////////////////////////////////////

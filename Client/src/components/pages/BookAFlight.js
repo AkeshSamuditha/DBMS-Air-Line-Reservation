@@ -46,13 +46,15 @@ export default function BookAFlight() {
         },
       })
       .then((response) => handleFlightDetails(response))
-      .catch((error) => console.log("Details of flight not found"));
+      .catch((error) => {
+        window.location.reload();
+        console.log("Details of flight not found");
+      });
   };
 
   function handleFlightDetails(response) {
     setFlightsGot(true);
     setFlightTable(response.data);
-    console.log(flightTable);
   }
 
   return (

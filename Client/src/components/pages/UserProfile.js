@@ -5,25 +5,18 @@ import "./UserProfile.css";
 import { useToken } from "./token";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import { DataGrid } from "@mui/x-data-grid";
-// import { DataGrid } from "react-data-grid";
-
-// const columns = [
-//   { key: "id", name: "ID" },
-//   { key: "title", name: "Title" },
-//   { key: "count", name: "Count" },
-// ];
-// const rows = [
-//   { id: 0, title: "row1", count: 20 },
-//   { id: 1, title: "row2", count: 40 },
-//   { id: 2, title: "row3", count: 60 },
-// ];
 
 export default function UserProfile() {
   const [bookedFlightTable, setBookedFlightTable] = useState([]);
   const [TraveledbookedFlightTable, setTraveledbookedFlightTable] = useState(
     []
   );
+
+  const [titile, setTitle] = useState("Mr.");
+  const [firstName, setFirstName] = useState("Jhon");
+  const [lastName, setLastName] = useState("Doe");
+  const [user_category, setUser_category] = useState("Newbie");
+  const [tot_booking, setTot_booking] = useState("0");
 
   const [token, setToken] = useToken();
 
@@ -36,10 +29,30 @@ export default function UserProfile() {
       })
       .then((response) => bookedFlightDetails(response))
       .catch((error) => console.log(error));
-  });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:6969/api/registered/RegUserDetails", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => userDetails(response))
+      .catch((error) => console.log("Wrong User"));
+  }, []);
+
+  function userDetails(response) {
+    setTitle(response.data[0].title);
+    setFirstName(response.data[0].first_name);
+    setLastName(response.data[0].last_name);
+    setUser_category(response.data[0].user_category);
+    setTot_booking(response.data[0].total_bookings);
+  }
+  // console.log(response.data);
 
   function bookedFlightDetails(response) {
-    console.log(response.data);
+    // console.log(response.data);
     setBookedFlightTable(response.data);
     // setFlights0(response.data[0]);
   }
@@ -54,24 +67,23 @@ export default function UserProfile() {
         <div className="user-container">
           <div className="user">
             <i className={"fas fa-user-circle fa-9x center"} />
-            <h3 className="name">John Doe</h3>
-            <h5 className="membership">Platinum Member</h5>
+            <h3 className="name">{firstName + " " + lastName}</h3>
+            <h5 className="membership">{user_category + " Member"}</h5>
             <br />
             <div className="lables">
               <label>Total tickets booked : </label>
-              <label>Count</label>
+              <label>{tot_booking}</label>
             </div>
             <br />
-            <div className="past-flights">
-              <h3>UPCOMING FLIGHTS WIHT US</h3>
-              <br />
-              <div></div>
-            </div>
           </div>
         </div>
 
         <>
           <div>
+            <div className="past-flights">
+              <h3>UPCOMING FLIGHTS WIHT US</h3>
+              <div></div>
+            </div>
             {bookedFlightTable.length === 0 ? (
               <div>
                 YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU SOON
@@ -93,24 +105,26 @@ export default function UserProfile() {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {bookedFlightTable.map((val, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{"T" + val.ticket_ID}</td>
-                        <td>{val.class + val.seat_ID}</td>
-                        <td>{val.flight_ID}</td>
-                        <td>{val.origin_ID}</td>
-                        <td>{val.destination_ID}</td>
-                        <td>{val.date_of_travel}</td>
-                        <td>{val.arr_time}</td>
-                        <td>{val.dep_time}</td>
-                        <td>{val.flight_status}</td>
-                        <td>
-                          <button className="edit-button">Cancel</button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  <tbody>
+                    {bookedFlightTable.map((val, key) => {
+                      return (
+                        <tr key={key}>
+                          <td>{"T" + val.ticket_ID}</td>
+                          <td>{val.class + val.seat_ID}</td>
+                          <td>{val.flight_ID}</td>
+                          <td>{val.origin_ID}</td>
+                          <td>{val.destination_ID}</td>
+                          <td>{val.date_of_travel}</td>
+                          <td>{val.arr_time}</td>
+                          <td>{val.dep_time}</td>
+                          <td>{val.flight_status}</td>
+                          <td>
+                            <button className="edit-button">Cancel</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
                 </table>
               </div>
             )}

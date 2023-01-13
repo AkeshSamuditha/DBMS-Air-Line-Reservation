@@ -12,28 +12,9 @@ export default function BookAFlight() {
   const [FromDate, setFromDate] = useState("");
   const [ToDate, setToDate] = useState("");
   const [flightsGot, setFlightsGot] = useState(false);
+  const [flightTable, setFlightTable] = useState([]); 
 
   const [selected, setSelect] = useState("");
-  const [flights0, setFlights0] = useState([]);
-  const [flights1, setFlights1] = useState([]);
-  const [flights2, setFlights2] = useState([]);
-
-  const flight0Values = Object.values(flights0);
-  const flight1Values = Object.values(flights1);
-  const flight2Values = Object.values(flights2);
-
-  const header = [
-    "Flight ID",
-    "Date of Travel",
-    "Arrival Time",
-    "Departure Time",
-    "Tickets Remaining :Platinum Class",
-    "Tickets Remaining :Bussiness Class",
-    "Tickets Remaining :Economic Class",
-    "Flight Status",
-  ];
-
-  const fullArray = [header, flight0Values, flight1Values, flight2Values];
 
   const disableDates = () => {
     var today = new Date();
@@ -61,24 +42,19 @@ export default function BookAFlight() {
           From: "BIA",
           To: "JFK",
           From_Date: "2023-01-01",
-          To_Date: "2024-01-01",
+          To_Date: "2023-01-02",
         },
       })
-      .then((response) => {
-        if (response.data.status == "400") {
-        } else {
-          console.log(response.data[0]);
-          handleFlightDetails(response);
-          // window.location.reload();
-        }
-      });
+      .then((response) => handleFlightDetails(response))
+      .catch((error) => console.log("Details of flight not found"));
   };
+    
 
   function handleFlightDetails(response) {
     setFlightsGot(true);
-    setFlights0(response.data[0]);
-    setFlights1(response.data[1]);
-    setFlights2(response.data[2]);
+    setFlightTable(response.data);
+    console.log(flightTable)
+
   }
 
   return (
@@ -202,34 +178,45 @@ export default function BookAFlight() {
         <>
           {flightsGot ? (
             <div>
-              <table>
-                <thead>
-                  <tr>
-                    {fullArray[0].map((item, index) => {
-                      return <th key={index}>{item}</th>;
-                    })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {fullArray.slice(1, fullArray.length).map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td key={item[0]}>{item[0]}</td>
-                        <td key={item[1]}>{item[1]}</td>
-                        <td key={item[2]}>{item[2]}</td>
-                        <td key={item[3]}>{item[3]}</td>
-                        <td key={item[4]}>{item[4]}</td>
-                        <td key={item[5]}>{item[5]}</td>
-                        <td key={item[6]}>{item[6]}</td>
-                        <td key={item[7]}>{item[7]}</td>
+              <>
+              <div>
+              {flightTable.length === 0 ? (
+                <div>
+                NO FLIGHTS AVAILABLE FOR YOU SELECTION, TRY AGAIN
+                </div>):(
+                <div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Flight ID</th>
+                        <th>Date of Travel</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Tickets Remaining : Platinum Class</th>
+                        <th>Tickets Remaining : Buisness Class</th>
+                        <th>Tickets Remaining : Economy Class</th>
                       </tr>
-                    );
+                    </thead>
+                    {flightTable.map((val, key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{val.flight_ID}</td>
+                        <td>{val.date_of_travel}</td>
+                        <td>{val.dep_time}</td>
+                        <td>{val.Arr_time}</td>
+                        <td>{val.Tickets_remainingP}</td>
+                        <td>{val.Tickets_remainingB}</td>
+                        <td>{val.Tickets_remainingE}</td>
+                      </tr>
+                    )
                   })}
-                </tbody>
               </table>
+              </div>)}
+              </div>
+              </>
             </div>
           ) : (
-            <div></div>
+            <div> </div>
           )}
         </>
       </div>

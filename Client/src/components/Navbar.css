@@ -183,3 +183,7 @@
 .menu > li:hover {
   background-color: lightgray;
 }
+
+.userbtn {
+  padding-top: 21px;
+}

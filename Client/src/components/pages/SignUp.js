@@ -183,6 +183,7 @@ function SignUp() {
                 className="footer-input"
                 name="password"
                 type="password"
+                placeholder="Eg: ********"
                 onChange={(e) => {
                   setPasswordReg(e.target.value);
                 }}

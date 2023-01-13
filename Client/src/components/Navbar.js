@@ -6,8 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { useToken } from './pages/token';
-
+import { useToken } from "./pages/token";
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -101,35 +100,33 @@ function Navbar() {
                   Destinations
                 </Link>
               </li>
-              <div>
-                <li className="nav-links">
-                  <Button className="nav-item" onClick={handleOpen}>
-                    <FontAwesomeIcon icon={faUser} />
-                  </Button>
-                  {open ? (
-                    <ul className="menu">
-                      <li className="menu-item">
-                        <Link to="/Auth/UserProfile" className="btn-mobile">
-                          <Button
-                            buttonStyle="btn--dropdown"
-                            buttonSize="btn--dropdown_size"
-                          >
-                            Your Profile
-                          </Button>
-                        </Link>
-                      </li>
-                      <li className="menu-item">
+              <div className="userbtn">
+                <Button className="nav-item" onClick={handleOpen}>
+                  <FontAwesomeIcon icon={faUser} />
+                </Button>
+                {open ? (
+                  <ul className="menu">
+                    <li className="menu-item">
+                      <Link to="/Auth/UserProfile" className="btn-mobile">
                         <Button
                           buttonStyle="btn--dropdown"
                           buttonSize="btn--dropdown_size"
-                          onClick={logout}
                         >
-                          Log Out
+                          Your Profile
                         </Button>
-                      </li>
-                    </ul>
-                  ) : null}
-                </li>
+                      </Link>
+                    </li>
+                    <li className="menu-item">
+                      <Button
+                        buttonStyle="btn--dropdown"
+                        buttonSize="btn--dropdown_size"
+                        onClick={logout}
+                      >
+                        Log Out
+                      </Button>
+                    </li>
+                  </ul>
+                ) : null}
               </div>
               <li>
                 <Link

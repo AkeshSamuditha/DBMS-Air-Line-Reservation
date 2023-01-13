@@ -30,7 +30,6 @@ function App() {
           <Route path="/admin-flights" component={AdminFlights} />
           <Route path="/admin-passengers" component={AdminPassengers} />
           <Route path="/admin-login" component={AdminLogIn} />
-          <Route path="/guest-user" component={GuestUser} />
         </Switch>
         <Footer />
       </Router>

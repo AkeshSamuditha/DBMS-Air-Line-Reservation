@@ -259,3 +259,12 @@ Optional Rq:
 
 1. Get Details of the Registered User
 2. Edit User Details
+
+
+Request_NO: 
+Description: Get registered user detail
+Type: GET
+URL: http://localhost:3000/registered/GetUserDetail
+Input: NONE
+Response: SELECT title, first_name, last_name, user_category, total_bookings, telephone, email, country, address, date_of_birth, username}
+SQL_Query: 'SELECT title, first_name, last_name, (SELECT discription FROM user_categories WHERE category = user_category) AS user_category , total_bookings, telephone, email, country, address, date_of_birth, username FROM registered_users LEFT JOIN users USING(PID);'

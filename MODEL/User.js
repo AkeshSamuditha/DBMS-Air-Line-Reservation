@@ -79,14 +79,22 @@ class RegUser {
     async getBookedFlightDetails() {
         try {
             const sqlQuary = `
-                SELECT flight_ID, origin_ID, destination_ID, date_of_travel, dep_time, arr_time, flight_Status
-                FROM flights 
-                RIGHT JOIN routes 
-                ON route = route_ID
-                WHERE flight_ID IN (
+            SELECT flight_ID, origin_ID, destination_ID, date_of_travel, dep_time, arr_time, flight_status, ticket_ID, seat_ID, class
+                FROM ( 
+                    SELECT * 
+                    FROM 
+                    tickets 
+                    WHERE PID = 4) 
+                    AS A
+                LEFT JOIN (
+					SELECT * FROM flights 
+					RIGHT JOIN routes 
+					ON route = route_ID
+					WHERE flight_ID IN (
                     SELECT flight 
-                    FROM tickets WHERE PID = ?) 
-                    AND date_of_travel >= CURDATE();`;
+                    FROM tickets WHERE PID = 4) 
+                    AND date_of_travel >= CURDATE()) AS B
+                ON B.flight_ID = A.flight;`
 
             const data = await executeSQL(sqlQuary, [this.PID]);
             return (data);
@@ -206,7 +214,7 @@ class AdminUser extends RegUser{
                                 WHERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%G%') AS Guests,
                                 (SELECT COUNT(*) 
                                 FROM tickets, users 
-                                WHERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%R%') AS Registered;`;
+                                WERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%R%') AS Registered;`;
 
             const data = await executeSQL(sqlQuary,[From_Date,To_Date,From_Date,To_Date]);
             return(data);

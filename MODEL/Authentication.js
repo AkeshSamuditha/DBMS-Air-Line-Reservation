@@ -48,7 +48,7 @@ async function adminLogin(method){
 
 async function register(method) {
   const body = method.getBody();
-  console.log(body);
+  // console.log(body);
   const Title = body.Title;
   const First_Name = body.First_Name;
   const Last_Name = body.Last_Name;
@@ -91,40 +91,9 @@ async function register(method) {
         "SELECT users.PID FROM users WHERE users.email =?",
         [Email]
       ); 
+      
       //same as login code
-      var user = userFactory(PID, UserName, "Registered", First_Name, Last_Name);
-
-      if (RegUsers.has(PID)) {
-        RegUsers.delete(PID);
-
-        await executeSQL(
-          "UPDATE session_table SET session_id = ?, last_used_time=? WHERE user_Id= ?",
-          [user.sessionID, Number(new Date().getTime()), user.PID]
-        );
-
-        console.log("User Already logged in, logging out previous session");
-      } else {
-        try {
-          await executeSQL("INSERT INTO session_table VALUES (?,?,?)", [
-            user.sessionID,
-            user.PID,
-            Number(new Date().getTime()),
-          ]);
-        } catch (e) {
-          console.log(e);
-          console.log("Error");
-        }
-      }
-
-      RegUsers.set(PID, user);
-
-      const token = getAccessToken({
-        sessionID: user.sessionID,
-        PID: user.PID,
-      })
-      console.log(UserName + " Successfully Logged In !!!");
-      method.res.header("token", token);
-      return { token: token, user: user };
+      return login(method);
     }
   } catch (e) {
     console.log(e);

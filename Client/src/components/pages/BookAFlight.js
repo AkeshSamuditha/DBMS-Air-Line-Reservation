@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import Navbar from "../Navbar";
 import axios from "axios";
+import dateForamt from "dateformat";
 
 export default function BookAFlight() {
   const [Location01, setLocation01] = useState("");
@@ -12,7 +13,7 @@ export default function BookAFlight() {
   const [FromDate, setFromDate] = useState("");
   const [ToDate, setToDate] = useState("");
   const [flightsGot, setFlightsGot] = useState(false);
-  const [flightTable, setFlightTable] = useState([]); 
+  const [flightTable, setFlightTable] = useState([]);
 
   const [selected, setSelect] = useState("");
 
@@ -175,17 +176,21 @@ export default function BookAFlight() {
         </div>
         <>
           {flightsGot ? (
-            <div>
+            <div className="results">
               <>
                 <div>
                   {flightTable.length === 0 ? (
-                    <div>NO FLIGHTS AVAILABLE FOR YOU SELECTION, TRY AGAIN</div>
+                    <div>
+                      NO FLIGHTS AVAILABLE FOR THE SELECTED PERIOD, PLEASE TRY
+                      AGAIN
+                    </div>
                   ) : (
                     <div>
                       <h2>
                         Flights from {Location01} to {Location02} between{" "}
                         {FromDate} to {ToDate}
                       </h2>
+                      <br />
                       <table>
                         <thead>
                           <tr>
@@ -200,29 +205,32 @@ export default function BookAFlight() {
                           </tr>
                         </thead>
                         <tbody>
-                        {flightTable.map((val, key) => {
-                          return (
-                            <tr key={key}>
-                              <td>{val.flight_ID}</td>
-                              <td>{val.date_of_travel}</td>
-                              <td>{val.dep_time}</td>
-                              <td>{val.Arr_time}</td>
-                              <td>{val.Tickets_remainingP}</td>
-                              <td>{val.Tickets_remainingB}</td>
-                              <td>{val.Tickets_remainingE}</td>
-                              <td>
-                                <Link to="/seatReservations">
-                                  <button className="edit-button">
-                                    Book Ticekt
-                                  </button>
-                                </Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
+                          {flightTable.map((val, key) => {
+                            return (
+                              <tr key={key}>
+                                <td>{val.flight_ID}</td>
+                                <td>
+                                  {dateForamt(val.date_of_travel, "dd/mm/yyyy")}
+                                </td>
+                                <td>{val.dep_time}</td>
+                                <td>{val.Arr_time}</td>
+                                <td>{val.Tickets_remainingP}</td>
+                                <td>{val.Tickets_remainingB}</td>
+                                <td>{val.Tickets_remainingE}</td>
+                                <td>
+                                  <Link to="/seatReservations">
+                                    <button className="edit-button">
+                                      Book Ticekt
+                                    </button>
+                                  </Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </table>
-                      <h5>*ටිකට් වල ගණන් ඕනිනම් බුක් කරන්න පලයන්</h5>
+                      <br />
+                      <h5>*Proceed to booking for the ticket prices.</h5>
                     </div>
                   )}
                 </div>

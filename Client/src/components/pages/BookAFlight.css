@@ -1,19 +1,14 @@
 .booking-input {
   width: 50%;
-  height: 520px;
+  height: 400px;
   padding-left: 5%;
   border-radius: 5px;
-  margin-top: 400px;
-  margin-bottom: 400px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
   outline: none;
   border: none;
   font-size: 18px;
   background-color: rgba(240, 248, 255, 0.3);
   align-content: center;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 
 .book-your-flight {
@@ -65,10 +60,23 @@
 }
 
 .booking-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-image: url("/public/images/img-9.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
-  height: 800px;
+  height: 90vh;
+}
+
+.results {
+  height: auto;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
 }

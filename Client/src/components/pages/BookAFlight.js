@@ -85,6 +85,7 @@ export default function BookAFlight() {
                     id="from"
                     onChange={(e) => {
                       setLocation01(e.target.value);
+                      console.log(Location01);
                     }}
                   >
                     <option value="default" hidden={true}>
@@ -95,7 +96,7 @@ export default function BookAFlight() {
                     <option value="MAA">Chennai (MAA)</option>
                     <option value="BIA">Colombo (BIA)</option>
                     <option value="CGK">Indonesia (CGK)</option>
-                    <option value="HRI">Maththala (MRI)</option>
+                    <option value="MRI">Maththala (MRI)</option>
                     <option value="BFK">Minnesota (BFK)</option>
                     <option value="BOM">Mumbai (BOM)</option>
                     <option value="DEL">New Delhi (DEL)</option>
@@ -113,6 +114,7 @@ export default function BookAFlight() {
                     id="to"
                     onChange={(e) => {
                       setLocation02(e.target.value);
+                      console.log(Location02);
                     }}
                   >
                     <option value="default" hidden={true}>
@@ -123,7 +125,7 @@ export default function BookAFlight() {
                     <option value="MAA">Chennai (MAA)</option>
                     <option value="BIA">Colombo (BIA)</option>
                     <option value="CGK">Indonesia (CGK)</option>
-                    <option value="HRI">Maththala (MRI)</option>
+                    <option value="MRI">Maththala (MRI)</option>
                     <option value="BFK">Minnesota (BFK)</option>
                     <option value="BOM">Mumbai (BOM)</option>
                     <option value="DEL">New Delhi (DEL)</option>

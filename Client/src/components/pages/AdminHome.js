@@ -304,7 +304,7 @@ export default function AdminHome() {
                       <option value="MAA">Chennai (MAA)</option>
                       <option value="BIA">Colombo (BIA)</option>
                       <option value="CGK">Indonesia (CGK)</option>
-                      <option value="HRI">Maththala (MRI)</option>
+                      <option value="MRI">Maththala (MRI)</option>
                       <option value="BFK">Minnesota (BFK)</option>
                       <option value="BOM">Mumbai (BOM)</option>
                       <option value="DEL">New Delhi (DEL)</option>
@@ -369,7 +369,7 @@ export default function AdminHome() {
                     <option value="MAA">Chennai (MAA)</option>
                     <option value="BIA">Colombo (BIA)</option>
                     <option value="CGK">Indonesia (CGK)</option>
-                    <option value="HRI">Maththala (MRI)</option>
+                    <option value="MRI">Maththala (MRI)</option>
                     <option value="BFK">Minnesota (BFK)</option>
                     <option value="BOM">Mumbai (BOM)</option>
                     <option value="DEL">New Delhi (DEL)</option>

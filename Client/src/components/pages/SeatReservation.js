@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import "./SeatReservation.css";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ export default function SeatReservation() {
   const [price, setPrice] = useState();
   const [classes, setClasses] = useState("");
   const [selected, setSelected] = useState(false);
+  const [temp, setTemp] = useState("");
 
   let seatNumbers = [];
   for (let i = 1; i <= noOfSeats; i++) {
@@ -27,8 +28,9 @@ export default function SeatReservation() {
   }
 
   const getPrice = () => {
+    if (classes === "F") {
+    }
     axios
-
       .get("http://localhost:6969/Api/SeatPrice", {
         headers: {
           Authorization: token,
@@ -63,6 +65,18 @@ export default function SeatReservation() {
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    setClasses(temp);
+  }, [temp]);
+
+  useEffect(() => {
+    getPrice();
+  }, [classes]);
+
+  function handleChange(e) {
+    setTemp(e.target.value);
+  }
+
   let toggleClass = btnState ? "selected" : "not-selected";
 
   return (
@@ -93,7 +107,7 @@ export default function SeatReservation() {
                 </select>
               </div>
               <div className="child2">
-                <label>Children</label>
+                <label>Class</label>
                 <br />
                 <select
                   id="class"
@@ -101,16 +115,14 @@ export default function SeatReservation() {
                   name="class"
                   placeholder="Class"
                   onChange={(e) => {
-                    setClasses(e.target.value);
-                    console.log(e.target.value);
-                    getPrice();
+                    handleChange(e);
                     setSelected(true);
                   }}
                 >
                   <option hidden>Select</option>
-                  <option value="economy">Economy</option>
-                  <option value="business">Business</option>
-                  <option value="first-class">Platinum</option>
+                  <option value="E">Economy</option>
+                  <option value="B">Business</option>
+                  <option value="P">Platinum</option>
                 </select>
               </div>
             </div>
@@ -118,6 +130,7 @@ export default function SeatReservation() {
               <div>
                 {selected ? (
                   <div>
+                    <br />
                     <center>Price per Ticket = LKR {price} /=</center>
                   </div>
                 ) : (

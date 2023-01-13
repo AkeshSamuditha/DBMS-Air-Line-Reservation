@@ -24,11 +24,11 @@ h5 {
   align-items: center;
   height: 90vh;
   /* background-color: rgb(254, 241, 225); */
-  padding-top: 5%;
+  /* padding-top: 5%; */
 }
 
 .user {
-  padding-top: 70px;
+  padding-top: 50px;
   height: 380px;
   width: 50%;
   background-color: rgb(255, 255, 255, 0.3);
@@ -53,5 +53,5 @@ h5 {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: bisque;
+  background-color: rgba(0, 0, 0, 0.1);
 }

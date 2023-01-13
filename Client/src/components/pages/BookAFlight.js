@@ -6,6 +6,8 @@ import { Button } from "../Button";
 import Navbar from "../Navbar";
 import axios from "axios";
 import dateForamt from "dateformat";
+// import { HashLink } from "react-router-hash-link";
+// import { Link as Jump } from "react-scroll";
 
 export default function BookAFlight() {
   const [Location01, setLocation01] = useState("");
@@ -62,15 +64,15 @@ export default function BookAFlight() {
     <>
       <Navbar />
       <div className="book-your-flight">
-        <div>
+        {/* <div>
           <h1 className="book-a-flight">Book A Flight</h1>
-        </div>
+        </div> */}
         <div className="booking-bg">
           <div className="booking-input">
             <h2>
               <center>Book your Flight!</center>
             </h2>
-            {disableDates()}
+            <center>{disableDates()}</center>
             <br />
             <form>
               <div className="Parent">

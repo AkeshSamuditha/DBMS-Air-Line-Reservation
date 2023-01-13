@@ -81,11 +81,13 @@ export default function UserProfile() {
     <>
       <Navbar />
       <div>
-        <div className="userprofile">
+        {/* <div className="userprofile">
           <h2>Welcome aboard</h2>
-        </div>
+        </div> */}
         <div className="user-container">
           <div className="user">
+            <h2>WELCOME ABOARD!</h2>
+            <br />
             <i className={"fas fa-user-circle fa-9x center"} />
             <h3 className="name">{firstName + " " + lastName}</h3>
             <h5 className="membership">{user_category + " Member"}</h5>
@@ -103,7 +105,8 @@ export default function UserProfile() {
             {bookedFlightTable.length === 0 ? (
               <div>
                 <center>
-                  YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU SOON
+                  YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU FLY
+                  SOON
                 </center>
               </div>
             ) : (

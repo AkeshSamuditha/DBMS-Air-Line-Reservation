@@ -94,8 +94,13 @@
     "range-parser": "^1.2.1",
     "raw-body": "^2.5.1",
     "react-data-grid": "^7.0.0-beta.20",
+<<<<<<< Updated upstream
     "react-player": "^2.11.0",
     "react-youtube": "^10.1.0",
+=======
+    "react-router-hash-link": "^2.4.3",
+    "react-scroll": "^1.8.9",
+>>>>>>> Stashed changes
     "readdirp": "^3.6.0",
     "safe-buffer": "^5.2.1",
     "safer-buffer": "^2.1.2",

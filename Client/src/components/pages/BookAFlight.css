@@ -63,7 +63,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("/public/images/img-9.jpg");
+  background-image: url("/public/images/img-2.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -78,5 +78,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: bisque;
+  background-color: rgba(0, 0, 0, 0.2);
 }

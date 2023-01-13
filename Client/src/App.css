@@ -22,14 +22,14 @@
   font-size: 3rem;
 }
 
-.book-a-flight {
+/* .book-a-flight {
   background-image: url("/public/images/img-2.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
-}
+} */
 
 .destinations {
   background-image: url("/public/images/img-1.jpg");
@@ -59,7 +59,7 @@
 }
 
 .admin-login {
-  background-image: url('/public/images/img-11.jpg');
+  background-image: url("/public/images/img-11.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

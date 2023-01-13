@@ -14,6 +14,7 @@ import AdminFlights from "./components/pages/AdminFlights";
 import AdminPassengers from "./components/pages/AdminPassengers";
 import AdminLogIn from "./components/pages/AdminLogIn";
 import GuestUser from "./components/pages/GuestUser";
+import Cancel from "./components/pages/Cancel";
 
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
           <Route path="/admin-flights" component={AdminFlights} />
           <Route path="/admin-passengers" component={AdminPassengers} />
           <Route path="/admin-login" component={AdminLogIn} />
+          <Route path="/guest-user" component={GuestUser} />
+          <Route path="/cancel" component={Cancel} />
         </Switch>
         <Footer />
       </Router>

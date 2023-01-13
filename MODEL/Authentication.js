@@ -340,7 +340,7 @@ function ShowCurrentUsers(){
   var CurrUsers = "Logged in: ";
   console.log(RegUsers.entries());
     for (const [key, value] of RegUsers.entries()){
-        CurrUsers = CurrUsers + value.username + "  " ;
+        CurrUsers = CurrUsers + value.UserName + "  " ;
   }
 
     if (CurrUsers=="Logged in: "){

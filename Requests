@@ -5,10 +5,10 @@
 # Response: What is given in Response
 # SQL_Query: SQL_query to Access DB
 
-Request_No: 01✅
+Request_No: 01✅💠
 Description: Given a flight no, all passengers travelling in it (next immediate flight) below age 18, above age 18
 Type: GET
-URL: http://localhost:3000/api/getPassengersByflight
+URL: http://localhost:3000/admin/api/getPassengersByflight
 Input: {"flight_ID": "F1"}
 Response:{Above, Below}
 SQL_Query: 
@@ -48,7 +48,7 @@ SELECT (SELECT COUNT(*) FROM
 
 Request_No: 04 ✅
 Description: Given origin and destination, all past flights, status, passenger counts data
-Type: GET/POST/DELETE/UPDATE
+Type: GET
 URL: http://localhost:3000/api/getPastflights
 input: 
 {
@@ -81,10 +81,10 @@ FROM flights LEFT JOIN (
 ON airplane = airplane_ID
 GROUP BY model_ID;
 
-Request_No: 06 ✅  
+Request_No: 06 ✅💠
 Description: Login
 Type: GET
-URL: http://localhost:3000/Auth/login
+URL: http://localhost:3000/auth/login
 input:
 {
 Email: "Mr",
@@ -93,10 +93,10 @@ Password: "John",
 Response: NONE
 SQL_Query: SELECT * FROM users, registered_users WHERE email = ? AND password = ? AND users.PID = registered_users.PID LIMIT 1;
 
-Request_No: 07✅
+Request_No: 07✅💠
 Description: Register
 Type: POST
-URL: http://localhost:3000/Auth/Register
+URL: http://localhost:3000/auth/Register
 input:
 {
 Title: "Mr",
@@ -113,7 +113,7 @@ Address: "123",
 Response: No Response
 SQL_Query: Call new_registred_user(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-Request_No: 08 ✅
+Request_No: 08 ✅💠
 Description: When From, To and Date Range(From_Date,To_Date) is given then available flights will be shown to the user
 Type: GET
 URL: Http:/localhost:3000/api/getflights
@@ -136,7 +136,7 @@ WHERE route = (
 ) AND (Tickets_remainingP + Tickets_remainingB + Tickets_remainingE > 0);
 
 
-Request_No: 09 ✅
+Request_No: 09 ✅💠
 Description: Restricted Seats
 Type: Get
 URL: http://localhost:3000/api/AvailableSeats
@@ -148,7 +148,7 @@ SQL_Query:
     WHERE flight = 'F1'
     ORDER BY class, seat_ID;
 
-Request_No: 10 ✅
+Request_No: 10 ✅💠
 Description: flight Booking
 Type: Post
 URL: http://localhost:3000/api/Bookflight
@@ -161,7 +161,7 @@ input: {
 Response: NONE
 SQL_Query: CALL new_ticket(?, ?, ?, ?, ?);
 
-Request_No: 11 ✅
+Request_No: 11 ✅💠
 Description: Cancel Booking
 Type: Post
 URL: http://localhost:3000/api/CancelBooking
@@ -172,7 +172,7 @@ input:
 Response: NONE
 SQL_Query: CALL cancel_ticket(?);
 
-Request_No: 12 ✅ 
+Request_No: 12 ✅💠
 Description: Seat Price
 Type: Get
 URL: http://localhost:3000/api/SeatPrice
@@ -185,7 +185,7 @@ input:
 response: {'Price': "100"}
 SQL_Query: CALL ticket_price(?, ?, ?); //Function
 
-Request_No: 13✅
+Request_No: 13✅💠
 Description: Guest User Login
 Type: Post
 URL: http://localhost:3000/api/GuestLogin
@@ -202,7 +202,7 @@ Response: No response
 SQL_Query: 
 INSERT INTO users(title, first_Name, last_Name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);
 
-Request_No: 14✅
+Request_No: 14✅💠
 Description: Check flight Status
 Type: Get
 URL: http://localhost:3000/api/flightStatus
@@ -213,19 +213,22 @@ Input:
 Response: {flight_Status}
 SQL_Query: SELECT flight_Status FROM flights WHERE flight_ID = ?;
 
-Request_No: 15 ✅
+Request_No: 15 ✅💠
 Description: Get Destinations
 Type: Get
 URL: http://localhost:3000/api/Destinations
 Input: None
-Response: {Airport_code, Airport_namee, Location}
+Response: {Airport_code, Airport_name, Location}
 Query: 
 SELECT * FROM airports;
 
-Request_No: 16 ✅
+
+--------------REGISTERED USER REQUESTS-----------------------
+
+Request_No: 16 ✅💠
 Description: Get Details of the Booked flight Along with its Status
 Type: Get
-URL: http://localhost:3000/api/BookedflightDetails
+URL: http://localhost:3000/registered/BookedflightDetails
 Input: 
 {
 "PID": "XXX"
@@ -236,10 +239,10 @@ Query:
     FROM flights RIGHT JOIN routes ON route = route_ID
     WHERE flight_ID in (SELECT flight FROM Tickets WHERE PID = ?) AND date_of_travel >= CURDATE();
 
-Request_No: 17✅
+Request_No: 17✅💠
 Description: Past flights of the user
 Type: Get
-URL: http://localhost:3000/api/Pastflights
+URL: http://localhost:3000/registered/Pastflights
 Input: 
 {
 "PID": "XXX"

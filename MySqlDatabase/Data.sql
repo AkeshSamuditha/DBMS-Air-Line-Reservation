@@ -1,7 +1,7 @@
 INSERT INTO user_categories(category, discription, Discount, threashold) VALUES ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
 INSERT INTO class_types(class, discription, price_per_air_mile) VALUES ('E', 'Economy', 8), ('B','Buisness',15), ('P','Platinum',25);
 INSERT INTO admins(admin_name, admin_password) VALUES ('admin', 'admin'); 
-
+insert INTO admins(admin_name, admin_password) VALUES ('admin', '$2a$10$35QCTy/gi9fdeECwK8qRi.QUHZ3fEdwq8v.71gHSC5MTCzzB448Ju');
 
 INSERT INTO locations(location) VALUES('Sri Lanka');
 INSERT INTO locations(location, parent_ID) VALUES('Colombo', 1);

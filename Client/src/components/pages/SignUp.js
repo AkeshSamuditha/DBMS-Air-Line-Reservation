@@ -4,8 +4,10 @@ import { Button } from "../Button";
 import axios from "axios";
 import "./SignUp.css";
 import Footer from "../Footer";
+import { useToken } from './token';
 
 function SignUp() {
+  const [token , setToken] = useToken();
   const [titleReg, setTitleReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -16,7 +18,6 @@ function SignUp() {
   const [birthDayReg, setBirthdayReg] = useState("");
   const [addressReg, setAddressReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
-
 
   const register = () => {
     axios
@@ -32,16 +33,14 @@ function SignUp() {
         DOB: birthDayReg,
         Address: addressReg,
       })
-      .then((response) => {
-        if (response.data.status == "400") {
-          alert("Invalid Username or Passwrod");
-        }
-        axios.post("http://localhost:6969/Auth/login", {
-          Email: emailReg,
-          Password: passwordReg,
-        });
-        console.log(response);
-      });
+      .then(response => {
+          const {token :newtok} = response.data;
+          console.log("Token", newtok);
+          if (newtok){
+            setToken(newtok)
+            window.location.href = '/auth/Login';
+            console.log("Token2", newtok)};
+      }).catch(error => console.log("Error at Signup"));
   };
 
   return (
@@ -53,7 +52,7 @@ function SignUp() {
               <div>
                 <label>Title</label>
                 <br />
-                <select name="title" className="input-box-mr" id="title">
+                <select name="title" className="input-box-mr" id="title" onChange={setTitleReg()}>
                   <option value="Mr">Mr</option>
                   <option value="Mrs">Mrs</option>
                   <option value="Ms">Ms</option>
@@ -187,7 +186,7 @@ function SignUp() {
             </div>
           </form>
           <div className="sign-up-btns">
-            <Link to={"/Auth/login"}>
+            <Link>
               <Button
                 className="btns"
                 buttonStyle="btn--outline"

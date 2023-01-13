@@ -4,8 +4,26 @@ import "./Admin.css";
 import "./AdminHome.css";
 import { Button } from "../Button";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useToken } from "./token";
 
-export default function AdminHome() {
+export default function AdminHome() { 
+  // const [loginStatus, setLoginStatus] = useState("");
+  const [token, setToken] = useToken();
+  console.log("epa bn ", token)
+  
+  
+  axios.get("http://localhost:6969/admin/api/getrevenueByAircraftType", {
+    headers: {
+      Authorization:'$2a$10$35QCTy/gi9fdeECwK8qRi.QUHZ3fEdwq8v.71gHSC5MTCzzB448Ju',
+  }})
+    .then(response => handleRevenue(response))
+    .catch(error => console.log(error));
+
+  function handleRevenue(response) {
+    console.log(response);
+      }
+  
   return (
     <div>
       <div className="container">
@@ -239,4 +257,4 @@ export default function AdminHome() {
       </div>
     </div>
   );
-}
+  }

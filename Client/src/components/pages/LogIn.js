@@ -6,6 +6,8 @@ import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
 import Footer from "../Footer";
+import { useToken } from './token';
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,45 +17,23 @@ export default function Login() {
 
   const [token, setToken] = useToken();
 
-  function useToken() {
-    const [token, setToken] = useState(localStorage.getItem("token"));
-
-    useEffect(() => {
-      localStorage.setItem("token", token);
-    }, [token]);
-
-    return [token, setToken];
-  }
-
-  useEffect(() => {
-    console.log(token);
-    if (token !== localStorage.getItem("token")) {
-      localStorage.setItem("token", token);
-      console.log(token);
-    }
-  }, [token]);
-
   const login = () => {
     axios
       .post("http://localhost:6969/Auth/login", {
         Email: email,
         Password: password,
       })
-      .then((response) => {
-        console.log("shit", response);
-        if (response.data.status == "400") {
-          setLoginStatus("Invalid Username or Passwrod");
-        } else {
-          console.log(response);
-          handleLogin(response);
-          window.location.reload();
-        }
-      });
+      .then(response => handleLogin(response))
+      .catch(error => setLoginStatus("Invalid Username or Passwrod"));
   };
 
   function handleLogin(response) {
-    setToken(response.data.data.token);
-    console.log("ent", token);
+    const { token } = response.data;
+    console.log("Token", token);
+    if (token){
+      setToken(token)};
+      window.location.reload();
+
   }
 
   return (

@@ -6,16 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTypo3 } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { useToken } from './pages/token';
 
-function useToken() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
-  useEffect(() => {
-    localStorage.setItem("token", token);
-  }, [token]);
-
-  return [token, setToken];
-}
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -38,6 +30,7 @@ function Navbar() {
         }
       )
       .then((response) => {
+        
         console.log(response);
         if (response.data.message == "400") {
           setLogoutStatus("Error While Logging Out");

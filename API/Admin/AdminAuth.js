@@ -17,7 +17,7 @@ router.post('/login', async function (req, res) {
   var status = await adminLogin(method);
 
   console.log("login status:", status);
-  res.send({ status: ResponseHandler(status), data: status });
+  res.status(ResponseHandler(status)).send(status);
 });
 
 

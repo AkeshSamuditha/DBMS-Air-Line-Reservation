@@ -14,7 +14,7 @@ router.post("/login", async function (req, res) {
   var status = await login(method);
 
   console.log("login status:", status);
-  res.send({ status: ResponseHandler(status), data: status });
+  res.status(ResponseHandler(status)).send(status);
 });
 
 // Request No: 07
@@ -24,7 +24,7 @@ router.post("/Register", async function (req, res) {
 
   const status = await register(method);
   console.log("register status:", status);
-  res.send({ status: ResponseHandler(status), data: status });
+  res.status(ResponseHandler(status)).send(status);
 });
 
 

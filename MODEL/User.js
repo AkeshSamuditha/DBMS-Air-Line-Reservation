@@ -235,7 +235,7 @@ class AdminUser extends RegUser{
     }
 
     //5
-    async getRevenueByAircraftType(Model,Brand) {
+    async getRevenueByAircraftType() {
         try {
             const sqlQuary = `
                             SELECT model_ID, model, brand, revenue

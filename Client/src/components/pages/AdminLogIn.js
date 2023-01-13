@@ -5,57 +5,49 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
-
-function useToken() {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
-  useEffect(() => {
-    localStorage.setItem("token", token);
-  }, [token]);
-
-  return [token, setToken];
-}
+import { useToken } from './token';
 
 export default function AdminLogIn() {
+  const [token, setToken] = useToken();
+  
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  const [token, setToken] = useToken();
+  // if (token) {
+  //   setToken("");
+  //   return;
+  // }
 
-  useEffect(() => {
-    console.log(token);
-    if (token !== localStorage.getItem("token")) {
-      localStorage.setItem("token", token);
-      console.log(token);
+    const adminlogin = () => {
+      axios
+        .post("http://localhost:6969/admin/login", {
+          Admin_Name: name,
+          Admin_Password: password,
+        })
+        .then(response => {handleLogin(response);
+        // console.log("response", response);
+        
+      })
+        .catch(error => {
+          setLoginStatus("Invalid Username or Password");
+          // window.location.reload()
+        });
+    };
+
+    function handleLogin(response) {
+      const { token } = response.data;
+      if (token){
+        console.log("Token", token);
+        setToken(token);
+        window.location.href = '/admin-home';
+      }
     }
-  }, [token]);
-
-  //   const login = () => {
-  //     axios
-  //       .post("http://localhost:6969/Auth/login", {
-  //         Name: name,
-  //         Password: password,
-  //       })
-  //       .then((response) => {
-  //         console.log("shit", response);
-  //         if (response.data.status == "400") {
-  //           setLoginStatus("Invalid Passwrod");
-  //         } else {
-  //           console.log(response);
-  //           handleLogin(response);
-  //           window.location.reload();
-  //         }
-  //       });
-  //   };
-
-  function handleLogin(response) {
-    setToken(response.data.data.token);
-    console.log("ent", token);
-  }
-
+  
   return (
+    <>
+      {!token ? (<>
     <div className="log-in">
       <div className="input-areas-login">
         <form>
@@ -83,13 +75,13 @@ export default function AdminLogIn() {
           />
         </form>
         <div className="log-in-btns">
-          <Link to="/admin-home">
-            {/* <Link to="/Auth/login"> */}
+          {/* <Link to="/admin-home"> */}
+            <Link to="/admin-login">
             <Button
               className="btns"
               buttonStyle="btn--outline"
               buttonSize="btn--large"
-              //   onClick={login}
+              onClick={adminlogin}
             >
               Log In
             </Button>
@@ -98,5 +90,7 @@ export default function AdminLogIn() {
         <div className="login-status">{loginStatus}</div>
       </div>
     </div>
+    </>
+  ) : (<></>)}</>
   );
 }

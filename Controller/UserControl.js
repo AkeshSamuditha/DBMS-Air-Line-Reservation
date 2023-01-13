@@ -72,8 +72,6 @@ class UserControl{
             const To = method.searchURL("To");
             const From_Date = method.searchURL("From_Date");
             const To_Date = method.searchURL("To_Date");
-
-            console.log(From,To,From_Date,To_Date)
             
             const sqlQuary = `
                 SELECT flight_ID, date_of_travel, dep_time, Arr_time, Tickets_remainingP, Tickets_remainingB, Tickets_remainingE, flight_Status
@@ -120,7 +118,7 @@ class UserControl{
             const Route = method.searchURL("Route");
             const Class = method.searchURL("Class");
 
-            const sqlQuary = `CALL Ticket_Price(?, ?, ?);`;
+            const sqlQuary = `CALL ticket_price(?, ?, ?);`;
 
             const data = await executeSQL(sqlQuary,[PID,Route,Class]);
             return(data);

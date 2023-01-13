@@ -11,16 +11,15 @@ var AdminUsers = new Map();
 
 async function adminLogin(method){
     const body = method.getBody();
-
-    const admin_name = body.Admin_name;
-    const Password = body.Password;
+    console.log(body);
+    const admin_name = body.Admin_Name;
+    const password = body.Admin_Password;
 
     try{
         const credential = await executeSQL(`SELECT * FROM admins WHERE admin_name =?`,[admin_name]);
-        console.log(method.body);
         if(!credential[0]) return "Error : Invalid admin_id or Password";
         
-        const status = await compare(Password,credential[0].admin_password);
+        const status = await compare(password,credential[0].admin_password);
 
         if(status){
           console.log("Password Matched");
@@ -87,7 +86,45 @@ async function register(method) {
         ]
       );
       console.log(UserName + " successfuly added");
-      return "User added";
+      
+      const PID = await executeSQL(
+        "SELECT users.PID FROM users WHERE users.email =?",
+        [Email]
+      ); 
+      //same as login code
+      var user = userFactory(PID, UserName, "Registered", First_Name, Last_Name);
+
+      if (RegUsers.has(PID)) {
+        RegUsers.delete(PID);
+
+        await executeSQL(
+          "UPDATE session_table SET session_id = ?, last_used_time=? WHERE user_Id= ?",
+          [user.sessionID, Number(new Date().getTime()), user.PID]
+        );
+
+        console.log("User Already logged in, logging out previous session");
+      } else {
+        try {
+          await executeSQL("INSERT INTO session_table VALUES (?,?,?)", [
+            user.sessionID,
+            user.PID,
+            Number(new Date().getTime()),
+          ]);
+        } catch (e) {
+          console.log(e);
+          console.log("Error");
+        }
+      }
+
+      RegUsers.set(PID, user);
+
+      const token = getAccessToken({
+        sessionID: user.sessionID,
+        PID: user.PID,
+      })
+      console.log(UserName + " Successfully Logged In !!!");
+      method.res.header("token", token);
+      return { token: token, user: user };
     }
   } catch (e) {
     console.log(e);
@@ -174,7 +211,7 @@ async function logout(user){
     catch(e){
     console.log("database error");
   }
-
+  console.log(user.UserName + " Successfully Logged Out !!!");
     return(user.UserName + " Successfully Logged Out !!!")
 
 }
@@ -234,7 +271,7 @@ var ExtractRegUser =async function(req,res, next){
 var ExtractAdminUser =async function(req,res, next){
 
   var method = new Method(req,res);
-
+  console.log("Ane plyn bn ynna", req.headers);
   var token = method.getToken();
   console.log(token);
   try{

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
-// import ReactPlayer from "react-player";
-// import YouTube from "react-youtube";
 
 function Payment() {
   // const [isPlaying, setIsPlaying] = useState(false);
@@ -12,7 +10,8 @@ function Payment() {
   // };
 
   return (
-    <div className="hero-container">
+    <div c
+    lassName="hero-container">
       {/* <video src="/videos/video-1.mp4" autoPlay loop muted /> */}
       <h1>Proceed with your Payment</h1>
       <p>සල්ලි දීලා පලයන්</p>

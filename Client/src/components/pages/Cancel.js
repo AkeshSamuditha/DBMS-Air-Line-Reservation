@@ -5,6 +5,7 @@ import "../../App.css";
 import "../../components/HeroSection.css";
 import { Button } from "../Button";
 import { useToken } from "./token";
+import Navbar from "../Navbar";
 
 function Cancel() {
   const [token, setToken] = useToken();
@@ -22,28 +23,31 @@ function Cancel() {
   }
 
   return (
-    <div className="hero-container">
-      <h1>Are You Sure You Want to Cancel?</h1>
-      <div className="hero-btns">
-        <Button
-          className="btns"
-          buttonStyle="btn--outline"
-          buttonSize="btn--large"
-          onClick={cancelBooking}
-        >
-          Yes
-        </Button>
-        <Link to="/Auth/UserProfile">
+    <>
+      <Navbar />
+      <div className="hero-container">
+        <h1>Are You Sure You Want to Cancel?</h1>
+        <div className="hero-btns">
           <Button
             className="btns"
             buttonStyle="btn--outline"
             buttonSize="btn--large"
+            onClick={cancelBooking}
           >
-            No
+            Yes
           </Button>
-        </Link>
+          <Link to="/Auth/UserProfile">
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+            >
+              No
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -12,7 +12,9 @@
 .log-in,
 .sign-up,
 .guest-user,
-.admin-login .cancel {
+.admin-login,
+.cancel,
+.seatReservations {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -91,7 +93,7 @@
   color: #fff;
   font-size: 100px;
 }
-.cancel {
+.seatReservations {
   background-image: url("/public/images/img-1.jpg");
   background-position: center;
   background-size: cover;

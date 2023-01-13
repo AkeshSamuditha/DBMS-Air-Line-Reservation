@@ -15,6 +15,8 @@ import AdminPassengers from "./components/pages/AdminPassengers";
 import AdminLogIn from "./components/pages/AdminLogIn";
 import GuestUser from "./components/pages/GuestUser";
 import Cancel from "./components/pages/Cancel";
+import SeatReservation from "./components/pages/SeatReservation";
+import Payment from "./components/pages/Payment";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
           <Route path="/admin-login" component={AdminLogIn} />
           <Route path="/guest-user" component={GuestUser} />
           <Route path="/cancel" component={Cancel} />
+          <Route path="/seatReservations" component={SeatReservation} />
+          <Route path="/payments" component={Payment} />
         </Switch>
         <Footer />
       </Router>

@@ -4,6 +4,7 @@ import Navbar from "../Navbar";
 import "./UserProfile.css";
 import { useToken } from "./token";
 import axios from "axios";
+import { Link } from "react-router-dom";
 // import { DataGrid } from "@mui/x-data-grid";
 // import { DataGrid } from "react-data-grid";
 
@@ -19,10 +20,10 @@ import axios from "axios";
 // ];
 
 export default function UserProfile() {
-  
   const [bookedFlightTable, setBookedFlightTable] = useState([]);
-  const [TraveledbookedFlightTable, setTraveledbookedFlightTable] = useState([]);
-  
+  const [TraveledbookedFlightTable, setTraveledbookedFlightTable] = useState(
+    []
+  );
 
   const [token, setToken] = useToken();
 
@@ -35,7 +36,7 @@ export default function UserProfile() {
       })
       .then((response) => bookedFlightDetails(response))
       .catch((error) => console.log(error));
-  },);
+  });
 
   function bookedFlightDetails(response) {
     console.log(response.data);
@@ -62,42 +63,41 @@ export default function UserProfile() {
             </div>
             <br />
             <div className="past-flights">
-              <h3>UPCOMING FLIGHTS WIHT US...</h3>
+              <h3>UPCOMING FLIGHTS WIHT US</h3>
               <br />
-              <div>
-              
-            </div>
+              <div></div>
             </div>
           </div>
         </div>
 
         <>
+          <div>
+            {bookedFlightTable.length === 0 ? (
               <div>
-              {bookedFlightTable.length === 0 ? (
-                <div>
                 YOU HAVE NO FLIGHTS WITH US CURRENTLY, HOPE TO SEE YOU SOON
-                </div>):(
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Ticket ID</th>
-                        <th>Seat ID</th>
-                        <th>Flight ID</th>
-                        <th>Origin</th>
-                        <th>Destination</th>
-                        <th>Date of Travel</th>
-                        <th>Arrival Time</th>
-                        <th>Departure Time</th>
-                        <th>Flight Status</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    {bookedFlightTable.map((val, key) => {
+              </div>
+            ) : (
+              <div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Ticket ID</th>
+                      <th>Seat ID</th>
+                      <th>Flight ID</th>
+                      <th>Origin</th>
+                      <th>Destination</th>
+                      <th>Date of Travel</th>
+                      <th>Arrival Time</th>
+                      <th>Departure Time</th>
+                      <th>Flight Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  {bookedFlightTable.map((val, key) => {
                     return (
                       <tr key={key}>
-                        <td>{"T"+val.ticket_ID}</td>
-                        <td>{val.class+val.seat_ID}</td>
+                        <td>{"T" + val.ticket_ID}</td>
+                        <td>{val.class + val.seat_ID}</td>
                         <td>{val.flight_ID}</td>
                         <td>{val.origin_ID}</td>
                         <td>{val.destination_ID}</td>
@@ -105,14 +105,17 @@ export default function UserProfile() {
                         <td>{val.arr_time}</td>
                         <td>{val.dep_time}</td>
                         <td>{val.flight_status}</td>
-                        <td><button className="edit-button">Cancel</button></td>
+                        <td>
+                          <button className="edit-button">Cancel</button>
+                        </td>
                       </tr>
-                    )
+                    );
                   })}
-              </table>
-              </div>)}
+                </table>
               </div>
-              </>
+            )}
+          </div>
+        </>
       </div>
     </>
   );

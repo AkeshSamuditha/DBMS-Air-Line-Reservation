@@ -13,6 +13,35 @@ function GuestUser() {
   const [countryReg, setCountryReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
 
+  const guestUserLogin = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:6969/api/guest/GuestUserLogin", {
+        title: titleReg,
+        firstName: firstNameReg,
+        lastName: lastNameReg,
+        email: emailReg,
+        country: countryReg,
+        telephone: telephoneReg,
+      })
+      .then((response) => confirmBooking())
+      .catch((error) => console.log(error));
+  };
+
+  const confirmBooking = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:6969/api/Bookflight", {
+        Flight_ID: "F1",
+        Class: "F",
+        Seat_ID: "1",
+        // PID: "P1",
+        Adult_or_Child: "A",
+      })
+      .then((response) => window.location.replace())
+      .catch((error) => console.log(error));
+  };
+
   return (
     <>
       <Navbar />
@@ -31,7 +60,15 @@ function GuestUser() {
               <div>
                 <label>Title</label>
                 <br />
-                <select name="title" className="input-box-mr" id="title">
+                <select
+                  name="title"
+                  className="input-box-mr"
+                  id="title"
+                  onChange={setTitleReg}
+                >
+                  <option value="Mr" hidden>
+                    Title
+                  </option>
                   <option value="Mr">Mr</option>
                   <option value="Mrs">Mrs</option>
                   <option value="Ms">Ms</option>
@@ -110,17 +147,21 @@ function GuestUser() {
               />
             </div>
             <div className="find-a-flight-btn">
-              <Link>
-                <Button
-                  className="find-a-flight-btn"
-                  buttonStyle="btn--black"
-                  buttonSize="btn--black_size"
-                >
-                  Proceed
-                </Button>
-              </Link>
+              <Button
+                className="find-a-flight-btn"
+                buttonStyle="btn--black"
+                buttonSize="btn--black_size"
+                onClick={guestUserLogin}
+              >
+                Proceed
+              </Button>
             </div>
           </form>
+          <div className="login-redirect">
+            <Link to="/Auth/login" style={{ color: "black" }}>
+              Already have an account? Log In
+            </Link>
+          </div>
         </div>
       </div>
     </>

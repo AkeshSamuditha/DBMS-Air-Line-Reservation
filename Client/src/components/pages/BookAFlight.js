@@ -35,26 +35,24 @@ export default function BookAFlight() {
     axios
       .get("http://localhost:6969/api/getFlights", {
         params: {
-          // From: Location01,
-          // To: Location02,
-          // From_Date: FromDate,
-          // To_Date: ToDate,
-          From: "BIA",
-          To: "JFK",
-          From_Date: "2023-01-01",
-          To_Date: "2023-01-02",
+          From: Location01,
+          To: Location02,
+          From_Date: FromDate,
+          To_Date: ToDate,
+          // From: "BIA",
+          // To: "JFK",
+          // From_Date: "2023-01-01",
+          // To_Date: "2024-01-02",
         },
       })
       .then((response) => handleFlightDetails(response))
       .catch((error) => console.log("Details of flight not found"));
   };
-    
 
   function handleFlightDetails(response) {
     setFlightsGot(true);
     setFlightTable(response.data);
-    console.log(flightTable)
-
+    console.log(flightTable);
   }
 
   return (
@@ -179,40 +177,55 @@ export default function BookAFlight() {
           {flightsGot ? (
             <div>
               <>
-              <div>
-              {flightTable.length === 0 ? (
                 <div>
-                NO FLIGHTS AVAILABLE FOR YOU SELECTION, TRY AGAIN
-                </div>):(
-                <div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Flight ID</th>
-                        <th>Date of Travel</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                        <th>Tickets Remaining : Platinum Class</th>
-                        <th>Tickets Remaining : Buisness Class</th>
-                        <th>Tickets Remaining : Economy Class</th>
-                      </tr>
-                    </thead>
-                    {flightTable.map((val, key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{val.flight_ID}</td>
-                        <td>{val.date_of_travel}</td>
-                        <td>{val.dep_time}</td>
-                        <td>{val.Arr_time}</td>
-                        <td>{val.Tickets_remainingP}</td>
-                        <td>{val.Tickets_remainingB}</td>
-                        <td>{val.Tickets_remainingE}</td>
-                      </tr>
-                    )
-                  })}
-              </table>
-              </div>)}
-              </div>
+                  {flightTable.length === 0 ? (
+                    <div>NO FLIGHTS AVAILABLE FOR YOU SELECTION, TRY AGAIN</div>
+                  ) : (
+                    <div>
+                      <h2>
+                        Flights from {Location01} to {Location02} between{" "}
+                        {FromDate} to {ToDate}
+                      </h2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Flight ID</th>
+                            <th>Date of Travel</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Tickets Remaining : Platinum</th>
+                            <th>Tickets Remaining : Buisness</th>
+                            <th>Tickets Remaining : Economy</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {flightTable.map((val, key) => {
+                          return (
+                            <tr key={key}>
+                              <td>{val.flight_ID}</td>
+                              <td>{val.date_of_travel}</td>
+                              <td>{val.dep_time}</td>
+                              <td>{val.Arr_time}</td>
+                              <td>{val.Tickets_remainingP}</td>
+                              <td>{val.Tickets_remainingB}</td>
+                              <td>{val.Tickets_remainingE}</td>
+                              <td>
+                                <Link to="/seatReservations">
+                                  <button className="edit-button">
+                                    Book Ticekt
+                                  </button>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                        </tbody>
+                      </table>
+                      <h5>*ටිකට් වල ගණන් ඕනිනම් බුක් කරන්න පලයන්</h5>
+                    </div>
+                  )}
+                </div>
               </>
             </div>
           ) : (

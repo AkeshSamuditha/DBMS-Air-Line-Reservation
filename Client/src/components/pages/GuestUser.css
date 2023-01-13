@@ -24,3 +24,10 @@
   align-content: center;
   padding-top: 30px;
 }
+
+.login-redirect {
+  color: #fff;
+  font-size: 15px;
+  margin-top: 30px;
+  margin-left: 85px;
+}

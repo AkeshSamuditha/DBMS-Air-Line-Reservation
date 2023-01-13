@@ -7,7 +7,15 @@ import Navbar from "../Navbar";
 import { useToken } from "./token";
 import axios from "axios";
 
+
 export default function SeatReservation() {
+  const [noOfSeats, setnoOfSeats] = useState(40);
+  let seatNumbers = [];
+  for (let i = 1; i <= noOfSeats; i++) {
+    seatNumbers.push(i);
+  }
+  const [selectedSeat, setSelectedSeat] = useState(null);
+
   const [btnState, setBtnState] = useState(false);
   const [token, setToken] = useToken();
 
@@ -18,11 +26,16 @@ export default function SeatReservation() {
   const Bookflight = () => {
     axios
       .post("http://localhost:6969/api/Bookflight", {
-        Flight_ID: "F1",
-        Class: "F",
-        Seat_ID: "1",
-        // PID: "P1",
-        Adult_or_Child: "A",
+        headers: {
+          Authorization: token,
+        },
+        params: {
+          Flight_ID: "F1",
+          Class: "F",
+          Seat_ID: "1",
+          // PID: "P1",
+          Adult_or_Child: "A",
+        },
       })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
@@ -47,7 +60,9 @@ export default function SeatReservation() {
                 <label>Adults</label>
                 <br />
                 <select name="adults" className="input-box" id="adults">
-                  <option value="default">Select</option>
+                  <option value="default" hidden>
+                    Select
+                  </option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -59,7 +74,9 @@ export default function SeatReservation() {
                 <label>Children</label>
                 <br />
                 <select name="children" className="input-box" id="children">
-                  <option value="default">Select</option>
+                  <option value="default" hidden>
+                    Select
+                  </option>
                   <option value="1">1</option>
                   <option value="2">2</option>
                   <option value="3">3</option>
@@ -77,7 +94,9 @@ export default function SeatReservation() {
                 name="class"
                 placeholder="Class"
               >
-                <option value="default">Select</option>
+                <option value="default" hidden>
+                  Select
+                </option>
                 <option value="economy">Economy</option>
                 <option value="business">Business</option>
                 <option value="first-class">Platinum</option>
@@ -89,386 +108,49 @@ export default function SeatReservation() {
             </div>
             <div className="table_container">
               <div className="table_align">
+                (
                 <table>
                   <tbody>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          1
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          2
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          3
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          4
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          5
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          6
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          7
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          8
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          9
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          10
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          11
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          12
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          13
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          14
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          15
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          16
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          17
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          18
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          19
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          20
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          21
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          22
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          23
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          24
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          25
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          26
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          27
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          28
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          29
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          30
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          31
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          32
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          33
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          34
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          35
-                        </Button2>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          36
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          37
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          38
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          39
-                        </Button2>
-                      </td>
-                      <td>
-                        <Button2
-                          className="booking-table"
-                          buttonStyle="btn--table"
-                          buttonSize="btn--table_size"
-                        >
-                          40
-                        </Button2>
-                      </td>
-                    </tr>
+                    {seatNumbers.map((seatNumber, index) => {
+                      if (index % 10 === 0) {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <Button2
+                                className="booking-table"
+                                buttonStyle="btn--table"
+                                buttonSize="btn--table_size"
+                                onClick={() => handleClick(seatNumber)}
+                                isSelected={selectedSeat === seatNumber}
+                              >
+                                {seatNumber}
+                              </Button2>
+                            </td>
+                            {seatNumbers
+                              .slice(index + 1, index + 10)
+                              .map((seatNumber, subIndex) => {
+                                return (
+                                  <td key={subIndex}>
+                                    <Button2
+                                      className="booking-table"
+                                      buttonStyle="btn--table"
+                                      buttonSize="btn--table_size"
+                                      onClick={() => handleClick(seatNumber)}
+                                      isSelected={selectedSeat === seatNumber}
+                                    >
+                                      {seatNumber}
+                                    </Button2>
+                                  </td>
+                                );
+                              })}
+                          </tr>
+                        );
+                      }
+                      return null;
+                    })}
                   </tbody>
                 </table>
+                ); );
                 <>
                   {token ? (
                     <div className="booking-table-btn">

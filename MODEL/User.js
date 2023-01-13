@@ -184,15 +184,9 @@ class AdminUser extends RegUser{
     //1
     async getPassengersByFlight(Flight_ID) {
         try {
-            const sqlQuary = `SELECT (
-                                SELECT COUNT(*)
-                                FROM tickets 
-                                WHERE adult_or_child LIKE '%A%' AND flight = ?) as Above_18, (
-                                SELECT COUNT(*) 
-                                FROM tickets 
-                                WHERE adult_or_child LIKE '%C%'AND flight = ?) as Below_18;`;
+            const sqlQuary = `SELECT time_of_booking, first_name, last_name, ticket_ID, class, seat_ID, email, telephone, country, adult_or_child FROM tickets LEFT JOIN users USING (PID) WHERE flight = ?;`;
 
-            const data = await executeSQL(sqlQuary,[Flight_ID,Flight_ID]);
+            const data = await executeSQL(sqlQuary, [Flight_ID]);
             return(data);
         }catch(err){
             return err;
@@ -228,7 +222,7 @@ class AdminUser extends RegUser{
                                 WHERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%G%') AS Guests,
                                 (SELECT COUNT(*) 
                                 FROM tickets, users 
-                                WERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%R%') AS Registered;`;
+                                WHERE users.PID = tickets.PID AND Time_of_booking BETWEEN ? AND ? AND user_type LIKE '%R%') AS Registered;`;
 
             const data = await executeSQL(sqlQuary,[From_Date,To_Date,From_Date,To_Date]);
             return(data);

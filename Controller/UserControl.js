@@ -189,16 +189,14 @@ class UserControl{
             const body = method.getBody();
 
             const PID = null;
-            if(user && body.PID == null){
-                PID = user.PID;
+            if (body.PID === null) {
+              PID = user.PID;
+            } else if (user.PID === null) {
+              PID = body.PID;
+            } else {
+              return "Booking failed";
             }
-            else if(!user && body.PID != null){
-                PID = body.PID;
-            }
-            else{
-                return "Booking failed";
-            }
-
+            console.log(PID);
             const Flight_ID = body.Flight_ID;
             const Class = body.Class;
             const seat_ID = body.seat_ID;
@@ -206,8 +204,14 @@ class UserControl{
 
             const sqlQuary = `CALL new_ticket(?, ?, ?, ?, ?);`;
 
-            const data = await executeSQL(sqlQuary, [Flight_ID, Class, seat_ID, PID, Adult_or_Child]);
-
+            const data = await executeSQL(sqlQuary, [
+              Flight_ID,
+              Class,
+              seat_ID,
+              PID,
+              Adult_or_Child,
+            ]);
+            return "Booked";
         }catch(err){
             return err;
         }
@@ -222,6 +226,7 @@ class UserControl{
             const sqlQuary = `CALL cancel_ticket(?);`;
 
             const data = await executeSQL(sqlQuary,[Ticket_ID]);
+            return "Cancelled";
 
         }catch(err){
             return err;

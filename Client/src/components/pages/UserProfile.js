@@ -57,6 +57,26 @@ export default function UserProfile() {
     // setFlights0(response.data[0]);
   }
 
+  const CancelBooking = () => {
+    axios
+      .post("http://localhost:6969/Api/CancelBooking", {
+        Ticket_ID: bookedFlightTable[0].ticket_ID,
+      })
+      .then((response) => window.location.reload())
+      .catch((error) => console.log(error));
+  };
+
+  function handleClick() {
+    const confirmation = window.confirm(
+      "Are You Sure You Want To Cancel This Flight?"
+    );
+    if (confirmation) {
+      console.log("Flight Cancelled");
+      CancelBooking();
+      // Perform the action here
+    }
+  }
+
   return (
     <>
       <Navbar />
@@ -120,7 +140,12 @@ export default function UserProfile() {
                           <td>{val.dep_time}</td>
                           <td>{val.flight_status}</td>
                           <td>
-                            <button className="edit-button">Cancel</button>
+                            <button
+                              className="delete-button"
+                              onClick={handleClick}
+                            >
+                              Cancel Ticket
+                            </button>
                           </td>
                         </tr>
                       );

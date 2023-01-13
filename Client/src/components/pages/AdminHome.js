@@ -21,9 +21,11 @@ export default function AdminHome() {
   const [city, setCity] = useState("");
   const [bookings, setBookings] = useState("");
   const [flightsGot, setFlightsGot] = useState(false);
+  const [flightsGot2, setFlightsGot2] = useState(false);
   const [typesGot, setTypesGot] = useState(false);
   const [registered, setRegistered] = useState("");
   const [guest, setGuest] = useState("");
+  const [flightTable, setFlightTable] = useState([]);
 
   useEffect(() => {
     axios
@@ -44,11 +46,15 @@ export default function AdminHome() {
     setRevenue2(response.data[2].revenue);
   }
 
-  const getPassengersByflight = () => {
+  const getPassengersByflight = (e) => {
+    e.preventDefault();
     axios
       .get("http://localhost:6969/admin/api/getPassengersByFlight", {
+        headers: {
+          Authorization: token,
+        },
         params: {
-          Flight_ID: "F1",
+          Flight_ID: flightID,
         },
       })
       .then((response) => getDetailsByFlight(response))
@@ -56,6 +62,8 @@ export default function AdminHome() {
   };
 
   function getDetailsByFlight(response) {
+    setFlightsGot2(true);
+    setFlightTable(response.data);
     console.log(response);
   }
 
@@ -194,32 +202,61 @@ export default function AdminHome() {
                 Search
               </Button>
             </form>
-
             <br />
-
-            <h2>Bookings of Flight A12345</h2>
-            <br />
-            <table>
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Date</th>
-                  <th>Flight</th>
-                  <th>Actions</th>
-                </tr>
-                <tr>
-                  <td>John Doe</td>
-                  <td>johndoe@example.com</td>
-                  <td>2000-01-01</td>
-                  <td>A12345</td>
-                  <td>
-                    <button className="edit-button">Edit</button>
-                    <button className="delete-button">Delete</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <>
+              {flightsGot2 ? (
+                <div>
+                  <>
+                    <div>
+                      {flightTable.length === 0 ? (
+                        <center>NO BOOKINGS FOR FLIGHT {flightID}</center>
+                      ) : (
+                        <div>
+                          <h2>Bookings of Flight {flightID}</h2>
+                          <br />
+                          <table>
+                            <thead>
+                              <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Time of Booking</th>
+                                <th>Ticket ID</th>
+                                <th>Class</th>
+                                <th>Seat ID</th>
+                                <th>Adult or Child</th>
+                                <th>Country</th>
+                                <th>Telephone</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {flightTable.map((val, key) => {
+                                return (
+                                  <tr key={key}>
+                                    <td>{val.first_name}</td>
+                                    <td>{val.last_name}</td>
+                                    <td>{val.email}</td>
+                                    <td>{val.time_of_booking}</td>
+                                    <td>{val.ticket_ID}</td>
+                                    <td>{val.class}</td>
+                                    <td>{val.seat_ID}</td>
+                                    <td>{val.adult_or_child}</td>
+                                    <td>{val.country}</td>
+                                    <td>{val.telephone}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                </div>
+              ) : (
+                <div> </div>
+              )}
+            </>
             <br />
           </div>
           <>

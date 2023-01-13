@@ -1,11 +1,12 @@
 import React from "react";
 import "../../App.css";
-import Footer from "../Footer";
+import Navbar from "../Navbar";
 import "./UserProfile.css";
 
 export default function UserProfile() {
   return (
     <>
+      <Navbar />
       <div>
         <div className="userprofile">
           <h2>Welcome aboard</h2>
@@ -29,7 +30,6 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

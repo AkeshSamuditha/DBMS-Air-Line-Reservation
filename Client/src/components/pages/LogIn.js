@@ -5,9 +5,8 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import "./../Button.css";
 import axios from "axios";
-import Footer from "../Footer";
-import { useToken } from './token';
-
+import { useToken } from "./token";
+import Navbar from "../Navbar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -15,8 +14,6 @@ export default function Login() {
 
   const [loginStatus, setLoginStatus] = useState("");
   const [token, setToken] = useToken();
-  const port = process.env.port;
-  const concatenated = "http://localhost:" + port + "/Auth/login";
 
   const login = () => {
     axios
@@ -24,21 +21,22 @@ export default function Login() {
         Email: email,
         Password: password,
       })
-      .then(response => handleLogin(response))
-      .catch(error => setLoginStatus("Invalid Username or Passwrod"));
+      .then((response) => handleLogin(response))
+      .catch((error) => setLoginStatus("Invalid Username or Passwrod"));
   };
 
   function handleLogin(response) {
     const { token } = response.data;
     console.log("Token", token);
-    if (token){
-      setToken(token)};
-      window.location.reload();
-
+    if (token) {
+      setToken(token);
+    }
+    window.location.reload();
   }
 
   return (
     <>
+      <Navbar />
       {token ? (
         <>
           <div className="logged-in">
@@ -52,7 +50,6 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <Footer />
         </>
       ) : (
         <>
@@ -102,7 +99,6 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <Footer />
         </>
       )}
     </>

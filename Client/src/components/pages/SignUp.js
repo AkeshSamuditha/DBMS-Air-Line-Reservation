@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import axios from "axios";
 import "./SignUp.css";
-import Footer from "../Footer";
-import { useToken } from './token';
+import Navbar from "../Navbar";
+import { useToken } from "./token";
 
 function SignUp() {
-  const [token , setToken] = useToken();
+  const [token, setToken] = useToken();
   const [titleReg, setTitleReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -48,18 +48,24 @@ function SignUp() {
         DOB: birthDayReg,
         Address: addressReg,
       })
-      .then(response => {
-          const {token :newtok} = response.data;
-          console.log("Token", newtok);
-          if (newtok){
-            setToken(newtok)
-            window.location.href = '/auth/Login';
-            console.log("Token2", newtok)};
-      }).catch(error => console.log("Error at Signup"));
+      .then((response) => {
+        const { token: newtok } = response.data;
+        console.log("Token", newtok);
+        if (newtok) {
+          setToken(newtok);
+          window.location.href = "/auth/Login";
+          console.log("Token2", newtok);
+        }
+      })
+      .catch((error) => {
+        console.log("Error at Signup");
+        setRegStatus("Sign Up Failed");
+      });
   };
 
   return (
     <>
+      <Navbar />
       <div className="sign-up">
         {disableDates()}
         <div className="input-areas-signup">
@@ -68,7 +74,14 @@ function SignUp() {
               <div>
                 <label>Title</label>
                 <br />
-                <select name="title" className="input-box-mr" id="title" onChange={setTitleReg()}>
+                <select
+                  name="title"
+                  className="input-box-mr"
+                  id="title"
+                  onChange={(e) => {
+                    setTitleReg(e.target.value);
+                  }}
+                >
                   <option value="Title" hidden={true}>
                     Title
                   </option>
@@ -206,21 +219,18 @@ function SignUp() {
             </div>
           </form>
           <div className="sign-up-btns">
-            <Link>
-              <Button
-                className="btns"
-                buttonStyle="btn--outline"
-                buttonSize="btn--large"
-                onClick={register}
-              >
-                Sign Up
-              </Button>
-              <div className="login-status">{regStatus}</div>
-            </Link>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={register}
+            >
+              Sign Up
+            </Button>
+            <div className="login-status">{regStatus}</div>
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

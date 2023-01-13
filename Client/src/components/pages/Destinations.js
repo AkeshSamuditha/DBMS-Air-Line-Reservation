@@ -2,11 +2,12 @@ import React from "react";
 import "../../App.css";
 import "./Destinations.css";
 import CardItem from "./../CardItem";
-import Footer from "../Footer";
+import Navbar from "../Navbar";
 
 export default function Destinations() {
   return (
     <>
+      <Navbar />
       <div>
         <h1 className="destinations">DESTINATIONS</h1>
         <div className="cards">
@@ -85,7 +86,6 @@ export default function Destinations() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

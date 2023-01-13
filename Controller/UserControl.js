@@ -60,6 +60,7 @@ class UserControl{
             const Brand = method.searchURL("Brand");
 
             const data = await user.getRevenueByAircraftType(Model,Brand);
+            console.log(data);
             return(data);
         }catch(err){
             return err;

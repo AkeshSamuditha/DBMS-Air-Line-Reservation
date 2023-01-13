@@ -3,7 +3,7 @@ import "../../App.css";
 import "./BookAFlight.css";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
-import Footer from "../Footer";
+import Navbar from "../Navbar";
 import axios from "axios";
 
 export default function BookAFlight() {
@@ -29,17 +29,8 @@ export default function BookAFlight() {
   };
 
   const findFlight = () => {
-    console.log(
-      "From",
-      Location01,
-      "To",
-      Location02,
-      "From Date",
-      FromDate,
-      "To Date",
-      ToDate
-    );
-    axios.get("http://localhost:6969/api/getFlights", {
+    axios
+      .get("http://localhost:6969/api/getFlights", {
         params: {
           // From: Location01,
           // To: Location02,
@@ -49,20 +40,20 @@ export default function BookAFlight() {
           To: "JFK",
           From_Date: "2023-01-01",
           To_Date: "2024-01-01",
-        }
+        },
       })
       .then((response) => {
         if (response.data.status == "400") {
         } else {
-          console.log(response.data[0].flight_ID);
+          console.log(response.data[0]);
           // window.location.reload();
-          
         }
       });
   };
 
   return (
     <>
+      <Navbar />
       <div className="book-your-flight">
         <div>
           <h1 className="book-a-flight">Book A Flight</h1>
@@ -87,7 +78,9 @@ export default function BookAFlight() {
                       setLocation01(e.target.value);
                     }}
                   >
-                    <option value="default">Select</option>
+                    <option value="default" hidden={true}>
+                      Select
+                    </option>
                     <option value="DPS">Bali (DPS)</option>
                     <option value="BKK">Bangkok (BKK)</option>
                     <option value="MAA">Chennai (MAA)</option>
@@ -113,7 +106,9 @@ export default function BookAFlight() {
                       setLocation02(e.target.value);
                     }}
                   >
-                    <option value="default">Select</option>
+                    <option value="default" hidden={true}>
+                      Select
+                    </option>
                     <option value="DPS">Bali (DPS)</option>
                     <option value="BKK">Bangkok (BKK)</option>
                     <option value="MAA">Chennai (MAA)</option>
@@ -175,7 +170,6 @@ export default function BookAFlight() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

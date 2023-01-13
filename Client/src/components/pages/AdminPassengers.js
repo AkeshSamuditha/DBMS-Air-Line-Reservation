@@ -3,10 +3,14 @@ import "../../App.css";
 import "./Admin.css";
 import { Button } from "../Button";
 import { Link } from "react-router-dom";
+import AdminNavbar from "../AdminNavbar";
+import axios from "axios";
+import { useToken } from "./token";
 
 export default function AdminPassengers() {
   return (
     <div>
+      <AdminNavbar />
       <div className="container">
         <Link to="/admin-home">
           <Button

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import axios from "axios";
 import "./GuestUser.css";
-import Footer from "../Footer";
+import Navbar from "../Navbar";
 
 function GuestUser() {
   const [titleReg, setTitleReg] = useState("");
@@ -18,6 +18,7 @@ function GuestUser() {
 
   return (
     <>
+      <Navbar />
       <div className="guest-bg">
         <div className="guest-input">
           <h2>
@@ -125,7 +126,6 @@ function GuestUser() {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

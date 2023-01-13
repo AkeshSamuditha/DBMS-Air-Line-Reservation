@@ -216,19 +216,13 @@ async function logout(user){
 
 }
 
-async function adminLogout(user){
-
-  
-
-  try{
+async function adminLogout(user) {
+  try {
     AdminUsers.delete(user.admin_id);
+  } catch (e) {
+    console.log("'logout error'");
   }
-  catch(e){
-      console.log("'logout error'");
-  }
-  
-  return("Admin :"+user.UserName + " Successfully Logged Out !!!")
-
+  return "Admin :" + user.UserName + " Successfully Logged Out !!!";
 }
 
 

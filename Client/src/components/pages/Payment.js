@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
-import ReactPlayer from "react-player";
-import YouTube from "react-youtube";
+// import ReactPlayer from "react-player";
+// import YouTube from "react-youtube";
 
 function Payment() {
   // const [isPlaying, setIsPlaying] = useState(false);

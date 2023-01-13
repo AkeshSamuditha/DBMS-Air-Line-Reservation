@@ -11,8 +11,29 @@ export default function BookAFlight() {
   const [Location02, setLocation02] = useState("");
   const [FromDate, setFromDate] = useState("");
   const [ToDate, setToDate] = useState("");
+  const [flightsGot, setFlightsGot] = useState(false);
 
   const [selected, setSelect] = useState("");
+  const [flights0, setFlights0] = useState([]);
+  const [flights1, setFlights1] = useState([]);
+  const [flights2, setFlights2] = useState([]);
+
+  const flight0Values = Object.values(flights0);
+  const flight1Values = Object.values(flights1);
+  const flight2Values = Object.values(flights2);
+
+  const header = [
+    "Flight ID",
+    "Date of Travel",
+    "Arrival Time",
+    "Departure Time",
+    "Tickets Remaining :First Class",
+    "Tickets Remaining :Bussiness Class",
+    "Tickets Remaining :Economic Class",
+    "Flight Status",
+  ];
+
+  const fullArray = [header, flight0Values, flight1Values, flight2Values];
 
   const disableDates = () => {
     var today = new Date();
@@ -47,10 +68,18 @@ export default function BookAFlight() {
         if (response.data.status == "400") {
         } else {
           console.log(response.data[0]);
+          handleFlightDetails(response);
           // window.location.reload();
         }
       });
   };
+
+  function handleFlightDetails(response) {
+    setFlightsGot(true);
+    setFlights0(response.data[0]);
+    setFlights1(response.data[1]);
+    setFlights2(response.data[2]);
+  }
 
   return (
     <>
@@ -170,6 +199,39 @@ export default function BookAFlight() {
             </form>
           </div>
         </div>
+        <>
+          {flightsGot ? (
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    {fullArray[0].map((item, index) => {
+                      return <th key={index}>{item}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {fullArray.slice(1, fullArray.length).map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td key={item[0]}>{item[0]}</td>
+                        <td key={item[1]}>{item[1]}</td>
+                        <td key={item[2]}>{item[2]}</td>
+                        <td key={item[3]}>{item[3]}</td>
+                        <td key={item[4]}>{item[4]}</td>
+                        <td key={item[5]}>{item[5]}</td>
+                        <td key={item[6]}>{item[6]}</td>
+                        <td key={item[7]}>{item[7]}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </>
       </div>
     </>
   );

@@ -24,8 +24,10 @@ export default function AdminLogIn() {
   const adminlogin = () => {
     axios
       .post("http://localhost:6969/admin/login", {
-        Admin_Name: name,
-        Admin_Password: password,
+        // Admin_Name: name,
+        // Admin_Password: password,
+        Admin_Name: "admin",
+        Admin_Password: "admin",
       })
       .then((response) => {
         handleLogin(response);

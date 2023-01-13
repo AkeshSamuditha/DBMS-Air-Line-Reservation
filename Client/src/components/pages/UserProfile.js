@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import Navbar from "../Navbar";
 import "./UserProfile.css";
+import { useToken } from "./token";
+import axios from "axios";
 // import { DataGrid } from "@mui/x-data-grid";
 // import { DataGrid } from "react-data-grid";
 
@@ -17,6 +19,25 @@ import "./UserProfile.css";
 // ];
 
 export default function UserProfile() {
+  const [Pastflights, setPastflights] = useState([]);
+  const [token, setToken] = useToken();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:6969/auth/api/BookedFlightDetails", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => pastFlightDetails(response))
+      .catch((error) => console.log(error));
+  }, []);
+
+  function pastFlightDetails(response) {
+    console.log(response);
+    setPastflights(response.data);
+  }
+
   return (
     <>
       <Navbar />

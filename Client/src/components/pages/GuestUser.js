@@ -13,9 +13,6 @@ function GuestUser() {
   const [countryReg, setCountryReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
 
-  const port = process.env.port;
-  const concatenatedString = "http://localhost:" + port + "/API/Register";
-
   return (
     <>
       <Navbar />

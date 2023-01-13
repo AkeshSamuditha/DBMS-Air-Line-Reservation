@@ -75,7 +75,7 @@ export default function AdminHome() {
           To_Date: end_date,
         },
       })
-      .then((response) => getDetailsByType(response))
+      .then((response) => getDetailsByDestination(response))
       .catch((error) => console.log(error));
   };
 

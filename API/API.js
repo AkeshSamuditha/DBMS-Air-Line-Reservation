@@ -105,7 +105,7 @@ router.post('/BookFlight',async function(req, res){
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);
-
+    return("Done")
 });
 
 
@@ -123,7 +123,7 @@ router.post('/CancelBooking',async function(req, res){
 });
 
 // Request No: 13
-router.post('/GuestUserLogin',async function(req, res){
+router.get('/GuestUserLogin',async function(req, res){
 
     var method = new Method(req,res);
     

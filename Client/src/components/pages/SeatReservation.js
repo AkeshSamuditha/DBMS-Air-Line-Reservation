@@ -26,17 +26,14 @@ export default function SeatReservation() {
   const Bookflight = () => {
     axios
       .post("http://localhost:6969/api/Bookflight", {
-        headers: {
-          Authorization: token,
-        },
-        params: {
-          Flight_ID: "F1",
-          Class: "F",
-          Seat_ID: "1",
-          // PID: "P1",
-          Adult_or_Child: "A",
-        },
-      })
+        Flight_ID: "F1",
+        Class: "F",
+        Seat_ID: "1",
+        Adult_or_Child: "A",},
+        // Country: "Mr",
+        {headers: {
+        Authorization: token,
+      }})
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
   };

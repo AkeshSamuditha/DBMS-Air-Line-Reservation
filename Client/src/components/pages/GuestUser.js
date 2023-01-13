@@ -12,30 +12,33 @@ function GuestUser() {
   const [emailReg, setEmailReg] = useState("");
   const [countryReg, setCountryReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
+  const [PID, setPID] = useState("");
 
   const guestUserLogin = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:6969/api/guest/GuestUserLogin", {
-        title: titleReg,
-        firstName: firstNameReg,
-        lastName: lastNameReg,
-        email: emailReg,
-        country: countryReg,
-        telephone: telephoneReg,
-      })
-      .then((response) => confirmBooking())
+      .get("http://localhost:6969/api/GuestUserLogin", {
+        params: {
+        Shit: titleReg,
+        First_Name: firstNameReg,
+        Last_Name: lastNameReg,
+        Email: emailReg,
+        Telephone: telephoneReg,
+  }})
+      .then((response) => {
+        setPID(100);
+        confirmBooking()})
       .catch((error) => console.log(error));
   };
 
   const confirmBooking = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:6969/api/Bookflight", {
+      .post("http://localhost:6969/api/registered/Bookflight", {
         Flight_ID: "F1",
         Class: "F",
         Seat_ID: "1",
-        // PID: "P1",
+        PID: "P1",
         Adult_or_Child: "A",
       })
       .then((response) => window.location.replace())

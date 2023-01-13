@@ -187,31 +187,29 @@ class UserControl{
     async postBookFlight(method,user) {
         try {
             const body = method.getBody();
-
-            const PID = null;
-            if (body.PID === null) {
-              PID = user.PID;
-            } else if (user.PID === null) {
-              PID = body.PID;
-            } else {
-              return "Booking failed";
+            var PID = null;
+            console.log(user.PID)
+            if(user && user.PID){
+                PID = user.PID;
             }
-            console.log(PID);
+            else if(user && user.PID){
+                PID = body.PID;
+            }
+            else{
+                return "Booking failed";
+            }
+            
+            
+
             const Flight_ID = body.Flight_ID;
             const Class = body.Class;
-            const seat_ID = body.seat_ID;
+            const seat_ID = body.Seat_ID;
             const Adult_or_Child = body.Adult_or_Child;
 
             const sqlQuary = `CALL new_ticket(?, ?, ?, ?, ?);`;
 
-            const data = await executeSQL(sqlQuary, [
-              Flight_ID,
-              Class,
-              seat_ID,
-              PID,
-              Adult_or_Child,
-            ]);
-            return "Booked";
+            const data = await executeSQL(sqlQuary, [Flight_ID, Class, seat_ID, PID, Adult_or_Child]);
+            return("Ticket Booked")
         }catch(err){
             return err;
         }
@@ -219,6 +217,8 @@ class UserControl{
     //11
     async postCancelBooking(method) {
         try {
+            
+            
             const body = method.getBody();
 
             const  Ticket_ID = body.Ticket_ID;
@@ -236,24 +236,43 @@ class UserControl{
     //13
     async postGuestUserSubmission(method) {
         try {
-            const body = method.getBody();
-
-            const Title = body.Title;
-            const First_Name = body.First_Name;
-            const Last_Name = body.Last_Name;
-            const Email = body.Email;
-            const Telephone = body.Telephone;
-            const Country = body.Country;
+            const Title = method.searchURL("shit");
+            const First_Name = method.searchURL("First_Name");
+            const Last_Name = method.searchURL("Last_Name");
+            const Email = method.searchURL("Email");
+            const Telephone = method.searchURL("Telephone");
+            const Country = method.searchURL("Country");
 
 
             const sqlQuary = `INSERT INTO users(title, first_name, last_name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);`;
-
+            const sqlQuary2 = 'SELECT LAST_INSERT_ID() AS PID;'
             const data = await executeSQL(sqlQuary,[Title,First_Name,Last_Name,Email,Telephone,Country]);
-
+            const data2 = await executeSQL(sqlQuary2);
+            return data2;
         }catch(err){
             return err;
         }
     }
+
+    //new
+    async newflight(method) {
+        try{
+            const body = method.getBody();
+            const Flight_ID = body.Flight_ID;
+            const Airplane_ID = body.Airplane_ID;
+            const Route = body.Route;
+            const Date_of_travel = body.Date_of_travel;
+            const Dep_time = body.Dep_time;
+            const Arr_time = body.Arr_time;
+            
+            const sqlQuary = `CALL newflight(?, ?, ?, ?, ?, ?);`;
+
+            const data = await executeSQL(sqlQuary,[Flight_ID,Airplane_ID,Route,Date_of_travel,Dep_time,Arr_time]);
+
+        }catch(err){
+            return err;
+        }
+        }
 
     /////////////////////////////////// UPDATE ///////////////////////////////////////////////////
 

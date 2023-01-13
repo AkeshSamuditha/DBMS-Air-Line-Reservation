@@ -82,4 +82,17 @@ router.delete('/logout',async function(req, res){
 });
 
 
+//Request NO : NEW
+router.post('/newflight',async function(req, res){
+
+    var method = new Method(req,res);
+    
+    const status = await uController.newFlight(method,req.user);
+    console.log(status);
+    
+    res.status(ResponseHandler(status)).send(status);
+
+})
+
+
 module.exports = router;

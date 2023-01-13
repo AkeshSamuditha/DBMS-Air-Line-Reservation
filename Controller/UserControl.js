@@ -120,7 +120,7 @@ class UserControl{
             const Route = method.searchURL("Route");
             const Class = method.searchURL("Class");
 
-            const sqlQuary = `CALL ticket_price(?, ?, ?);`;
+            const sqlQuary = `SELECT ticket_price(?, ?, ?);`;
 
             const data = await executeSQL(sqlQuary,[PID,Route,Class]);
             return(data);

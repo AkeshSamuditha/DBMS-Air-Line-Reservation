@@ -81,15 +81,6 @@ function Navbar() {
                 </Button>
               </li>
             </div>
-            <li>
-              <Link
-                to="/Auth/login"
-                className="nav-links-mobile"
-                onClick={inlinefunction}
-              >
-                Log Out
-              </Link>
-            </li>
           </ul>
         </div>
       </nav>

@@ -21,16 +21,12 @@ function Navbar() {
 
   const logout = () => {
     axios
-      .delete(
-        "http://localhost:6969/API/registered/logout",
-        {
-          headers: {
-            Authorization: token,
-          }
-        }
-      )
+      .delete("http://localhost:6969/API/registered/logout", {
+        headers: {
+          Authorization: token,
+        },
+      })
       .then((response) => {
-        
         console.log(response);
         if (response.data.message == "400") {
           setLogoutStatus("Error While Logging Out");

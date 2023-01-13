@@ -49,54 +49,48 @@ export default function AdminLogIn() {
   return (
     <>
       <Navbar />
-      {!token ? (
-        <>
-          <div className="admin-login">
-            <div className="input-areas-login">
-              <form>
-                <input
-                  className="footer-input"
-                  name="name"
-                  type="name"
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                  placeholder="Name"
-                  required
-                />
-              </form>
-              <form>
-                <input
-                  className="footer-input"
-                  name="password"
-                  type="password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  placeholder="Password"
-                  required
-                />
-              </form>
-              <div className="log-in-btns">
-                {/* <Link to="/admin-home"> */}
-                <Link to="/admin-login">
-                  <Button
-                    className="btns"
-                    buttonStyle="btn--outline"
-                    buttonSize="btn--large"
-                    onClick={adminlogin}
-                  >
-                    Log In
-                  </Button>
-                </Link>
-              </div>
-              <div className="login-status">{loginStatus}</div>
-            </div>
+      <div className="admin-login">
+        <div className="input-areas-login">
+          <form>
+            <input
+              className="footer-input"
+              name="name"
+              type="name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              placeholder="Name"
+              required
+            />
+          </form>
+          <form>
+            <input
+              className="footer-input"
+              name="password"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              placeholder="Password"
+              required
+            />
+          </form>
+          <div className="log-in-btns">
+            {/* <Link to="/admin-home"> */}
+            <Link to="/admin-login">
+              <Button
+                className="btns"
+                buttonStyle="btn--outline"
+                buttonSize="btn--large"
+                onClick={adminlogin}
+              >
+                Log In
+              </Button>
+            </Link>
           </div>
-        </>
-      ) : (
-        <></>
-      )}
+          <div className="login-status">{loginStatus}</div>
+        </div>
+      </div>
     </>
   );
 }

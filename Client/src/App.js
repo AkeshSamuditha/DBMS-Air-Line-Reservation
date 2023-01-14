@@ -16,6 +16,7 @@ import AdminLogIn from "./components/pages/AdminLogIn";
 import GuestUser from "./components/pages/GuestUser";
 import SeatReservation from "./components/pages/SeatReservation";
 import Payment from "./components/pages/Payment";
+import FlightStatus from "./components/pages/FlightStatus";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/guest-user" component={GuestUser} />
           <Route path="/seatReservations" component={SeatReservation} />
           <Route path="/payments" component={Payment} />
+          <Route path="/flight-status" component={FlightStatus} />
         </Switch>
         <Footer />
       </Router>

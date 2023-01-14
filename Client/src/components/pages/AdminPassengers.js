@@ -13,17 +13,18 @@ export default function AdminPassengers() {
   const [telephone, setTelephone] = useState("");
   const [dateOfBooking, setDateOfBooking] = useState("");
   const [flight, setFlight] = useState("");
+  const [country, setCountry] = useState("");
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:6969/admin/api/getrevenueByAircraftType", {
-        headers: {
-          Authorization: token,
-        },
-      })
-      .then((response) => handlePassengerDetails(response))
-      .catch((error) => console.log(error));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:6969/admin/api/passengersInTransit", {
+  //       headers: {
+  //         Authorization: token,
+  //       },
+  //     })
+  //     .then((response) => handlePassengerDetails(response))
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   function handlePassengerDetails(response) {
     console.log(response);
@@ -32,6 +33,7 @@ export default function AdminPassengers() {
     setTelephone(response.data[0].Telephone);
     setDateOfBooking(response.data[0].DateOfBooking);
     setFlight(response.data[0].Flight);
+    setCountry(response.data[0].Country);
   }
 
   const [token, setToken] = useToken();
@@ -62,8 +64,6 @@ export default function AdminPassengers() {
             </Link>
           </div>
           <div className="container">
-            <h1>B Airways Admin Portal</h1>
-            <br />
             <h1 className="topic">Passengers in Transit</h1>
             <br />
             <table id="bookings-table">
@@ -72,6 +72,7 @@ export default function AdminPassengers() {
                   <th>Name</th>
                   <th>Email</th>
                   <th>Telephone</th>
+                  <th>Country</th>
                   <th>Date of Booking</th>
                   <th>Flight</th>
                 </tr>
@@ -79,6 +80,7 @@ export default function AdminPassengers() {
                   <td>{name}</td>
                   <td>{email}</td>
                   <td>{telephone}</td>
+                  <td>{country}</td>
                   <td>{dateOfBooking}</td>
                   <td>{flight}</td>
                 </tr>

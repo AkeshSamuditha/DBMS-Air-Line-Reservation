@@ -56,4 +56,5 @@ td {
   align-items: center;
   justify-content: center;
   background-color: rgb(231, 248, 238);
+  min-height: 63vh;
 }

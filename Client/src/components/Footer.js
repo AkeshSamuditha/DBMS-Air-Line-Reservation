@@ -22,7 +22,7 @@ function Footer() {
         <div className="footer-container">
           <section className="footer-subscription">
             <p className="footer-subscription-heading">
-              Join B Airways by registering and enjoy exclusive deals
+              Join B Airways By Registering and Enjoy Exclusive Deals
             </p>
           </section>
           {/* <div className="footer-links">

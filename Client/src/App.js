@@ -17,6 +17,7 @@ import GuestUser from "./components/pages/GuestUser";
 import SeatReservation from "./components/pages/SeatReservation";
 import Payment from "./components/pages/Payment";
 import FlightStatus from "./components/pages/FlightStatus";
+import Deals from "./components/pages/Deals";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="/seatReservations" component={SeatReservation} />
           <Route path="/payments" component={Payment} />
           <Route path="/flight-status" component={FlightStatus} />
+          <Route path="/deals" component={Deals} />
         </Switch>
         <Footer />
       </Router>

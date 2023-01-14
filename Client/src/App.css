@@ -13,7 +13,8 @@
 .sign-up,
 .guest-user,
 .admin-login,
-.cancel {
+.cancel,
+.deals {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -91,4 +92,12 @@
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
+}
+
+.deals {
+  background-image: url("/public/images/img-3.jpg");
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fff;
 }

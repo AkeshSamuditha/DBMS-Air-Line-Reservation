@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AdminNavbar from "../AdminNavbar";
 import axios from "axios";
 import { useToken } from "./token";
+import dateForamt from "dateformat";
 
 export default function AdminPassengers() {
   const [name, setName] = useState("");
@@ -81,7 +82,7 @@ export default function AdminPassengers() {
                   <td>{email}</td>
                   <td>{telephone}</td>
                   <td>{country}</td>
-                  <td>{dateOfBooking}</td>
+                  <td>{dateForamt(dateOfBooking, "dd/mm/yyyy")}</td>
                   <td>{flight}</td>
                 </tr>
               </tbody>

@@ -1,0 +1,17 @@
+/* flightID
+from
+to
+dateoftravel
+departuretime
+arrivaltike
+FlightStatus */
+.flightStatFrom {
+  width: 50%; /* Set the width of the form */
+  margin: 20px auto; /* Center the form on the page */
+  text-align: center; /* Center the form's content */
+  padding: 30px; /* Add some padding to the form */
+  background-color: #ffffff; /* White background color for the form */
+  border: 1px solid #cccccc; /* Gray border for the form */
+  border-radius: 10px; /* Round the corners of the form */
+  box-shadow: 0px 0px 10px #cccccc; /* Add a shadow to the form */
+}

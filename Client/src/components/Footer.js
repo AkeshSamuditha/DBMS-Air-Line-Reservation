@@ -25,7 +25,7 @@ function Footer() {
               Join B Airways by registering and enjoy exclusive deals
             </p>
           </section>
-          <div className="footer-links">
+          {/* <div className="footer-links">
             <div className="footer-link-wrapper">
               <div className="footer-link-items">
                 <h2>About Us</h2>
@@ -51,7 +51,7 @@ function Footer() {
               </div>
             </div>
           </div>
-          <div></div>
+          <div></div> */}
           <section className="social-media">
             <div className="social-media-wrap">
               <div className="footer-logo">
@@ -59,6 +59,9 @@ function Footer() {
                   B Airways
                   <FontAwesomeIcon icon={faTypo3} />
                 </Link>
+              </div>
+              <div className="footer-link-items">
+                <h2>About Us</h2>
               </div>
               <small className="website-rights">G20 © 2023</small>
               <div className="social-icons">

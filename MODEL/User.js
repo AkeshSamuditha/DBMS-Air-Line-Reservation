@@ -304,7 +304,7 @@ class AdminUser extends RegUser {
 
   async flightsInAir(method) {
     try {
-      const sqlQuary = `SELECT flight_ID, getLoc(origin_ID) AS origin, getLoc(destination_ID) as destination,  dep_time, arr_time, "On Time", on_board FROM In_Time;`;
+      const sqlQuary = `SELECT flight_ID, getLoc(origin_ID) AS origin, getLoc(destination_ID) as destination,  dep_time, arr_time, "On Time", on_board FROM In_Time`;
 
       const data = await executeSQL(sqlQuary, []);
       return data;

@@ -321,27 +321,34 @@ class UserControl {
     } catch (err) {
       return err;
     }
+  
+  
+  
+  
+  
   }
 
   /////////////////////////////////// UPDATE ///////////////////////////////////////////////////
 
-  async getPassengersByFlight(method, user) {
+  async passengersInTransit(method, user) {
     try {
 
       const data = await user.passengersInTransit();
       return data;
     } catch (err) {
+      console.log(err);
       return err;
     }
   }
 
 
-  async getPassengersByFlight(method, user) {
+  async flightsInAir(method, user) {
     try {
 
       const data = await user.flightsInAir();
       return data;
     } catch (err) {
+      console.log(err);
       return err;
     }
   }

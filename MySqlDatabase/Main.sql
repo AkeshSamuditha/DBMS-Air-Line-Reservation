@@ -308,21 +308,22 @@ DELIMITER //
 CREATE PROCEDURE cancel_ticket(ticket int)
 BEGIN
 
-	DECLARE PID VARCHAR(5);
+	DECLARE ID VARCHAR(5);
 	DECLARE F VARCHAR(5);
 	DECLARE C CHAR(1);
+    DECLARE tot INT;
 
 
-	SET PID = (SELECT PID FROM tickets WHERE ticket_ID = ticket LIMIT 1); -- Get the PID of the user
+	SET ID = (SELECT PID FROM tickets WHERE ticket_ID = ticket LIMIT 1); -- Get the PID of the user
 	SET F = (SELECT flight FROM tickets WHERE ticket_ID = ticket); -- Get the flight ID
 	SET C = (SELECT class FROM tickets WHERE ticket_ID = ticket); -- Get the class of the ticket
-
+	SET tot = (SELECT total_bookings FROM registered_users WHERE PID = ID );
 	START TRANSACTION;
 
 	CALL change_tickets_remaining(F, C, 1); -- Increment the tickets remaining for the flight and class
-	UPDATE registered_users SET total_bookings = total_bookings - 1 WHERE registered_users.PID = PID; -- Decrease the number of bookings for the user
+	UPDATE registered_users SET total_bookings = tot - 1 WHERE registered_users.PID = ID; -- Decrease the number of bookings for the user
     UPDATE flights set revenue = revenue - (SELECT price FROM tickets WHERE tickets.ticket_ID = ticket) WHERE flight_ID = F; -- Decrease the revenue of the flight
-	DELETE FROM tickets WHERE ticket_ID = ticket; 
+	DELETE FROM tickets WHERE ticket_ID = ticket;
 
 	COMMIT;
 END//

@@ -140,7 +140,7 @@ class UserControl {
   async getFlightStatus(method) {
     try {
       const Flight_ID = method.searchURL("Flight_ID");
-
+      
       const sqlQuary = `SELECT flight_Status FROM flights WHERE flight_ID = ?;`;
 
       const data = await executeSQL(sqlQuary, [Flight_ID]);

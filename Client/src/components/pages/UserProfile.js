@@ -5,6 +5,7 @@ import "./UserProfile.css";
 import { useToken } from "./token";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import dateForamt from "dateformat";
 
 export default function UserProfile() {
   const [bookedFlightTable, setBookedFlightTable] = useState([]);
@@ -138,7 +139,9 @@ export default function UserProfile() {
                           <td>{val.flight_ID}</td>
                           <td>{val.origin_ID}</td>
                           <td>{val.destination_ID}</td>
-                          <td>{val.date_of_travel}</td>
+                          <td>
+                            {dateForamt(val.date_of_travel, "dd/mm/yyyy")}
+                          </td>
                           <td>{val.arr_time}</td>
                           <td>{val.dep_time}</td>
                           <td>{val.flight_status}</td>

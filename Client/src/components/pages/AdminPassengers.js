@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../App.css";
 import "./Admin.css";
 import { Button } from "../Button";
@@ -8,6 +8,31 @@ import axios from "axios";
 import { useToken } from "./token";
 
 export default function AdminPassengers() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [dateOfBooking, setDateOfBooking] = useState("");
+  const [flight, setFlight] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:6969/admin/api/getrevenueByAircraftType", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => handlePassengerDetails(response))
+      .catch((error) => console.log(error));
+  }, []);
+
+  function handlePassengerDetails(response) {
+    console.log(response);
+    setName(response.data[0].Name);
+    setEmail(response.data[0].Email);
+    setTelephone(response.data[0].Telephone);
+    setDateOfBooking(response.data[0].DateOfBooking);
+    setFlight(response.data[0].Flight);
+  }
 
   const [token, setToken] = useToken();
 
@@ -39,26 +64,23 @@ export default function AdminPassengers() {
           <div className="container">
             <h1>B Airways Admin Portal</h1>
             <br />
-            <h1 className="topic">Bookings</h1>
+            <h1 className="topic">Passengers in Transit</h1>
             <br />
             <table id="bookings-table">
               <tbody>
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Date</th>
+                  <th>Telephone</th>
+                  <th>Date of Booking</th>
                   <th>Flight</th>
-                  <th>Actions</th>
                 </tr>
                 <tr>
-                  <td>John Doe</td>
-                  <td>johndoe@example.com</td>
-                  <td>2000-01-01</td>
-                  <td>A12345</td>
-                  <td>
-                    <button className="edit-button">Edit</button>
-                    <button className="delete-button">Delete</button>
-                  </td>
+                  <td>{name}</td>
+                  <td>{email}</td>
+                  <td>{telephone}</td>
+                  <td>{dateOfBooking}</td>
+                  <td>{flight}</td>
                 </tr>
               </tbody>
             </table>

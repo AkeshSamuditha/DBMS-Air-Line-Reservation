@@ -43,14 +43,14 @@ export default function BookAFlight() {
     axios
       .get("http://localhost:6969/api/getFlights", {
         params: {
-          // From: Location01,
-          // To: Location02,
-          // From_Date: FromDate,
-          // To_Date: ToDate,
-          From: "BIA",
-          To: "JFK",
-          From_Date: "2023-01-01",
-          To_Date: "2024-01-02",
+          From: Location01,
+          To: Location02,
+          From_Date: FromDate,
+          To_Date: ToDate,
+          // From: "BIA",
+          // To: "JFK",
+          // From_Date: "2023-01-01",
+          // To_Date: "2024-01-02",
         },
       })
       .then((response) => handleFlightDetails(response))

@@ -9,17 +9,19 @@ import { useRoute } from "./Route";
 import { useFlight } from "./Flight";
 import axios from "axios";
 import styled from "styled-components";
-
+import { useSeat_ID } from "./Seat_ID";
+import { useType } from "./Adult_Child";
+import { useClasses } from "./Classes";
 
 const theme = {
   blue: {
     default: "#3f51b5",
-    hover: "#283593"
+    hover: "#283593",
   },
   pink: {
     default: "#e91e63",
-    hover: "#ad1457"
-  }
+    hover: "#ad1457",
+  },
 };
 
 const Butto = styled.button`
@@ -43,7 +45,7 @@ const Butto = styled.button`
 `;
 
 Butto.defaultProps = {
-  theme: "blue"
+  theme: "blue",
 };
 
 const ButtonToggle = styled(Butto)`
@@ -54,8 +56,6 @@ const ButtonToggle = styled(Butto)`
   `}
 `;
 
-
-
 export default function SeatReservation() {
   const [noOfSeats, setnoOfSeats] = useState(40);
   const [price, setPrice] = useState();
@@ -64,9 +64,12 @@ export default function SeatReservation() {
   const [temp, setTemp] = useState("");
   const [Route_ID, setRoute_ID] = useRoute();
   const [Flight_ID, setFlight_ID] = useFlight();
-  const [type, setType] = useState("");
+  const [type1, setType1] = useState("");
   // const [selectedSeat, setSelectedSeat] = useState(null);
   const [active, setActive] = useState(0);
+  const [seat_ID, setSeat_ID] = useSeat_ID();
+  const [type, setType] = useType();
+  const [classes1, setClasses1] = useClasses();
 
   let types = [];
   for (let i = 1; i <= noOfSeats; i++) {
@@ -82,10 +85,14 @@ export default function SeatReservation() {
           </ButtonToggle>
         ))}
         <p />
-        <p> Your payment selection: {active} </p>
+        <p> Your Seat Selection: {active} </p>
       </div>
     );
   }
+
+  useEffect(() => {
+    setType(type1);
+  }, [type1]);
 
   useEffect(() => {
     localStorage.getItem("Route_ID", Route_ID);
@@ -120,7 +127,7 @@ export default function SeatReservation() {
           Flight_ID: Flight_ID,
           Class: classes,
           Seat_ID: active,
-          Adult_or_Child: type,
+          Adult_or_Child: type1,
         },
         {
           headers: {
@@ -135,6 +142,18 @@ export default function SeatReservation() {
   useEffect(() => {
     setClasses(temp);
   }, [temp]);
+
+  useEffect(() => {
+    setClasses1(temp);
+  }, [temp]);
+
+  useEffect(() => {
+    setSeat_ID(temp);
+  }, [temp]);
+
+  useEffect(() => {
+    setSeat_ID(active);
+  }, [active]);
 
   useEffect(() => {
     getPrice();
@@ -165,7 +184,7 @@ export default function SeatReservation() {
                   name="adults"
                   className="input-box"
                   id="adults"
-                  onChange={(e) => setType(e.target.value)}
+                  onChange={(e) => setType1(e.target.value)}
                 >
                   <option value="default" hidden>
                     Select
@@ -221,14 +240,16 @@ export default function SeatReservation() {
                 <>
                   {token ? (
                     <div className="booking-table-btn">
-                      <Button
-                        className="find-a-flight-btn"
-                        buttonStyle="btn--black"
-                        buttonSize="btn--black_size"
-                        onClick={Bookflight}
-                      >
-                        Proceed
-                      </Button>
+                      <Link to="/payments">
+                        <Button
+                          className="find-a-flight-btn"
+                          buttonStyle="btn--black"
+                          buttonSize="btn--black_size"
+                          onClick={Bookflight}
+                        >
+                          Proceed
+                        </Button>
+                      </Link>
                     </div>
                   ) : (
                     <div className="booking-table-btn">

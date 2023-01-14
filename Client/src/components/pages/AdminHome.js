@@ -25,6 +25,9 @@ export default function AdminHome() {
   const [typesGot, setTypesGot] = useState(false);
   const [registered, setRegistered] = useState("");
   const [guest, setGuest] = useState("");
+  const [gold, setGold] = useState("");
+  const [frequent, setFrequent] = useState("");
+  const [neweset, setNeweset] = useState("");
   const [flightTable, setFlightTable] = useState([]);
 
   useEffect(() => {
@@ -116,6 +119,9 @@ export default function AdminHome() {
     console.log(response);
     setRegistered(response.data[0].Guests);
     setGuest(response.data[0].Registered);
+    setGold(response.data[0].Gold);
+    setFrequent(response.data[0].Frequent);
+    setNeweset(response.data[0].Neweset);
     setTypesGot(true);
   }
 
@@ -146,7 +152,7 @@ export default function AdminHome() {
           </div>
           <div className="container">
             <h1>
-              Total Revenue = <span>LKR</span>
+              Total Revenue = <span>LKR </span>
               <span>
                 {(
                   parseInt(revenue0) +
@@ -222,7 +228,6 @@ export default function AdminHome() {
                                 <th>Email</th>
                                 <th>Time of Booking</th>
                                 <th>Ticket ID</th>
-                                <th>Class</th>
                                 <th>Seat ID</th>
                                 <th>Adult or Child</th>
                                 <th>Country</th>
@@ -237,9 +242,8 @@ export default function AdminHome() {
                                     <td>{val.last_name}</td>
                                     <td>{val.email}</td>
                                     <td>{val.time_of_booking}</td>
-                                    <td>{val.ticket_ID}</td>
-                                    <td>{val.class}</td>
-                                    <td>{val.seat_ID}</td>
+                                    <td>T{val.ticket_ID}</td>
+                                    <td>{val.class + val.seat_ID}</td>
                                     <td>{val.adult_or_child}</td>
                                     <td>{val.country}</td>
                                     <td>{val.telephone}</td>
@@ -323,7 +327,7 @@ export default function AdminHome() {
                   <br />
                   <h2>Bookings For the Given Time Period</h2>
                   <br />
-                  <h3>{bookings}</h3>
+                  <h1>{bookings}</h1>
                 </div>
               </div>
             ) : (
@@ -411,7 +415,7 @@ export default function AdminHome() {
                   type="date"
                   name="end_date"
                   onChange={(e) => {
-                    setStartDate2(e.target.value);
+                    setEndDate2(e.target.value);
                   }}
                 />
               </label>
@@ -442,6 +446,18 @@ export default function AdminHome() {
                         <td>Guest</td>
                         <td>{guest}</td>
                       </tr>
+                      <tr>
+                        <td>Gold</td>
+                        <td>{gold}</td>
+                      </tr>
+                      <tr>
+                        <td>Frequent</td>
+                        <td>{frequent}</td>
+                      </tr>
+                      <tr>
+                        <td>New</td>
+                        <td>{neweset}</td>
+                      </tr>
                     </tbody>
                   </table>
                 ) : (
@@ -457,6 +473,18 @@ export default function AdminHome() {
                       </tr>
                       <tr>
                         <td>Guest</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Gold</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>Frequent</td>
+                        <td>-</td>
+                      </tr>
+                      <tr>
+                        <td>New</td>
                         <td>-</td>
                       </tr>
                     </tbody>

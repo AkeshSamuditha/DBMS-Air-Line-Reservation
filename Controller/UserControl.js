@@ -128,7 +128,13 @@ class UserControl {
 
       const sqlQuary = `SELECT (SELECT ticket_price(?, ?, ?)) AS price, (SELECT get_tickets_remaining((SELECT airplane FROM flights WHERE Flight_ID  = ?), ? )) AS seatlimit;`;
 
-      const data = await executeSQL(sqlQuary, [PID, Route, Class,Flight_ID, Class]);
+      const data = await executeSQL(sqlQuary, [
+        PID,
+        Route,
+        Class,
+        Flight_ID,
+        Class,
+      ]);
       console.log(data);
       return data;
     } catch (err) {
@@ -165,6 +171,7 @@ class UserControl {
   async getBookedFlightDetails(user) {
     try {
       const data = await user.getBookedFlightDetails();
+      console.log(user);
       return data;
     } catch (err) {
       return err;
@@ -193,8 +200,7 @@ class UserControl {
   async postBookFlight(method, user) {
     try {
       const body = method.getBody();
-      
-      
+
       var PID = null;
       // console.log(user.PID);
       if (user && user.PID) {
@@ -257,6 +263,19 @@ class UserControl {
       const Seat_ID = method.searchURL("Seat_ID");
       const Adult_or_Child = method.searchURL("Adult_or_Child");
 
+      console.log(
+        Title,
+        First_Name,
+        Last_Name,
+        Email,
+        Telephone,
+        Country,
+        Flight,
+        Class,
+        Seat_ID,
+        Adult_or_Child
+      );
+
       const sqlQuary = `CALL new_guest_user(?,?,?,?,?,?,?,?,?,?);`;
 
       const data = await executeSQL(sqlQuary, [
@@ -271,9 +290,10 @@ class UserControl {
         Seat_ID,
         Adult_or_Child,
       ]);
-        return ("Guest User Created");
+      return "Guest User Created";
     } catch (err) {
-      return "ERROR";
+      console.log(err);
+      return "Error";
     }
   }
 
@@ -305,9 +325,27 @@ class UserControl {
 
   /////////////////////////////////// UPDATE ///////////////////////////////////////////////////
 
+  async passengersInTransit(method) {
+    try {
+      const sqlQuary = `SELECT First_Name, Last_Name, Email, Telephone, Country, Flight_ID, Adult_or_Child FROM passengers_in_transit;`;
+
+      const data = await executeSQL(sqlQuary, []);
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async flightsInAir(method) {
+    try {
+      const sqlQuary = `SELECT First_Name, Last_Name, Email, Telephone, Country, Flight_ID, Adult_or_Child FROM passengers_in_transit;`;
+
+      const data = await executeSQL(sqlQuary, []);
+    } catch (err) {
+      return err;
+    }
+  }
+
   /////////////////////////////////// DELETE ///////////////////////////////////////////////////
 }
-
-
 
 module.exports = UserControl;

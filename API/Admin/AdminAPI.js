@@ -83,16 +83,33 @@ router.delete('/logout',async function(req, res){
 
 
 //Request NO : NEW
-router.post('/newflight',async function(req, res){
+router.post("/newflight", async function (req, res) {
+  var method = new Method(req, res);
 
-    var method = new Method(req,res);
-    
-    const status = await uController.newFlight(method,req.user);
-    console.log(status);
-    
-    res.status(ResponseHandler(status)).send(status);
+  const status = await uController.newFlight(method, req.user);
+  console.log(status);
 
-})
+  res.status(ResponseHandler(status)).send(status);
+});
+
+//Request NO : NEW
+router.get("/passengersInTransit", async function (req, res) {
+  var method = new Method(req, res);
+
+  const status = await uController.passengersInTransit(method, req.user);
+  console.log(status);
+
+  res.status(ResponseHandler(status)).send(status);
+});
+
+router.get("/flightsInAir", async function (req, res) {
+  var method = new Method(req, res);
+
+  const status = await uController.flightsInAir(method, req.user);
+  console.log(status);
+
+  res.status(ResponseHandler(status)).send(status);
+});
 
 
 module.exports = router;

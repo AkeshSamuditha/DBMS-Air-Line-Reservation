@@ -48,11 +48,12 @@ export default function UserProfile() {
     setLastName(response.data[0].last_name);
     setUser_category(response.data[0].user_category);
     setTot_booking(response.data[0].total_bookings);
+    console.log(response);
   }
   // console.log(response.data);
 
   function bookedFlightDetails(response) {
-    // console.log(response.data);
+    console.log(response);
     setBookedFlightTable(response.data);
     // setFlights0(response.data[0]);
   }
@@ -99,7 +100,6 @@ export default function UserProfile() {
             <br />
           </div>
         </div>
-
         <>
           <div className="userResults">
             {bookedFlightTable.length === 0 ? (

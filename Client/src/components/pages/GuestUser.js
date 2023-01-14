@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../Button";
 import axios from "axios";
 import "./GuestUser.css";
 import Navbar from "../Navbar";
+import { useSeat_ID } from "./Seat_ID";
+import { useType } from "./Adult_Child";
+import { useFlight } from "./Flight";
+import { useClasses } from "./Classes";
 
 function GuestUser() {
   const [titleReg, setTitleReg] = useState("");
@@ -13,42 +17,57 @@ function GuestUser() {
   const [countryReg, setCountryReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
   const [PID, setPID] = useState("");
+  const [seat_ID, setSeat_ID] = useSeat_ID();
+  const [type, setType] = useType();
+  const [flightReg, setFlightReg] = useFlight();
+  const [classReg, setClassReg] = useClasses();
+  const [temp, setTemp] = useState("");
 
   const guestUserLogin = (e) => {
     e.preventDefault();
     axios
       .get("http://localhost:6969/api/GuestUserLogin", {
         params: {
-        Shit: titleReg,
-        First_Name: firstNameReg,
-        Last_Name: lastNameReg,
-        Email: emailReg,
-        Telephone: telephoneReg,
-        Country: "countryReg",
-        Flight: "F1",
-        Class: "F",
-        Seat_ID : "1",
-        Adult_or_Child: "A",
-  }})
+          shit: titleReg,
+          First_Name: firstNameReg,
+          Last_Name: lastNameReg,
+          Email: emailReg,
+          Telephone: telephoneReg,
+          Country: countryReg,
+          Flight: flightReg,
+          Class: classReg,
+          Seat_ID: seat_ID,
+          Adult_or_Child: type,
+        },
+      })
       .then((response) => {
-        console.log(response.data.PID);
-        confirmBooking()})
+        console.log(response);
+        // window.location.replace("/payments");
+      })
       .catch((error) => console.log(error));
   };
 
-  const confirmBooking = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:6969/api/registered/Bookflight", {
-        Flight_ID: "F1",
-        Class: "F",
-        Seat_ID: "1",
-        PID: "P1",
-        Adult_or_Child: "A",
-      })
-      .then((response) => window.location.replace())
-      .catch((error) => console.log(error));
-  };
+  // const confirmBooking = (e) => {
+  //   // e.preventDefault();
+  //   axios
+  //     .post("http://localhost:6969/api/registered/Bookflight", {
+  //       Flight_ID: "F1",
+  //       Class: "F",
+  //       Seat_ID: "1",
+  //       PID: "P1",
+  //       Adult_or_Child: "A",
+  //     })
+  //     .then((response) => window.location.replace("/payments"))
+  //     .catch((error) => console.log(error));
+  // };
+
+  useEffect(() => {
+    setTitleReg(temp);
+  }, [temp]);
+
+  function handleClick(e) {
+    setTemp(e.target.value);
+  }
 
   return (
     <>
@@ -72,7 +91,7 @@ function GuestUser() {
                   name="title"
                   className="input-box-mr"
                   id="title"
-                  onChange={setTitleReg}
+                  onChange={handleClick}
                 >
                   <option value="Mr" hidden>
                     Title

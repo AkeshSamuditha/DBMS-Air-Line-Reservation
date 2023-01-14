@@ -76,8 +76,8 @@ CREATE TABLE
         user_type CHAR(1) NOT NULL DEFAULT 'G',
         PRIMARY KEY(PID),
         CHECK (user_type IN ("G", "R")),
-        -- CHECK (email LIKE '%@%' AND email Like  %.%),
-        -- CHECK (LENGTH(telephone) = 10),
+        CHECK (email LIKE '%@%' AND email Like  %.%),
+        CHECK (LENGTH(telephone) = 10),
         CHECK (
             title IN (
                 "Mr.",
@@ -106,9 +106,9 @@ CREATE TABLE
         PRIMARY KEY(PID),
         FOREIGN KEY(user_category) REFERENCES user_categories(category) ON UPDATE CASCADE ON DELETE RESTRICT,
         FOREIGN KEY(PID) REFERENCES users(PID) ON UPDATE CASCADE ON DELETE RESTRICT,
-        -- CHECK (date_of_birth < DATE_SUB(CURDATE(), INTERVAL 18 YEAR)),
-        -- CHECK LENGTH(password) >= 8,
-        -- CHECK (column_name LIKE '%@%') 
+        CHECK (date_of_birth < DATE_SUB(CURDATE(), INTERVAL 18 YEAR)),
+        CHECK LENGTH(password) >= 8,
+        CHECK (column_name LIKE '%@%') 
         CHECK (total_bookings >= 0)
     );
 

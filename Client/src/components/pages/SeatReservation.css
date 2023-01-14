@@ -25,19 +25,22 @@
 
 .reserve-box {
   width: 50%;
-  height: 700px;
+  height: auto;
   padding-left: 5%;
-  border-radius: 5px;
-  margin-top: 250px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -20%);
+  padding-right: 5%;
+  border-radius: 10px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  /* position: absolute; */
+  /* left: 50%;
+  transform: translate(-50%, -20%); */
   outline: none;
   border: none;
   font-size: 18px;
   background-color: rgba(240, 248, 255, 1);
   align-content: center;
   padding-top: 30px;
+  color: #000;
 }
 
 .Parent {
@@ -60,4 +63,11 @@
 
 .table_container {
   height: 250px;
+}
+
+.seatReserveContainer {
+  display: flex;
+  justify-content: center;
+  background-color: #fff4f4;
+  min-height: 90vh;
 }

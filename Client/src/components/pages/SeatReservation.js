@@ -17,17 +17,20 @@ const theme = {
   blue: {
     default: "#3f51b5",
     hover: "#283593",
+    hover: "#283593",
   },
   pink: {
     default: "#e91e63",
     hover: "#ad1457",
   },
+  hover: "#ad1457",
 };
 
 const Butto = styled.button`
   background-color: ${(props) => theme[props.theme].default};
   color: white;
   padding: 5px 15px;
+  width: 50px;
   border-radius: 5px;
   outline: 0;
   text-transform: uppercase;
@@ -45,6 +48,7 @@ const Butto = styled.button`
 `;
 
 Butto.defaultProps = {
+  theme: "blue",
   theme: "blue",
 };
 
@@ -167,7 +171,7 @@ export default function SeatReservation() {
   return (
     <>
       <Navbar />
-      <div className="seatReservations">
+      <div className="seatReserveContainer">
         <div className="reserve-box">
           <div>
             <div>
@@ -178,7 +182,7 @@ export default function SeatReservation() {
             <br />
             <div className="Parent">
               <div className="child1">
-                <label>Type</label>
+                <label>Age Group</label>
                 <br />
                 <select
                   name="adults"
@@ -216,27 +220,21 @@ export default function SeatReservation() {
                 </select>
               </div>
             </div>
-            <>
-              <div>
-                {selected ? (
-                  <div>
-                    <br />
-                    <center>Price per Ticket = LKR {price} /=</center>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-              </div>
-            </>
-            <br />
-            <div>
-              <h3>Select a Desired Seat</h3>
-            </div>
-            <>
-              <ToggleGroup />
-            </>
-            <div className="table_container">
-              <div className="table_align">
+            {selected ? (
+              <dev>
+                <div>
+                  <br />
+                  <center>Price per Ticket = LKR {price} /=</center>
+                </div>
+                <br />
+                <div>
+                  <h3>Select a Desired Seat</h3>
+                </div>
+                <>
+                  <ToggleGroup />
+                </>
+                {/* <div className="table_container">
+                  <div className="table_align"> */}
                 <>
                   {token ? (
                     <div className="booking-table-btn">
@@ -265,8 +263,12 @@ export default function SeatReservation() {
                     </div>
                   )}
                 </>
-              </div>
-            </div>
+                {/* </div>
+                </div> */}
+              </dev>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
       </div>

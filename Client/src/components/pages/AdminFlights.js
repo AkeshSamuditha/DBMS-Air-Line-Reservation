@@ -16,16 +16,16 @@ export default function AdminFlights() {
   const [arrTime, setArrTime] = useState("");
   const [onBoard, setOnBoard] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:6969/admin/api/flightsInAir", {
-  //       headers: {
-  //         Authorization: token,
-  //       },
-  //     })
-  //     .then((response) => handleFlightDetails(response))
-  //     .catch((error) => console.log(error));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:6969/admin/api/flightsInAir", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => handleFlightDetails(response))
+      .catch((error) => console.log(error));
+  }, []);
 
   function handleFlightDetails(response) {
     console.log(response);

@@ -289,6 +289,29 @@ class AdminUser extends RegUser {
       return err;
     }
   }
+
+
+  async passengersInTransit(method) {
+    try {
+      const sqlQuary = `SELECT first_name, last_name, adult_or_child, email, telephone, country AS re, getLoc(origin_ID) AS origin, getLoc(destination_ID) AS destination, dep_time, arr_time FROM users RIGHT JOIN In_Time USING(PID);`;
+
+      const data = await executeSQL(sqlQuary, []);
+      return data;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async flightsInAir(method) {
+    try {
+      const sqlQuary = `SELECT flight_ID, getLoc(origin_ID) AS origin, getLoc(destination_ID) as destination,  dep_time, arr_time, "On Time", on_board FROM In_Time;`;
+
+      const data = await executeSQL(sqlQuary, []);
+      return data;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 

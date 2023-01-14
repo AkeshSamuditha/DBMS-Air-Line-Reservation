@@ -325,21 +325,22 @@ class UserControl {
 
   /////////////////////////////////// UPDATE ///////////////////////////////////////////////////
 
-  async passengersInTransit(method) {
+  async getPassengersByFlight(method, user) {
     try {
-      const sqlQuary = `SELECT First_Name, Last_Name, Email, Telephone, Country, Flight_ID, Adult_or_Child FROM passengers_in_transit;`;
 
-      const data = await executeSQL(sqlQuary, []);
+      const data = await user.passengersInTransit();
+      return data;
     } catch (err) {
       return err;
     }
   }
 
-  async flightsInAir(method) {
-    try {
-      const sqlQuary = `SELECT First_Name, Last_Name, Email, Telephone, Country, Flight_ID, Adult_or_Child FROM passengers_in_transit;`;
 
-      const data = await executeSQL(sqlQuary, []);
+  async getPassengersByFlight(method, user) {
+    try {
+
+      const data = await user.flightsInAir();
+      return data;
     } catch (err) {
       return err;
     }

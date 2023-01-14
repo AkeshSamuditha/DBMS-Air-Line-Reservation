@@ -15,16 +15,16 @@ export default function AdminPassengers() {
   const [flight, setFlight] = useState("");
   const [country, setCountry] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:6969/admin/api/passengersInTransit", {
-  //       headers: {
-  //         Authorization: token,
-  //       },
-  //     })
-  //     .then((response) => handlePassengerDetails(response))
-  //     .catch((error) => console.log(error));
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://localhost:6969/admin/api/passengersInTransit", {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => handlePassengerDetails(response))
+      .catch((error) => console.log(error));
+  }, []);
 
   function handlePassengerDetails(response) {
     console.log(response);

@@ -72,7 +72,6 @@ router.get('/SeatPrice',async function(req, res){
 
 // Request No: 14
 router.get('/FlightStatus',async function(req, res){
-
     var method = new Method(req,res);
     
     const status = await uController.getFlightStatus(method);

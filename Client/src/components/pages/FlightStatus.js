@@ -7,14 +7,7 @@ import axios from "axios";
 export default function FlightStatus() {
   const [flightID, setFlightID] = useState("");
   const [flightStat, setFlightStat] = useState([]);
-  //   "F1",
-  //   "CMB",
-  //   "JFK",
-  //   "2023-01-14",
-  //   "04:15:00",
-  //   "04:15:00",
-  //   "scheduled",
-  // ]);
+
   const [statusGot, setStatusGot] = useState(false); //Change this to false
 
   const getFlightStatus = (e) => {
@@ -32,7 +25,6 @@ export default function FlightStatus() {
   function getStastusByFlight(response) {
     setStatusGot(true);
     setFlightStat(response.data);
-    console.log(response);
   }
   return (
     <div>
@@ -58,7 +50,7 @@ export default function FlightStatus() {
               className="find-a-flight-btn"
               buttonStyle="btn--black"
               buttonSize="btn--black_size"
-              onClick={getStastusByFlight}
+              onClick={getFlightStatus}
             >
               Search
             </Button>
@@ -79,32 +71,8 @@ export default function FlightStatus() {
                           <table className="flightStatTable">
                             <tbody>
                               <tr>
-                                <td>Flight ID:</td>
-                                <td>{flightStat[0]}</td>
-                              </tr>
-                              <tr>
-                                <td>From:</td>
-                                <td>{flightStat[1]}</td>
-                              </tr>
-                              <tr>
-                                <td>To:</td>
-                                <td>{flightStat[2]}</td>
-                              </tr>
-                              <tr>
-                                <td>Date of Travel:</td>
-                                <td>{flightStat[3]}</td>
-                              </tr>
-                              <tr>
-                                <td>Time of Departure:</td>
-                                <td>{flightStat[4]}</td>
-                              </tr>
-                              <tr>
-                                <td>Time of Arrival:</td>
-                                <td>{flightStat[5]}</td>
-                              </tr>
-                              <tr>
                                 <td>Flight Status:</td>
-                                <td>{flightStat[6]}</td>
+                                <td>{(flightStat[0].flight_Status)}</td>
                               </tr>
                             </tbody>
                           </table>

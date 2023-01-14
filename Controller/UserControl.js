@@ -25,7 +25,6 @@ class UserControl {
         From_Date,
         To_Date
       );
-      console.log(data);
       return data;
     } catch (err) {
       return err;
@@ -64,7 +63,6 @@ class UserControl {
       const Brand = method.searchURL("Brand");
 
       const data = await user.getRevenueByAircraftType(Model, Brand);
-      console.log(data);
       return data;
     } catch (err) {
       return err;
@@ -135,7 +133,6 @@ class UserControl {
         Flight_ID,
         Class,
       ]);
-      console.log(data);
       return data;
     } catch (err) {
       return err;
@@ -171,7 +168,6 @@ class UserControl {
   async getBookedFlightDetails(user) {
     try {
       const data = await user.getBookedFlightDetails();
-      console.log(user);
       return data;
     } catch (err) {
       return err;
@@ -202,7 +198,6 @@ class UserControl {
       const body = method.getBody();
 
       var PID = null;
-      // console.log(user.PID);
       if (user && user.PID) {
         PID = user.PID;
       } else if (user && user.PID) {
@@ -263,18 +258,6 @@ class UserControl {
       const Seat_ID = method.searchURL("Seat_ID");
       const Adult_or_Child = method.searchURL("Adult_or_Child");
 
-      console.log(
-        Title,
-        First_Name,
-        Last_Name,
-        Email,
-        Telephone,
-        Country,
-        Flight,
-        Class,
-        Seat_ID,
-        Adult_or_Child
-      );
 
       const sqlQuary = `CALL new_guest_user(?,?,?,?,?,?,?,?,?,?);`;
 

@@ -39,88 +39,91 @@ export default function FlightStatus() {
     console.log(flightStat);
   }
   return (
-    <>
+    <div>
       <Navbar />
-      <br />
-      <h2>See Flight Stutus</h2>
-      <form className="adminForm">
-        <label className="adminFormLabel">Flight ID:</label>
-        <br />
-        <input
-          className="adminFormInput"
-          type="text"
-          id="flight-id"
-          name="flight-id"
-          placeholder="F12345"
-          onChange={(e) => {
-            setFlightID(e.target.value);
-          }}
-        />
-        <br />
-        <Button
-          className="find-a-flight-btn"
-          buttonStyle="btn--black"
-          buttonSize="btn--black_size"
-          onClick={getStastusByFlight}
-        >
-          Search
-        </Button>
-        <>
-          {statusGot ? (
-            <div className="results">
-              <>
-                <div>
-                  {flightStat.length === 0 ? (
+      <div className="stat-bg">
+        <h1>See Flight Stutus</h1>
+        <div>
+          <form className="flightStatFrom">
+            <label className="adminFormLabel">Flight ID:</label>
+            <br />
+            <input
+              className="flightStatFormInput"
+              type="text"
+              id="flight-id"
+              name="flight-id"
+              placeholder="F12345"
+              onChange={(e) => {
+                setFlightID(e.target.value);
+              }}
+            />
+            <br />
+            <Button
+              className="find-a-flight-btn"
+              buttonStyle="btn--black"
+              buttonSize="btn--black_size"
+              onClick={getStastusByFlight}
+            >
+              Search
+            </Button>
+            <>
+              {statusGot ? (
+                <div className="flightStatResults">
+                  <>
                     <div>
-                      SORRY! NO UPCOMING FLIGHTS AVAILABLE AT THE MOMENT.
+                      {flightStat.length === 0 ? (
+                        <div>
+                          SORRY! NO UPCOMING FLIGHTS AVAILABLE AT THE MOMENT.
+                        </div>
+                      ) : (
+                        <div>
+                          <h2>Flight Details</h2>
+                          <hr></hr>
+                          <br />
+                          <table className="flightStatTable">
+                            <tbody>
+                              <tr>
+                                <td>Flight ID:</td>
+                                <td>{flightStat[0]}</td>
+                              </tr>
+                              <tr>
+                                <td>From:</td>
+                                <td>{flightStat[1]}</td>
+                              </tr>
+                              <tr>
+                                <td>To:</td>
+                                <td>{flightStat[2]}</td>
+                              </tr>
+                              <tr>
+                                <td>Date of Travel:</td>
+                                <td>{flightStat[3]}</td>
+                              </tr>
+                              <tr>
+                                <td>Time of Departure:</td>
+                                <td>{flightStat[4]}</td>
+                              </tr>
+                              <tr>
+                                <td>Time of Arrival:</td>
+                                <td>{flightStat[5]}</td>
+                              </tr>
+                              <tr>
+                                <td>Flight Status:</td>
+                                <td>{flightStat[6]}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    <div>
-                      <h2>Flight Details</h2>
-                      <hr></hr>
-                      <br />
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td>Flight ID:</td>
-                            <td>{flightStat[0]}</td>
-                          </tr>
-                          <tr>
-                            <td>From:</td>
-                            <td>{flightStat[1]}</td>
-                          </tr>
-                          <tr>
-                            <td>To:</td>
-                            <td>{flightStat[2]}</td>
-                          </tr>
-                          <tr>
-                            <td>Date of Travel:</td>
-                            <td>{flightStat[3]}</td>
-                          </tr>
-                          <tr>
-                            <td>Time of Departure:</td>
-                            <td>{flightStat[4]}</td>
-                          </tr>
-                          <tr>
-                            <td>Time of Arrival:</td>
-                            <td>{flightStat[5]}</td>
-                          </tr>
-                          <tr>
-                            <td>Flight Status:</td>
-                            <td>{flightStat[6]}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
+                  </>
                 </div>
-              </>
-            </div>
-          ) : (
-            <div> </div>
-          )}
-        </>
-      </form>
-    </>
+              ) : (
+                <div> </div>
+              )}
+            </>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }

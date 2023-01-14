@@ -6,12 +6,54 @@ departuretime
 arrivaltike
 FlightStatus */
 .flightStatFrom {
-  width: 50%; /* Set the width of the form */
-  margin: 20px auto; /* Center the form on the page */
-  text-align: center; /* Center the form's content */
-  padding: 30px; /* Add some padding to the form */
-  background-color: #ffffff; /* White background color for the form */
-  border: 1px solid #cccccc; /* Gray border for the form */
-  border-radius: 10px; /* Round the corners of the form */
-  box-shadow: 0px 0px 10px #cccccc; /* Add a shadow to the form */
+  width: 400px;
+  /* margin-top: 100px;
+  margin: auto; */
+
+  margin: 20px auto;
+  /* padding-bottom: 300px; */
+  text-align: center;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #cccccc;
+}
+
+.flightStatFormInput {
+  width: 200px;
+  padding: 12px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.flightStatResults {
+  width: auto;
+  height: auto;
+  padding-top: 30px;
+  padding-bottom: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgba(0, 0, 0, 0.2); */
+}
+
+.flightStatTable {
+  width: 100%;
+  text-align: justify;
+}
+
+.flightStatTable th,
+td {
+  border: none;
+}
+
+.stat-bg {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(231, 248, 238);
 }

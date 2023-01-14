@@ -122,17 +122,14 @@ class UserControl {
       } else {
         PID = 0;
       }
-      //   } else if (user && user.PID) {
-      //     PID = body.PID;
-      //   } else {
-      //     return "Booking failed";
-      //   }
       const Route = method.searchURL("Route");
       const Class = method.searchURL("Class");
+      const Flight_ID = method.searchURL("Flight_ID");
 
-      const sqlQuary = `SELECT ticket_price(?, ?, ?);`;
+      const sqlQuary = `SELECT (SELECT ticket_price(?, ?, ?)) AS price, (SELECT get_tickets_remaining((SELECT airplane FROM flights WHERE Flight_ID  = ?), ? )) AS seatlimit;`;
 
-      const data = await executeSQL(sqlQuary, [PID, Route, Class]);
+      const data = await executeSQL(sqlQuary, [PID, Route, Class,Flight_ID, Class]);
+      console.log(data);
       return data;
     } catch (err) {
       return err;
@@ -196,8 +193,10 @@ class UserControl {
   async postBookFlight(method, user) {
     try {
       const body = method.getBody();
+      
+      
       var PID = null;
-      console.log(user.PID);
+      // console.log(user.PID);
       if (user && user.PID) {
         PID = user.PID;
       } else if (user && user.PID) {
@@ -222,7 +221,7 @@ class UserControl {
       ]);
       return "Ticket Booked";
     } catch (err) {
-      return err;
+      return "Error";
     }
   }
 
@@ -253,9 +252,13 @@ class UserControl {
       const Email = method.searchURL("Email");
       const Telephone = method.searchURL("Telephone");
       const Country = method.searchURL("Country");
+      const Flight = method.searchURL("Flight");
+      const Class = method.searchURL("Class");
+      const Seat_ID = method.searchURL("Seat_ID");
+      const Adult_or_Child = method.searchURL("Adult_or_Child");
 
-      const sqlQuary = `INSERT INTO users(title, first_name, last_name, email, telephone, country) VALUES (?, ?, ?, ?, ?, ?);`;
-      const sqlQuary2 = "SELECT LAST_INSERT_ID() AS PID;";
+      const sqlQuary = `CALL new_guest_user(?,?,?,?,?,?,?,?,?,?);`;
+
       const data = await executeSQL(sqlQuary, [
         Title,
         First_Name,
@@ -263,11 +266,14 @@ class UserControl {
         Email,
         Telephone,
         Country,
+        Flight,
+        Class,
+        Seat_ID,
+        Adult_or_Child,
       ]);
-      const data2 = await executeSQL(sqlQuary2);
-      return data2;
+        return ("Guest User Created");
     } catch (err) {
-      return err;
+      return "ERROR";
     }
   }
 

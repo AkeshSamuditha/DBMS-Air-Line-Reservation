@@ -153,6 +153,7 @@ CREATE TABLE routes(
 );
 
 
+
 CREATE TABLE flights(
 	flight_ID VARCHAR(5),
 	airplane VARCHAR(5),
@@ -198,11 +199,11 @@ CREATE TABLE tickets(
 -- Function to calculate the price of a ticket for a given class, route and the category of the passenger
 DELIMITER //
 CREATE FUNCTION ticket_price(ID int, R VARCHAR(5), C CHAR(1))
-RETURNS NUMERIC(20,3)
+RETURNS NUMERIC(20,2)
 DETERMINISTIC
 BEGIN
 	DECLARE price NUMERIC(20,2) DEFAULT 0;
-	DECLARE discnt NUMERIC(4,3) DEFAULT 0;
+	DECLARE discnt NUMERIC(5,2) DEFAULT 0;
 	DECLARE usr_cat CHAR(1);
 	
 	SET price = (SELECT price_per_air_mile FROM class_types WHERE class = C LIMIT 1)*(SELECT miles FROM routes WHERE route_ID = R LIMIT 1);
@@ -262,11 +263,28 @@ END//
 DELIMITER ;
 
 
+-- Procedure to add new guest at Login/ Ticket Booked
+DELIMITER //
+CREATE PROCEDURE new_guest_user(title VARCHAR(4), first_name VARCHAR(30), last_name VARCHAR(30), email VARCHAR(30), telephone VARCHAR(15), country VARCHAR(30), F VARCHAR(5), C CHAR(1), seat_ID INT, adult_or_child CHAR(1))
+BEGIN
+	DECLARE PID INT DEFAULT 0;
+
+	START TRANSACTION;
+
+	INSERT INTO users(title, first_Name, last_Name, email, telephone, country, user_type) VALUES (title, first_Name, last_Name, email, telephone, country, 'G');
+	SET PID = LAST_INSERT_ID(); -- Get the PID of the last inserted user
+	CALL new_ticket(F, C, seat_ID, PID, adult_or_child);
+	
+COMMIT;
+	
+END//
+DELIMITER ;
+
 -- Procedure to add ticket booking 
 DELIMITER //
 CREATE PROCEDURE new_ticket(F VARCHAR(5), C CHAR(1), seat_ID INT,  ID INT, adult_or_child CHAR(1))
 BEGIN
-	DECLARE tikt_price NUMERIC(20,3);
+	DECLARE tikt_price NUMERIC(20,2);
     DECLARE R VARCHAR(5);
 	SET adult_or_child = UPPER(adult_or_child);
 	SET R = (SELECT route FROM flights WHERE flight_ID = F); -- set the route of the flight

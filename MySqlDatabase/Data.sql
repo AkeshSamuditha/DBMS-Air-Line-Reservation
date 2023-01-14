@@ -1,6 +1,7 @@
 INSERT INTO user_categories(category, discription, Discount, threashold) VALUES ('F', 'Frequent', 0.05, 10),('G', 'Gold', 0.09, 50), ('N', 'New', 0.00, 0);
 INSERT INTO class_types(class, discription, price_per_air_mile) VALUES ('E', 'Economy', 8), ('B','Buisness',15), ('P','Platinum',25);
-insert INTO admins(admin_name, admin_password) VALUES ('admin', '$2a$10$35QCTy/gi9fdeECwK8qRi.QUHZ3fEdwq8v.71gHSC5MTCzzB448Ju');
+-- INSERT INTO admins(admin_name, admin_password) VALUES ('admin', 'admin'); 
+
 
 INSERT INTO locations(location) VALUES('Sri Lanka');
 INSERT INTO locations(location, parent_ID) VALUES('Colombo', 1);
@@ -23,12 +24,6 @@ INSERT INTO locations(location, parent_ID) VALUES('Jakarta', 17);
 INSERT INTO locations(location, parent_ID) VALUES('Bali Island', 17);
 INSERT INTO locations(location, parent_ID) VALUES('Oklohoma', 3);
 INSERT INTO locations(location, parent_ID) VALUES('Buffalo City', 20);
-
-
-INSERT INTO users(title, first_Name, last_Name, email, telephone, country) VALUES
-('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.com', '+94701123891',  'Sri Lanka'),
-('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka'),
-('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka');
 
 
 INSERT INTO airports(airport_code, airport_Name, location) VALUES('BIA','Bandaranaike International Airport' ,2);
@@ -108,6 +103,15 @@ CALL new_flight('F41','A4','R1','2023-02-11','04:15:00','15:00:00');
 CALL new_flight('F42','A5','R2','2023-02-11','05:30:00','14:00:00');
 
 
+
+insert INTO admins(admin_name, admin_password) VALUES ('admin', '$2a$10$35QCTy/gi9fdeECwK8qRi.QUHZ3fEdwq8v.71gHSC5MTCzzB448Ju');
+INSERT INTO users (`PID`, `title`, `first_name`, `last_name`, `email`, `telephone`, `country`, `user_type`) VALUES ('1', 'Mr', 'Akesh', 'Samuditha', 'akeshsamuditha@gmail.com', '0703812594', 'Sri Lanka', 'R');
+INSERT INTO registered_users (`registered_date`, `PID`, `username`, `password`, `date_of_birth`, `address`, `user_category`, `total_bookings`) VALUES ('0000-01-01 00:00:00', '1', 'Akesh', '$2a$10$utsw1D2Kydja0PP5.yiCwOcYBrwMRzDTvOcK.nCmkxpd6VXAo/NhO', '2001-01-28', 'No, 46 Wariyagoda, Alawwa', 'G', '100000');
+CALL new_guest_user('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.cm', '+94701123821',  'Sri Lanka', 'F1', 'P', '15', 'C');
+CALL new_guest_user('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka', 'F2', 'E', '200', 'C');
+CALL new_guest_user('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka' , 'F4', 'E', '200', 'C');
+
+
 CALL new_ticket('F2', 'E', '2', '2', 'A' );
 CALL new_ticket('F2', 'E', '3', '2', 'C' );
 CALL new_ticket('F1', 'E', '3', '1', 'A' );
@@ -124,3 +128,6 @@ Select * from locations;
 select * from airPlane_models;
 select * from routes order by Route_ID;
 select * from Registered_users;
+select * from airports;
+select * from admins;
+select * From flights;

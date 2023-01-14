@@ -1,14 +1,14 @@
 function ResponseHandler(status) {
   if (!(status instanceof Object)) {
     if (status.includes("Error")) {
-      return "400";
+      return 400;
     } else if (status.includes("AccessDenied")) {
-      return "203";
+      return 203;
     } else {
-      return "200";
+      return 200;
     }
   } else {
-    return "200";
+    return 200;
   }
 }
 

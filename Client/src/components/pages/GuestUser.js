@@ -24,9 +24,14 @@ function GuestUser() {
         Last_Name: lastNameReg,
         Email: emailReg,
         Telephone: telephoneReg,
+        Country: "countryReg",
+        Flight: "F1",
+        Class: "F",
+        Seat_ID : "1",
+        Adult_or_Child: "A",
   }})
       .then((response) => {
-        setPID(100);
+        console.log(response.data.PID);
         confirmBooking()})
       .catch((error) => console.log(error));
   };

@@ -61,7 +61,7 @@ const ButtonToggle = styled(Butto)`
 `;
 
 export default function SeatReservation() {
-  const [noOfSeats, setnoOfSeats] = useState(40);
+  const [noOfSeats, setnoOfSeats] = useState(20);
   const [price, setPrice] = useState();
   const [classes, setClasses] = useState("");
   const [selected, setSelected] = useState(false);

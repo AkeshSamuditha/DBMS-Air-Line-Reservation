@@ -59,21 +59,22 @@ INSERT INTO airplane_models(model_ID, model, brand, seat_countP,seat_countB,seat
 INSERT INTO airplane_models(model_ID, model, brand, seat_countP,seat_countB,seat_countE, no_of_planes) VALUES ('M3','Airbus','A352','40', '80','240','1');
  
 
-CALL new_flight('F1','A1','R1','2023-02-01','04:15:00','15:00:00');
-CALL new_flight('F2','A2','R2','2023-02-01','05:30:00','14:00:00');
-CALL new_flight('F3','A3','R3','2023-02-02','05:30:00','06:30:00');
-CALL new_flight('F4','A4','R4','2023-02-02','06:30:00','17:30:00');
-CALL new_flight('F5','A1','R5','2023-02-03','08:30:00','18:00:00');
-CALL new_flight('F6','A2','R6','2023-02-03','05:30:00','12:00:00');
-CALL new_flight('F7','A3','R7','2023-02-04','06:30:00','12:00:00');
-CALL new_flight('F8','A4','R9','2023-02-04','08:30:00','14:30:00');
-CALL new_flight('F9','A10','R8','2023-02-05','05:30:00','15:30:00');
-CALL new_flight('F10','A2','R10','2023-02-05','09:30:00','18:00:00');
-CALL new_flight('F11','A3','R8','2023-02-06','05:30:00','14:00:00');
-CALL new_flight('F12','A5','R13','2023-02-06','06:00:00','10:00:00');
-CALL new_flight('F13','A4','R7','2023-02-06','06:45:00','16:45:00');
-CALL new_flight('F14','A8','R11','2023-02-06','07:30:00','16:00:00');
-CALL new_flight('F15','A3','R9','2023-02-07','08:00:00','17:00:00');
+CALL new_flight('F1','A1','R1','2023-01-14','04:15:00','15:00:00');
+CALL new_flight('F2','A2','R2','2023-01-14','05:30:00','14:00:00');
+CALL new_flight('F3','A3','R3','2023-01-14','05:30:00','06:30:00');
+CALL new_flight('F4','A4','R4','2023-01-14','06:30:00','17:30:00');
+CALL new_flight('F90','A5','R4','2023-01-14','06:30:00','17:30:00');
+CALL new_flight('F5','A1','R5','2023-01-15','08:30:00','18:00:00');
+CALL new_flight('F6','A2','R6','2023-01-13','05:30:00','12:00:00');
+CALL new_flight('F7','A3','R7','2023-01-13','06:30:00','12:00:00');
+CALL new_flight('F8','A4','R9','2023-01-13','08:30:00','14:30:00');
+CALL new_flight('F9','A10','R8','2023-01-14','05:30:00','15:30:00');
+CALL new_flight('F10','A2','R10','2023-01-16','09:30:00','18:00:00');
+CALL new_flight('F11','A3','R8','2023-01-16','05:30:00','14:00:00');
+CALL new_flight('F12','A5','R13','2023-01-16','06:00:00','10:00:00');
+CALL new_flight('F13','A4','R7','2023-01-16','06:45:00','16:45:00');
+CALL new_flight('F14','A8','R11','2023-01-18','07:30:00','16:00:00');
+CALL new_flight('F15','A3','R9','2023-01-19','08:00:00','17:00:00');
 CALL new_flight('F16','A10','R7','2023-02-07','12:30:00','22:30:00');
 CALL new_flight('F17','A2','R12','2023-02-07','06:00:00','16:00:00');
 CALL new_flight('F18','A3','R12','2023-02-08','07:00:00','17:00:00');
@@ -107,9 +108,10 @@ CALL new_flight('F42','A5','R2','2023-02-11','05:30:00','14:00:00');
 insert INTO admins(admin_name, admin_password) VALUES ('admin', '$2a$10$35QCTy/gi9fdeECwK8qRi.QUHZ3fEdwq8v.71gHSC5MTCzzB448Ju');
 INSERT INTO users (`PID`, `title`, `first_name`, `last_name`, `email`, `telephone`, `country`, `user_type`) VALUES ('1', 'Mr', 'Akesh', 'Samuditha', 'akeshsamuditha@gmail.com', '0703812594', 'Sri Lanka', 'R');
 INSERT INTO registered_users (`registered_date`, `PID`, `username`, `password`, `date_of_birth`, `address`, `user_category`, `total_bookings`) VALUES ('0000-01-01 00:00:00', '1', 'Akesh', '$2a$10$utsw1D2Kydja0PP5.yiCwOcYBrwMRzDTvOcK.nCmkxpd6VXAo/NhO', '2001-01-28', 'No, 46 Wariyagoda, Alawwa', 'G', '100000');
-CALL new_guest_user('Mr.', 'Dilshan' ,'Karunarathna','DilshanKarunarathna@gmail.cm', '+94701123821',  'Sri Lanka', 'F1', 'P', '15', 'C');
-CALL new_guest_user('Mr.', 'Dilshan' ,'Karunarathnb','DilshanKarunarathnb@gmail.com', '+94701123892',  'Sri Lanka', 'F2', 'E', '200', 'C');
-CALL new_guest_user('Mrs.', 'Dilshan' ,'Karunarathnd','DilshanKarunarathnd@gmail.com', '+94701123894', 'Sri Lanka' , 'F4', 'E', '200', 'C');
+CALL new_guest_user('Mr.', 'Supun' ,'Karunarathna','Supun@gmail.c0m', '+94701133821',  'Sri Lanka', 'F1', 'P', '15', 'A');
+CALL new_guest_user('Mr.', 'Dilshan' ,'Lakmal','Dilshan@gmail.com', '+94701243892',  'Sri Lanka', 'F2', 'E', '12', 'A');
+CALL new_guest_user('Mrs.', 'Nadil' ,'Samuditha','Nadil@gmail.com', '+94701423894', 'Sri Lanka' , 'F4', 'E', '17', 'A');
+
 
 
 CALL new_ticket('F2', 'E', '2', '2', 'A' );
@@ -119,6 +121,9 @@ CALL new_ticket('F1', 'B', '1', '3', 'C' );
 CALL new_ticket('F1', 'P', '1', '1', 'A' );
 CALL new_ticket('F1', 'P', '2', '3', 'C' );
 
+
+CALL flight_delay('F3', '03:00:00');
+CALL flight_delay('F10', '01:00:00');
 
 select * from Flights;
 select * from airplanes;

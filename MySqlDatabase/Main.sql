@@ -304,6 +304,18 @@ C CHAR(1)) RETURNS INT DETERMINISTIC BEGIN
 
 Delimiter ;
 
+-- function to get location of a Airport
+DELIMITER //
+CREATE FUNCTION getLoc(L char(3))
+RETURNS char(60)
+DETERMINISTIC
+BEGIN
+    DECLARE loc VARCHAR(60);
+    SET loc = (SELECT locations.location FROM locations WHERE location_ID = (SELECT location FROM airports WHERE airport_code = L) LIMIT 1);
+    RETURN loc;
+END//
+DELIMITER ;
+
 -- Procedure to add new flights
 
 DELIMITER //
@@ -340,61 +352,6 @@ CREATE PROCEDURE NEW_FLIGHT(F VARCHAR(5), A VARCHAR
 DELIMITER ;
 
 -- Procedure to add new registered users
-
-DELIMITER //
-
-CREATE PROCEDURE NEW_REGISTERED_USER(TITLE VARCHAR(
-4), FIRST_NAME VARCHAR(30), LAST_NAME VARCHAR(30), 
-EMAIL VARCHAR(30), TELEPHONE VARCHAR(15), COUNTRY 
-VARCHAR(30), USERNAME VARCHAR(30), PASSWORD VARCHAR
-(60), DOB DATE, ADDRESS VARCHAR(50)) BEGIN 
-	DECLARE last_PID INT DEFAULT 0;
-	START TRANSACTION;
-	-- First insert the user into the users table
-	INSERT INTO
-	    users(
-	        title,
-	        first_Name,
-	        last_Name,
-	        email,
-	        telephone,
-	        country,
-	        user_type
-	    )
-	VALUES (
-	        title,
-	        first_Name,
-	        last_Name,
-	        email,
-	        telephone,
-	        country,
-	        'R'
-	    );
-	SET last_PID = LAST_INSERT_ID();
-	-- Get the PID of the last inserted user
-	INSERT INTO
-	    registered_Users(
-	        PID,
-	        username,
-	        password,
-	        date_of_birth,
-	        address
-	    )
-	VALUES (
-	        last_PID,
-	        username,
-	        password,
-	        DOB,
-	        address
-	    );
-	-- Add the user to registered users table
-	COMMIT;
-	END// 
-
-
-DELIMITER ;
-
--- Procedure to add new guest at Login/ Ticket Booked
 
 DELIMITER //
 
@@ -644,6 +601,16 @@ CREATE VIEW AIRPLANES_W_SEASTS AS
 	WHERE
 	    airplanes.model = airplane_Models.m
 MODEL_ID; 
+
+
+CREATE VIEW In_Time AS
+SELECT flight, PID, adult_or_child, origin_ID, destination_ID, flight_ID, dep_time, arr_time, flight_status, on_board FROM tickets RIGHT JOIN  (SELECT origin_ID, destination_ID, flight_ID, dep_time, arr_time, flight_status, (get_tickets_remaining(airplane, 'P' ) + get_tickets_remaining(airplane, 'B' ) + get_tickets_remaining(airplane, 'E' ) - (tickets_remainingP + tickets_remainingB + tickets_remainingE)) as on_board
+FROM routes AS R
+RIGHT JOIN flights AS F ON Route_ID  =route
+WHERE CURRENT_TIMESTAMP 
+BETWEEN dep_time AND arr_time AND CURDATE() = date_of_travel) AS A ON flight = flight_ID;
+
+
 
 SELECT * FROM Flights;
 

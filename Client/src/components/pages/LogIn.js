@@ -27,7 +27,6 @@ export default function Login() {
 
   function handleLogin(response) {
     const { token } = response.data;
-    console.log("Token", token);
     if (token) {
       setToken(token);
     }

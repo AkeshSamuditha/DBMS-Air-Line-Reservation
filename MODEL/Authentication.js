@@ -11,7 +11,6 @@ var AdminUsers = new Map();
 
 async function adminLogin(method){
     const body = method.getBody();
-    console.log(body);
     const admin_name = body.Admin_Name;
     const password = body.Admin_Password;
 
@@ -48,7 +47,6 @@ async function adminLogin(method){
 
 async function register(method) {
   const body = method.getBody();
-  // console.log(body);
   const Title = body.Title;
   const First_Name = body.First_Name;
   const Last_Name = body.Last_Name;
@@ -204,7 +202,6 @@ async function adminLogout(user) {
 
 const getAccessToken = (data)=>{
   token = sign(data, ACCESS_TOKEN_SECRECT,{algorithm: "HS256",expiresIn:"500m"});
-  // console.log(token);
   return token;
 };
 
@@ -214,13 +211,11 @@ var ExtractRegUser =async function(req,res, next){
   var method = new Method(req,res);
 
   var token = method.getToken();
-  // console.log(token);
   try {
     const { sessionID, PID } = verify(token, ACCESS_TOKEN_SECRECT);
     if (sessionID) {
 
       var user = RegUsers.get(PID);
-      // console.log(user);
       await user.setLastUsedTime();
       req.user = user;
 
@@ -240,9 +235,7 @@ var ExtractRegUser =async function(req,res, next){
 var ExtractAdminUser =async function(req,res, next){
 
   var method = new Method(req,res);
-  console.log("Ane plyn bn ynna", req.headers);
   var token = method.getToken();
-  console.log(token);
   try{
       const {admin_id,admin_name} = verify(token,ACCESS_TOKEN_SECRECT);
       if(admin_id){
@@ -270,13 +263,11 @@ var UpdateSession =async function(req,res, next){
     var method = new Method(req,res);
 
     var token = method.getToken();
-    // console.log(token);
     try{
         const {sessionID,PID} = verify(token,ACCESS_TOKEN_SECRECT);
         if(sessionID){
             
             var user = RegUsers.get(PID);
-            // console.log(user);
             await user.setLastUsedTime();
             req.user = user;
 
@@ -306,8 +297,6 @@ var RestoreSession = async function(){
     console.log(e);
     console.log("error");
   }
-  //console.log(data);
-
     if (data == null){
     return;
   }

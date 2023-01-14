@@ -26,17 +26,12 @@ function Navbar() {
         },
       })
       .then((response) => {
-        console.log(response);
-        if (response.data.message == "400") {
-          setLogoutStatus("Error While Logging Out");
-        } else {
-          setToken("");
-          localStorage.removeItem("token");
-          console.log(token);
-          window.location.replace("http://localhost:3000");
-          setLogoutStatus("Logged Out");
-        }
-      });
+        setToken("");
+        localStorage.removeItem("token");
+        window.location.replace("http://localhost:3000");
+        setLogoutStatus("Logged Out");
+        
+      }).catch((error) => console.log(error));
   };
 
   const showButton = () => {

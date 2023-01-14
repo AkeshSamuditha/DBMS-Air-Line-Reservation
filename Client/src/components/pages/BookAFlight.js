@@ -97,7 +97,6 @@ export default function BookAFlight() {
                     id="from"
                     onChange={(e) => {
                       setLocation01(e.target.value);
-                      console.log(Location01);
                     }}
                   >
                     <option value="default" hidden={true}>
@@ -126,7 +125,6 @@ export default function BookAFlight() {
                     id="to"
                     onChange={(e) => {
                       setLocation02(e.target.value);
-                      console.log(Location02);
                     }}
                   >
                     <option value="default" hidden={true}>

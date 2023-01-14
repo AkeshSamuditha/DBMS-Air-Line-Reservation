@@ -32,7 +32,6 @@ function Navbar() {
         } else {
           setToken("");
           localStorage.removeItem("token");
-          console.log(token);
           window.location.replace("http://localhost:3000");
           setLogoutStatus("Logged Out");
         }

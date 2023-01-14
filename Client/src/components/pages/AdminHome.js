@@ -42,8 +42,7 @@ export default function AdminHome() {
   }, []);
 
   function handleRevenue(response) {
-    console.log(response);
-    console.log(bookings);
+
     setRevenue0(response.data[0].revenue);
     setRevenue1(response.data[1].revenue);
     setRevenue2(response.data[2].revenue);
@@ -67,7 +66,6 @@ export default function AdminHome() {
   function getDetailsByFlight(response) {
     setFlightsGot2(true);
     setFlightTable(response.data);
-    console.log(response);
   }
 
   const bookingsOnADate = (e) => {
@@ -91,7 +89,6 @@ export default function AdminHome() {
   };
 
   function getDetailsByDestination(response) {
-    console.log(response);
     setBookings(response.data[0].passengers_count);
     setFlightsGot(true);
   }
@@ -116,7 +113,6 @@ export default function AdminHome() {
   };
 
   function getDetailsByType(response) {
-    console.log(response);
     setRegistered(response.data[0].Guests);
     setGuest(response.data[0].Registered);
     setGold(response.data[0].Gold);

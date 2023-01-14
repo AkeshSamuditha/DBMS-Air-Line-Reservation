@@ -28,7 +28,6 @@ export default function AdminPassengers() {
   }, []);
 
   function handlePassengerDetails(response) {
-    console.log(response);
     setName(response.data[0].Name);
     setEmail(response.data[0].Email);
     setTelephone(response.data[0].Telephone);

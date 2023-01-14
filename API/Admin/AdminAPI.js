@@ -13,7 +13,7 @@ router.use(ExtractAdminUser);
 router.get('/getPassengersByFlight',async function(req, res){
 
     var method = new Method(req,res);
-    // console.log("method body");
+
     const status = await uController.getPassengersByFlight(method,req.user);
     
     res.status(ResponseHandler(status)).send(status);
@@ -38,6 +38,7 @@ router.get('/getBookingsByPassengerType',async function(req, res){
     var method = new Method(req,res);
     
     const status = await uController.getBookingsByPassengerType(method,req.user);
+    
     console.log(status);
     
     res.status(ResponseHandler(status)).send(status);
@@ -59,8 +60,8 @@ router.get('/getPastFlights',async function(req, res){
 
 //Request No: 05
 router.get('/getRevenueByAircraftType',async function(req, res){
-    // console.log(req)
-    var method = new Method(req,res);
+
+  var method = new Method(req,res);
     
     const status = await uController.getRevenueByAircraftType(method,req.user);
     console.log(status);

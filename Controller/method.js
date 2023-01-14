@@ -21,7 +21,6 @@ class Method{
         return this.url.searchParams.get(query);
     }
     getToken() {
-        // console.log(this.req.headers);
         var token = this.req.headers["authorization"];
         return token;
     }

@@ -50,11 +50,9 @@ function SignUp() {
       })
       .then((response) => {
         const { token: newtok } = response.data;
-        console.log("Token", newtok);
         if (newtok) {
           setToken(newtok);
           window.location.href = "/auth/Login";
-          console.log("Token2", newtok);
         }
       })
       .catch((error) => {

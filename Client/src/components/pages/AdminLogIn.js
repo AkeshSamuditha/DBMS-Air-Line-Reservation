@@ -16,33 +16,24 @@ export default function AdminLogIn() {
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  // if (token) {
-  //   setToken("");
-  //   return;
-  // }
-
   const adminlogin = () => {
     axios
       .post("http://localhost:6969/admin/login", {
         Admin_Name: name,
         Admin_Password: password,
-        // Admin_Name: "admin",
-        // Admin_Password: "admin",
+
       })
       .then((response) => {
         handleLogin(response);
-        // console.log("response", response);
       })
       .catch((error) => {
         setLoginStatus("Invalid Username or Password");
-        // window.location.reload()
       });
   };
 
   function handleLogin(response) {
     const { token } = response.data;
     if (token) {
-      console.log("Token", token);
       setToken(token);
       window.location.href = "/admin-home";
     }

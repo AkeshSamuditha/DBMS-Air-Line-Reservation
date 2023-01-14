@@ -11,6 +11,8 @@ Then include those Files (API , Controller , DB , MODEL , .env , index.js) in th
 
 make sure to edit .env with the relavant information of your sql database.
 
+run the main.sql and data.sql scripts one after the other in your sql database.
+
 Then open a terminal inside that new folder and install the following using those commands.
 
   npm install   -- install all dependencies
@@ -21,5 +23,5 @@ Go to Client/Src
   
   npm install
   
-  npm start
+  npm start  -- To run the client side
   

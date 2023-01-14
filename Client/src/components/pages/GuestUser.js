@@ -16,7 +16,6 @@ function GuestUser() {
   const [emailReg, setEmailReg] = useState("");
   const [countryReg, setCountryReg] = useState("");
   const [telephoneReg, setTelephoneReg] = useState("");
-  const [PID, setPID] = useState("");
   const [seat_ID, setSeat_ID] = useSeat_ID();
   const [type, setType] = useType();
   const [flightReg, setFlightReg] = useFlight();
@@ -40,26 +39,10 @@ function GuestUser() {
           Adult_or_Child: type,
         },
       })
-      .then((response) => {
-        console.log(response);
-        // window.location.replace("/payments");
-      })
-      .catch((error) => console.log(error));
+      .then((response) => 
+        window.location.replace("http://localhost:3000/payments")
+      ).catch((error) => console.log(error));
   };
-
-  // const confirmBooking = (e) => {
-  //   // e.preventDefault();
-  //   axios
-  //     .post("http://localhost:6969/api/registered/Bookflight", {
-  //       Flight_ID: "F1",
-  //       Class: "F",
-  //       Seat_ID: "1",
-  //       PID: "P1",
-  //       Adult_or_Child: "A",
-  //     })
-  //     .then((response) => window.location.replace("/payments"))
-  //     .catch((error) => console.log(error));
-  // };
 
   useEffect(() => {
     setTitleReg(temp);

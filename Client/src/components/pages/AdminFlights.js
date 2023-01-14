@@ -28,7 +28,6 @@ export default function AdminFlights() {
   }, []);
 
   function handleFlightDetails(response) {
-    console.log(response);
     setFlight(response.data[0].flight);
     setDeptCity(response.data[0].dept_city);
     setArrCity(response.data[0].arr_city);

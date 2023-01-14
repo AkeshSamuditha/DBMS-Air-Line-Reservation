@@ -68,35 +68,30 @@ export default function SeatReservation() {
   // const [selectedSeat, setSelectedSeat] = useState(null);
   const [active, setActive] = useState(0);
 
-let types = [];
-for (let i = 1; i <= noOfSeats ; i++) {
-  types.push(i);
-}
+  let types = [];
+  for (let i = 1; i <= noOfSeats; i++) {
+    types.push(i);
+  }
 
-
-function ToggleGroup() {  
-  return (
-    <div>
-      {types.map((x) => (
-        <ButtonToggle 
-        active={active === x} 
-        onClick={() => setActive(x)}>
-          {x}
-        </ButtonToggle>
-      ))}
-      <p />
-      <p> Your payment selection: {active} </p>
-    </div>
-  );
-}
-
+  function ToggleGroup() {
+    return (
+      <div>
+        {types.map((x) => (
+          <ButtonToggle active={active === x} onClick={() => setActive(x)}>
+            {x}
+          </ButtonToggle>
+        ))}
+        <p />
+        <p> Your payment selection: {active} </p>
+      </div>
+    );
+  }
 
   useEffect(() => {
     localStorage.getItem("Route_ID", Route_ID);
   }, [Route_ID]);
-  
-  const [token, setToken] = useToken();
 
+  const [token, setToken] = useToken();
 
   const getPrice = () => {
     axios
@@ -111,9 +106,8 @@ function ToggleGroup() {
         },
       })
       .then((response) => {
-        setPrice(response.data[0].price)
-        setnoOfSeats(response.data[0].seatlimit
-          )
+        setPrice(response.data[0].price);
+        setnoOfSeats(response.data[0].seatlimit);
       })
       .catch((error) => console.log(error));
   };
@@ -127,7 +121,8 @@ function ToggleGroup() {
           Class: classes,
           Seat_ID: active,
           Adult_or_Child: type,
-        },{
+        },
+        {
           headers: {
             Authorization: token,
           },
@@ -218,12 +213,11 @@ function ToggleGroup() {
             <div>
               <h3>Select a Desired Seat</h3>
             </div>
-          <>
-          <ToggleGroup />
-          </>
+            <>
+              <ToggleGroup />
+            </>
             <div className="table_container">
               <div className="table_align">
-                
                 <>
                   {token ? (
                     <div className="booking-table-btn">

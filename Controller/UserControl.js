@@ -1,4 +1,4 @@
-const {executeSQL} = require("../DB/db");
+const { executeSQL } = require("../DB/db");
 
 class UserControl {
   /////////////////////////// GET ///////////////////////////
@@ -146,8 +146,8 @@ class UserControl {
   async getFlightStatus(method) {
     try {
       const Flight_ID = method.searchURL("Flight_ID");
-      
-      const sqlQuary = `SELECT flight_Status FROM flights WHERE flight_ID = ?;`;
+
+      const sqlQuary = `SELECT flight_Status, date_of_travel, dep_time, arr_time, origin_ID, destination_ID FROM flights LEFT JOIN ROUTES ON route=Route_ID WHERE flight_ID = ?;`;
 
       const data = await executeSQL(sqlQuary, [Flight_ID]);
       return data;
@@ -321,17 +321,13 @@ class UserControl {
     } catch (err) {
       return err;
     }
-  
-  
-  
-  
-  
   }
 
   /////////////////////////////////// UPDATE ///////////////////////////////////////////////////
 
   async passengersInTransit(method, user) {
     try {
+      const sqlQuary = `SELECT first_name, last_name, adult_or_child, email, telephone, country AS re, getLoc(origin_ID) AS origin, getLoc(destination_ID) AS destination, dep_time, arr_time FROM users RIGHT JOIN In_Time USING(PID);`;
 
       const data = await user.passengersInTransit();
       return data;
@@ -341,9 +337,9 @@ class UserControl {
     }
   }
 
-
   async flightsInAir(method, user) {
     try {
+      const sqlQuary = `SELECT First_Name, Last_Name, Email, Telephone, Country, Flight_ID, Adult_or_Child FROM passengers_in_transit;`;
 
       const data = await user.flightsInAir();
       return data;

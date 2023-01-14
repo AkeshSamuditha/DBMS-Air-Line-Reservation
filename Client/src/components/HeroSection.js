@@ -20,6 +20,16 @@ function HeroSection() {
             BOOK A FLIGHT
           </Button>
         </Link>
+
+        <Link to="/flight-status">
+          <Button
+            className="btns"
+            buttonStyle="btn--outline"
+            buttonSize="btn--large"
+          >
+            CHECK FLIGHT STATUS
+          </Button>
+        </Link>
       </div>
     </div>
   );

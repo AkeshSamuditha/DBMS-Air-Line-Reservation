@@ -2,41 +2,37 @@ import React, { useState, useEffect } from "react";
 import "./FlightStatus.css";
 import Navbar from "../Navbar";
 import { Button } from "../Button";
-import { useToken } from "./token";
 import axios from "axios";
 
 export default function FlightStatus() {
   const [flightID, setFlightID] = useState("");
-  const [token, setToken] = useToken();
-  const [flightStat, setFlightStat] = useState([
-    "F1",
-    "CMB",
-    "JFK",
-    "2023-01-14",
-    "04:15:00",
-    "04:15:00",
-    "scheduled",
-  ]);
-  const [statusGot, setStatusGot] = useState(true); //Change this to false
+  const [flightStat, setFlightStat] = useState([]);
+  //   "F1",
+  //   "CMB",
+  //   "JFK",
+  //   "2023-01-14",
+  //   "04:15:00",
+  //   "04:15:00",
+  //   "scheduled",
+  // ]);
+  const [statusGot, setStatusGot] = useState(false); //Change this to false
 
-  useEffect(() => {
+  const getFlightStatus = (e) => {
+    e.preventDefault();
     axios
       .get("http://localhost:6969/api/FlightStatus", {
-        headers: {
-          Authorization: token,
-        },
         params: {
           Flight_ID: flightID,
         },
       })
       .then((response) => getStastusByFlight(response))
       .catch((error) => console.log(error));
-  }, []);
+  };
 
   function getStastusByFlight(response) {
-    // setFlightsGot2(true);
-    // setFlightTable(response.data);
-    console.log(flightStat);
+    setStatusGot(true);
+    setFlightStat(response.data);
+    console.log(response);
   }
   return (
     <div>

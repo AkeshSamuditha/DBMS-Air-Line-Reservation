@@ -26,7 +26,7 @@ Welcome to the Airline Reservation System, a user-friendly platform designed to 
 
 - Provide an efficient and secure platform for administrators to manage the system.
 
-## quick guide to start working on the project
+## Getting Started
 
 1. DOWNLOAD and install Node.js
 2. add the paths of npm & Node.js to the environment variables if needed.
